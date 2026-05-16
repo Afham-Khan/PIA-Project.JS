@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search Flights — Pakistan International Airlines</title>
+  <meta name="description" content="Search and book PIA flights. Find the best fares for domestic and international routes." />
+  <link rel="stylesheet" href="css/global.css" />
+  <style>
+    .page-header {
+      background: linear-gradient(135deg, var(--pia-green-dark) 0%, var(--pia-green) 100%);
+      padding: 3rem 0 5rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .page-header .container { position: relative; z-index: 1; }
+    .page-header h1 { font-family: var(--font-display); font-size: 2.25rem; font-weight: 700; margin-bottom: 0.375rem; }
+    .page-header p  { color: rgba(255,255,255,0.72); font-size: 1rem; }
+
+    /* Search bar lift */
+    .search-lift {
+      margin-top: -3rem;
+      position: relative;
+      z-index: 10;
+    }
+    .search-compact {
+      background: white;
+      border-radius: var(--r-xl);
+      box-shadow: var(--shadow-lg);
+      padding: 1.5rem;
+    }
+    .search-compact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr auto;
+      gap: 0.875rem;
+      align-items: end;
+    }
+    @media (max-width: 900px)  { .search-compact-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px)  { .search-compact-grid { grid-template-columns: 1fr; } }
+
+    /* Results layout */
+    .results-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 2rem;
+      margin-top: 2.5rem;
+    }
+    @media (max-width: 900px) { .results-layout { grid-template-columns: 1fr; } }
+
+    /* Filters sidebar */
+    .filters-sidebar {
+      position: sticky;
+      top: calc(var(--nav-h) + 1rem);
+      max-height: calc(100vh - var(--nav-h) - 2rem);
+      overflow-y: auto;
+    }
+    .filter-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+    }
+    .filter-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-alt);
+    }
+    .filter-card-header h3 { font-size: 0.875rem; font-weight: 700; color: var(--ink); text-transform: uppercase; letter-spacing: 0.06em; }
+    .filter-reset { font-size: 0.75rem; color: var(--pia-green); font-weight: 600; }
+    .filter-section { padding: 1.25rem; border-bottom: 1px solid var(--border); }
+    .filter-section:last-child { border-bottom: none; }
+    .filter-section h4 { font-size: 0.8125rem; font-weight: 600; color: var(--ink-muted); margin-bottom: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .filter-option { display: flex; align-items: center; gap: 0.625rem; margin-bottom: 0.625rem; cursor: pointer; }
+    .filter-option input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--pia-green); cursor: pointer; }
+    .filter-option label { font-size: 0.875rem; color: var(--ink-muted); cursor: pointer; flex: 1; }
+    .filter-option .filter-count { font-size: 0.75rem; color: var(--ink-subtle); font-family: var(--font-mono); }
+
+    /* Price range slider */
+    .price-range input[type="range"] {
+      width: 100%;
+      accent-color: var(--pia-green);
+      cursor: pointer;
+    }
+    .price-range-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--ink-subtle); margin-top: 0.375rem; font-family: var(--font-mono); }
+
+    /* Results area */
+    .results-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .results-count { font-weight: 600; color: var(--ink); font-size: 0.9375rem; }
+    .results-count span { color: var(--pia-green); }
+
+    .sort-bar {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .sort-btn {
+      padding: 0.375rem 0.875rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--ink-muted);
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-full);
+      transition: all var(--t-fast);
+    }
+    .sort-btn:hover  { border-color: var(--pia-green); color: var(--pia-green); }
+    .sort-btn.active { background: var(--pia-green); border-color: var(--pia-green); color: white; }
+
+    /* Flight card enhanced */
+    .flight-card-full {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      transition: all var(--t-base);
+    }
+    .flight-card-full:hover { border-color: var(--pia-green); box-shadow: var(--shadow-green); }
+    .flight-card-full.selected { border-color: var(--pia-green); background: var(--surface-green); }
+
+    .fcard-main {
+      display: grid;
+      grid-template-columns: 2fr 3fr 2fr auto;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      align-items: center;
+    }
+    @media (max-width: 700px) { .fcard-main { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+
+    .fcard-airline { display: flex; align-items: center; gap: 0.75rem; }
+    .fcard-logo {
+      width: 40px; height: 40px;
+      background: var(--pia-green);
+      border-radius: var(--r-sm);
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+    .fcard-airline-name { font-size: 0.875rem; font-weight: 600; color: var(--ink); }
+    .fcard-flight-num  { font-size: 0.75rem; color: var(--ink-subtle); font-family: var(--font-mono); }
+
+    .fcard-route { display: flex; align-items: center; gap: 1.5rem; }
+    .fcard-end   { text-align: center; }
+    .fcard-time  { font-family: var(--font-display); font-size: 1.625rem; font-weight: 700; line-height: 1; }
+    .fcard-city  { font-size: 0.75rem; color: var(--ink-subtle); margin-top: 3px; }
+    .fcard-mid   { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
+    .fcard-dur   { font-size: 0.75rem; color: var(--ink-subtle); white-space: nowrap; }
+    .fcard-line  { position: relative; width: 100%; display: flex; align-items: center; }
+    .fcard-line-inner { flex: 1; height: 1.5px; background: var(--border); position: relative; }
+    .fcard-line-inner::before, .fcard-line-inner::after {
+      content: '';
+      position: absolute;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--pia-green);
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .fcard-line-inner::before { left: 0; }
+    .fcard-line-inner::after  { right: 0; }
+    .fcard-nonstop { font-size: 0.7rem; color: var(--success); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .fcard-price-col { text-align: right; }
+    .fcard-price { font-size: 1.5rem; font-weight: 700; color: var(--pia-green); font-family: var(--font-display); }
+    .fcard-per   { font-size: 0.75rem; color: var(--ink-subtle); margin-bottom: 0.625rem; }
+    .fcard-seats { font-size: 0.75rem; margin-bottom: 0.5rem; }
+
+    .fcard-footer {
+      padding: 0.75rem 1.5rem;
+      background: var(--surface-alt);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .fcard-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .fcard-tag  { font-size: 0.72rem; color: var(--ink-subtle); background: white; border: 1px solid var(--border); border-radius: var(--r-full); padding: 0.2rem 0.625rem; }
+
+    /* Empty state */
+    .empty-state { text-align: center; padding: 4rem 2rem; color: var(--ink-subtle); }
+    .empty-state-icon { font-size: 4rem; margin-bottom: 1rem; }
+    .empty-state h3 { font-size: 1.25rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem; }
+
+    /* Loading skeleton */
+    .flight-skeleton {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.5rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .skel-block { border-radius: var(--r-sm); }
+  </style>
+</head>
+<body>
+
+<div class="page-loader" role="status" aria-label="Loading flights"><div class="loader-ring"></div></div>
+<div class="scroll-progress" role="progressbar" aria-label="Page scroll progress"></div>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- Announcement -->
+<div class="announcement-bar" role="banner">
+  <div class="ticker-wrap"><div class="ticker">
+    <span>✈ Web check-in available 24–48 hours before departure &nbsp;&nbsp;&nbsp;</span>
+    <span>✈ <strong>Summer Sale:</strong> Up to 30% off — limited time &nbsp;&nbsp;&nbsp;</span>
+    <span>✈ Web check-in available 24–48 hours before departure &nbsp;&nbsp;&nbsp;</span>
+  </div></div>
+  <button class="announcement-close" aria-label="Close announcement">×</button>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar" role="navigation" aria-label="Main navigation">
+  <div class="container">
+    <a href="index.html" class="nav-logo" aria-label="Pakistan International Airlines Home">
+      <svg width="42" height="42" viewBox="0 0 42 42" fill="none" aria-hidden="true">
+        <circle cx="21" cy="21" r="21" fill="#1a5c38"/>
+        <text x="21" y="27" font-family="serif" font-size="18" font-weight="700" fill="#c9a84c" text-anchor="middle">PIA</text>
+      </svg>
+      <div class="nav-logo-text">
+        <span class="logo-name">Pakistan International Airlines</span>
+        <span class="logo-tagline">Great People to Fly With</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html"   class="nav-link" data-page="index.html">Home</a>
+      <a href="flights.html" class="nav-link" data-page="flights.html">Search Flights</a>
+      <a href="booking.html" class="nav-link" data-page="booking.html">Booking</a>
+      <a href="about.html"   class="nav-link" data-page="about.html">About PIA</a>
+      <a href="contact.html" class="nav-link" data-page="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <a href="#" class="btn btn-primary btn-sm">Awards+ Login</a>
+      <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<div id="nav-mobile" class="nav-mobile" aria-hidden="true">
+  <a href="index.html"   class="nav-link">🏠 Home</a>
+  <a href="flights.html" class="nav-link">✈ Search Flights</a>
+  <a href="booking.html" class="nav-link">📋 Booking</a>
+  <a href="about.html"   class="nav-link">ℹ About</a>
+  <a href="contact.html" class="nav-link">📞 Contact</a>
+</div>
+
+<main id="main-content">
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="container">
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumb" style="color:rgba(255,255,255,0.6);">
+          <li><a href="index.html" style="color:rgba(255,255,255,0.7);">Home</a></li>
+          <li class="breadcrumb-sep" aria-hidden="true">›</li>
+          <li style="color:rgba(255,255,255,0.9);" aria-current="page">Search Flights</li>
+        </ol>
+      </nav>
+      <h1>Find Your Flight</h1>
+      <p>Search hundreds of domestic and international routes</p>
+    </div>
+  </div>
+
+  <!-- SEARCH BAR LIFTED -->
+  <div class="search-lift">
+    <div class="container">
+      <div class="search-compact">
+        <form id="flight-search-form" novalidate aria-label="Flight search">
+          <!-- Trip tabs -->
+          <div style="display:flex;gap:0.5rem;margin-bottom:1.25rem;flex-wrap:wrap;" role="group" aria-label="Trip type">
+            <button type="button" class="sort-btn active" data-trip-tab="oneway">→ One Way</button>
+            <button type="button" class="sort-btn" data-trip-tab="roundtrip">⇄ Round Trip</button>
+          </div>
+          <div class="search-compact-grid">
+            <div class="form-group">
+              <label class="form-label" for="fs-from">From</label>
+              <div class="form-select-wrap">
+                <select id="fs-from" name="from" class="form-select" data-city-select data-placeholder="Departure" required aria-required="true"></select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="fs-to">To</label>
+              <div class="form-select-wrap">
+                <select id="fs-to" name="to" class="form-select" data-city-select data-placeholder="Destination" required aria-required="true"></select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="fs-dep">Departure</label>
+              <input type="date" id="fs-dep" name="departure" class="form-input" required aria-required="true" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="fs-pax">Passengers</label>
+              <div class="form-select-wrap">
+                <select id="fs-pax" name="passengers" class="form-select">
+                  <option value="1">1 Adult</option>
+                  <option value="2">2 Adults</option>
+                  <option value="3">3 Adults</option>
+                  <option value="4">4 Adults</option>
+                </select>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-end;">
+              <button type="submit" class="btn btn-primary btn-lg" style="width:100%;" aria-label="Search flights">
+                <span class="btn-text">Search</span>
+              </button>
+            </div>
+          </div>
+          <div id="fs-feedback" role="status" aria-live="polite" style="font-size:0.8125rem;padding-top:0.5rem;min-height:1.5rem;"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS LAYOUT -->
+  <section class="section" style="padding-top:2rem;" aria-label="Flight results">
+    <div class="container">
+      <div class="results-layout">
+
+        <!-- FILTERS -->
+        <aside class="filters-sidebar hide-mobile" aria-label="Filter flights">
+          <div class="filter-card">
+            <div class="filter-card-header">
+              <h3>Filters</h3>
+              <button class="filter-reset" id="reset-filters" aria-label="Reset all filters">Reset All</button>
+            </div>
+
+            <div class="filter-section">
+              <h4>Stops</h4>
+              <label class="filter-option">
+                <input type="checkbox" value="nonstop" data-filter="stops" checked aria-label="Non-stop flights"/>
+                <span class="filter-label">Non-stop</span>
+                <span class="filter-count" aria-label="All flights non-stop">All</span>
+              </label>
+            </div>
+
+            <div class="filter-section">
+              <h4>Departure Time</h4>
+              <label class="filter-option">
+                <input type="checkbox" value="morning" data-filter="time" checked aria-label="Morning flights"/>
+                <span class="filter-label">Morning (00:00 – 11:59)</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="afternoon" data-filter="time" checked aria-label="Afternoon flights"/>
+                <span class="filter-label">Afternoon (12:00 – 17:59)</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="evening" data-filter="time" checked aria-label="Evening flights"/>
+                <span class="filter-label">Evening (18:00 – 23:59)</span>
+              </label>
+            </div>
+
+            <div class="filter-section">
+              <h4>Max Price</h4>
+              <div class="price-range">
+                <input type="range" id="price-filter" min="5000" max="300000" value="300000" step="1000"
+                       aria-label="Maximum price filter" aria-valuemin="5000" aria-valuemax="300000" />
+                <div class="price-range-labels">
+                  <span>PKR 5,000</span>
+                  <span id="price-display" aria-live="polite">PKR 300,000</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="filter-section">
+              <h4>Aircraft Type</h4>
+              <label class="filter-option">
+                <input type="checkbox" value="all" data-filter="aircraft" checked aria-label="All aircraft types"/>
+                <span class="filter-label">All Aircraft</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="B777" data-filter="aircraft" aria-label="Boeing 777"/>
+                <span class="filter-label">Boeing 777</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="ATR" data-filter="aircraft" aria-label="ATR 72"/>
+                <span class="filter-label">ATR 72</span>
+              </label>
+            </div>
+          </div>
+        </aside>
+
+        <!-- RESULTS -->
+        <div>
+          <div id="results-area" role="region" aria-live="polite" aria-label="Flight results">
+            <!-- Populated by JS -->
+            <div class="empty-state" id="initial-state" aria-label="Search instructions">
+              <div class="empty-state-icon" aria-hidden="true">✈️</div>
+              <h3>Search for Flights</h3>
+              <p>Enter your origin, destination, and travel date above to see available flights.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="padding-block:2rem;">
+      <p>© 2025 Pakistan International Airlines Corporation. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#" class="footer-bottom-link">Privacy Policy</a>
+        <a href="#" class="footer-bottom-link">Terms of Use</a>
+        <a href="contact.html" class="footer-bottom-link">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div id="toast-container" aria-live="polite"></div>
+<button id="back-to-top" aria-label="Back to top">↑</button>
+
+<div id="a11y-widget">
+  <button class="a11y-btn" aria-label="Accessibility options" aria-expanded="false">♿</button>
+  <div class="a11y-panel" role="dialog" aria-label="Accessibility settings">
+    <h3>Accessibility</h3>
+    <div class="a11y-option"><span>High Contrast</span><button class="a11y-toggle" data-feature="high-contrast" role="switch" aria-checked="false"></button></div>
+    <div class="a11y-option"><span>Larger Text</span><button class="a11y-toggle" data-feature="large-text" role="switch" aria-checked="false"></button></div>
+    <div class="a11y-option"><span>Reduce Motion</span><button class="a11y-toggle" data-feature="reduce-motion" role="switch" aria-checked="false"></button></div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+let currentFlights = [];
+let currentPassengers = 1;
+let sortMode = 'price';
+
+function renderFlightCards(flights, passengers) {
+  const area = document.getElementById('results-area');
+  if (!flights.length) {
+    area.innerHTML = `
+      <div class="empty-state" role="status">
+        <div class="empty-state-icon">🔍</div>
+        <h3>No Flights Found</h3>
+        <p>No flights match your search. Try different dates or cities.</p>
+        <button class="btn btn-outline" style="margin-top:1.25rem;" onclick="document.getElementById('fs-dep').focus()">
+          Adjust Search
+        </button>
+      </div>`;
+    return;
+  }
+
+  const fromCity = getCityByCode(flights[0].from);
+  const toCity   = getCityByCode(flights[0].to);
+
+  area.innerHTML = `
+    <div class="results-meta">
+      <div>
+        <div class="results-count"><span>${flights.length} flight${flights.length > 1 ? 's' : ''}</span> found</div>
+        <div style="font-size:0.8125rem;color:var(--ink-subtle);">
+          ${fromCity?.name} → ${toCity?.name} · ${formatDate(flights[0].date)} · ${passengers} pax
+        </div>
+      </div>
+      <div class="sort-bar" role="group" aria-label="Sort flights">
+        <span style="font-size:0.8125rem;color:var(--ink-subtle);">Sort:</span>
+        <button class="sort-btn ${sortMode==='price'?'active':''}" data-sort="price" aria-pressed="${sortMode==='price'}">Lowest Price</button>
+        <button class="sort-btn ${sortMode==='dep'?'active':''}"   data-sort="dep"   aria-pressed="${sortMode==='dep'}">Earliest Dep.</button>
+        <button class="sort-btn ${sortMode==='dur'?'active':''}"   data-sort="dur"   aria-pressed="${sortMode==='dur'}">Shortest</button>
+      </div>
+    </div>
+    <div id="flights-list" role="list" aria-label="Available flights"></div>
+  `;
+
+  area.querySelectorAll('[data-sort]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      sortMode = btn.dataset.sort;
+      sortAndRender();
+    });
+  });
+
+  sortAndRender();
+}
+
+function sortAndRender() {
+  const list = document.getElementById('flights-list');
+  if (!list) return;
+  let sorted = [...currentFlights];
+  if (sortMode === 'price') sorted.sort((a,b) => a.price - b.price);
+  if (sortMode === 'dep')   sorted.sort((a,b) => a.dep.localeCompare(b.dep));
+  if (sortMode === 'dur')   sorted.sort((a,b) => a.duration.localeCompare(b.duration));
+
+  /* Update sort buttons */
+  document.querySelectorAll('[data-sort]').forEach(b => {
+    b.classList.toggle('active', b.dataset.sort === sortMode);
+    b.setAttribute('aria-pressed', b.dataset.sort === sortMode);
+  });
+
+  const total = (f) => f.price * currentPassengers;
+
+  list.innerHTML = sorted.map(f => `
+    <article class="flight-card-full animate-fade-up" role="listitem"
+             aria-label="${f.id} departing ${f.dep}, arriving ${f.arr}, ${formatPKR(total(f))}">
+      <div class="fcard-main">
+        <!-- Airline -->
+        <div class="fcard-airline">
+          <div class="fcard-logo" aria-hidden="true">PIA</div>
+          <div>
+            <div class="fcard-airline-name">Pakistan Int'l Airlines</div>
+            <div class="fcard-flight-num">${f.id} · ${f.class}</div>
+          </div>
+        </div>
+        <!-- Route -->
+        <div class="fcard-route" aria-label="Route details">
+          <div class="fcard-end" aria-label="Departure ${f.dep} from ${getCityByCode(f.from)?.name}">
+            <div class="fcard-time">${f.dep}</div>
+            <div class="fcard-city">${getCityByCode(f.from)?.code}</div>
+            <div class="fcard-city">${getCityByCode(f.from)?.name}</div>
+          </div>
+          <div class="fcard-mid">
+            <div class="fcard-dur">${f.duration}</div>
+            <div class="fcard-line"><div class="fcard-line-inner" aria-hidden="true"></div></div>
+            <div class="fcard-nonstop">Non-stop</div>
+          </div>
+          <div class="fcard-end" aria-label="Arrival ${f.arr} at ${getCityByCode(f.to)?.name}">
+            <div class="fcard-time">${f.arr}</div>
+            <div class="fcard-city">${getCityByCode(f.to)?.code}</div>
+            <div class="fcard-city">${getCityByCode(f.to)?.name}</div>
+          </div>
+        </div>
+        <!-- Price -->
+        <div class="fcard-price-col">
+          <div class="fcard-price">${formatPKR(total(f))}</div>
+          <div class="fcard-per">${currentPassengers > 1 ? 'for ' + currentPassengers + ' passengers' : 'per person'}</div>
+          <span class="badge ${f.seats < 15 ? 'badge-red' : 'badge-green'}" aria-label="${f.seats} seats available">
+            ${f.seats < 15 ? '⚡ Only ' + f.seats + ' left' : '✓ ' + f.seats + ' seats'}
+          </span>
+        </div>
+        <!-- Action -->
+        <div style="display:flex;flex-direction:column;gap:0.5rem;align-items:flex-end;">
+          <button class="btn btn-primary"
+                  onclick="selectFlight('${f.id}', ${total(f)}, '${f.from}', '${f.to}', '${f.date}', ${currentPassengers})"
+                  aria-label="Select flight ${f.id} for ${formatPKR(total(f))}">
+            Select →
+          </button>
+          <button class="btn btn-ghost btn-sm" 
+                  onclick="toggleDetails('${f.id}')"
+                  aria-expanded="false"
+                  aria-controls="details-${f.id}"
+                  id="toggle-${f.id}">
+            Details
+          </button>
+        </div>
+      </div>
+      <!-- Tags footer -->
+      <div class="fcard-footer">
+        <div class="fcard-tags" aria-label="Flight features">
+          <span class="fcard-tag">✓ In-flight Meal</span>
+          <span class="fcard-tag">✓ 23kg Baggage</span>
+          <span class="fcard-tag">✓ Free Cancellation</span>
+          <span class="fcard-tag">✓ Web Check-in</span>
+        </div>
+        <span style="font-size:0.775rem;color:var(--ink-subtle);">${formatDate(f.date)}</span>
+      </div>
+      <!-- Expandable details -->
+      <div id="details-${f.id}" style="display:none;padding:1.25rem 1.5rem;border-top:1px solid var(--border);background:var(--surface-alt);" aria-label="Flight ${f.id} details">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;">
+          <div><div style="font-size:0.75rem;font-weight:700;color:var(--ink-subtle);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.25rem;">Aircraft</div><div style="font-size:0.9rem;font-weight:600;">Boeing 777-200ER</div></div>
+          <div><div style="font-size:0.75rem;font-weight:700;color:var(--ink-subtle);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.25rem;">Class</div><div style="font-size:0.9rem;font-weight:600;">${f.class}</div></div>
+          <div><div style="font-size:0.75rem;font-weight:700;color:var(--ink-subtle);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.25rem;">Fare Type</div><div style="font-size:0.9rem;font-weight:600;">Flexible</div></div>
+          <div><div style="font-size:0.75rem;font-weight:700;color:var(--ink-subtle);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.25rem;">Check-in Baggage</div><div style="font-size:0.9rem;font-weight:600;">23 kg</div></div>
+          <div><div style="font-size:0.75rem;font-weight:700;color:var(--ink-subtle);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.25rem;">Cabin Baggage</div><div style="font-size:0.9rem;font-weight:600;">7 kg</div></div>
+          <div><div style="font-size:0.75rem;font-weight:700;color:var(--ink-subtle);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.25rem;">Meal</div><div style="font-size:0.9rem;font-weight:600;">Included</div></div>
+        </div>
+      </div>
+    </article>
+  `).join('');
+
+  requestAnimationFrame(() => {
+    list.querySelectorAll('.animate-fade-up').forEach((el, i) => {
+      el.style.transitionDelay = (i * 0.07) + 's';
+      setTimeout(() => el.classList.add('visible'), 20);
+    });
+  });
+}
+
+function toggleDetails(id) {
+  const panel = document.getElementById('details-' + id);
+  const btn   = document.getElementById('toggle-' + id);
+  if (!panel) return;
+  const open = panel.style.display === 'none';
+  panel.style.display = open ? 'block' : 'none';
+  btn.textContent = open ? 'Hide Details' : 'Details';
+  btn.setAttribute('aria-expanded', open);
+}
+
+function pageInit() {
+  const form = document.getElementById('flight-search-form');
+  const feedback = document.getElementById('fs-feedback');
+  let tripType = 'oneway';
+
+  /* Trip tabs */
+  document.querySelectorAll('[data-trip-tab]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-trip-tab]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      tripType = btn.dataset.tripTab;
+    });
+  });
+
+  /* Price filter */
+  const priceSlider = document.getElementById('price-filter');
+  const priceDisplay = document.getElementById('price-display');
+  priceSlider?.addEventListener('input', () => {
+    priceDisplay.textContent = 'PKR ' + parseInt(priceSlider.value).toLocaleString();
+    applyClientFilters();
+  });
+
+  /* Checkbox filters */
+  document.querySelectorAll('[data-filter]').forEach(cb => {
+    cb.addEventListener('change', applyClientFilters);
+  });
+
+  function applyClientFilters() {
+    const maxP = parseInt(priceSlider?.value || 300000);
+    const timeFilters = [...document.querySelectorAll('[data-filter="time"]:checked')].map(c => c.value);
+
+    const filtered = currentFlights.filter(f => {
+      if (f.price > maxP) return false;
+      const hour = parseInt(f.dep.split(':')[0]);
+      const slot = hour < 12 ? 'morning' : hour < 18 ? 'afternoon' : 'evening';
+      if (!timeFilters.includes(slot)) return false;
+      return true;
+    });
+
+    const list = document.getElementById('flights-list');
+    if (!list) return;
+    renderFlightCardsFiltered(filtered);
+  }
+
+  function renderFlightCardsFiltered(flights) {
+    /* reuse same render, but only update list */
+    currentFlights = flights;
+    sortAndRender();
+    const countEl = document.querySelector('.results-count span');
+    if (countEl) countEl.textContent = flights.length + ' flight' + (flights.length !== 1 ? 's' : '');
+  }
+
+  /* Form submit */
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    currentPassengers = parseInt(form.querySelector('[name="passengers"]')?.value) || 1;
+
+    const from    = form.querySelector('[name="from"]')?.value;
+    const to      = form.querySelector('[name="to"]')?.value;
+    const depDate = form.querySelector('[name="departure"]')?.value;
+
+    if (!from || !to || !depDate) {
+      showToast('error', 'Incomplete', 'Please fill in all search fields.');
+      if (feedback) { feedback.textContent = '⚠ Please fill in all required fields.'; feedback.style.color = 'var(--error)'; }
+      return;
+    }
+    if (from === to) { showToast('error', 'Same City', 'Origin and destination must differ.'); return; }
+
+    const btn = form.querySelector('[type="submit"]');
+    btn.classList.add('loading');
+    btn.disabled = true;
+    feedback.textContent = 'Searching…';
+    feedback.style.color = 'var(--info)';
+
+    setTimeout(() => {
+      btn.classList.remove('loading');
+      btn.disabled = false;
+      currentFlights = flightData.filter(f => f.from === from && f.to === to && f.date === depDate);
+      renderFlightCards(currentFlights, currentPassengers);
+      feedback.textContent = currentFlights.length ? `✓ ${currentFlights.length} flights found` : '0 flights found';
+      feedback.style.color = currentFlights.length ? 'var(--success)' : 'var(--warning)';
+      document.getElementById('initial-state')?.remove();
+    }, 700);
+  });
+
+  /* URL param pre-fill */
+  const params = new URLSearchParams(location.search);
+  if (params.get('from')) { document.getElementById('fs-from').value = params.get('from'); }
+  if (params.get('to'))   { document.getElementById('fs-to').value   = params.get('to'); }
+  if (params.get('date')) { document.getElementById('fs-dep').value  = params.get('date'); }
+  if (params.get('pax'))  { document.getElementById('fs-pax').value  = params.get('pax'); currentPassengers = parseInt(params.get('pax')); }
+
+  /* Auto-search from URL */
+  if (params.get('from') && params.get('to') && params.get('date')) {
+    setTimeout(() => form.querySelector('[type="submit"]').click(), 400);
+  }
+
+  /* Reset filters */
+  document.getElementById('reset-filters')?.addEventListener('click', () => {
+    document.querySelectorAll('[data-filter]').forEach(cb => { cb.checked = true; });
+    if (priceSlider) { priceSlider.value = 300000; priceDisplay.textContent = 'PKR 300,000'; }
+    renderFlightCards(currentFlights, currentPassengers);
+    showToast('info', 'Filters Reset', '');
+  });
+}
+</script>
+</body>
+</html>
