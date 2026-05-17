@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="About Pakistan International Airlines — PIA's history, values, and why this HCI redesign prototype focuses on passenger usability." />
+  <title>About PIA — Pakistan International Airlines</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="css/global.css" />
+  
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- Announcement Bar -->
+<div class="announce-bar" role="banner" aria-label="Service announcements">
+  <div class="announce-bar__track" aria-live="off">
+    <span class="announce-bar__item"><span class="announce-bar__dot"></span>Pakistan's National Airline — Serving since 1946</span>
+    <span class="announce-bar__item"><span class="announce-bar__dot"></span>This is an academic HCI redesign prototype — No real transactions</span>
+    <span class="announce-bar__item"><span class="announce-bar__dot"></span>Pakistan's National Airline — Serving since 1946</span>
+    <span class="announce-bar__item"><span class="announce-bar__dot"></span>This is an academic HCI redesign prototype — No real transactions</span>
+  </div>
+  <button class="announce-bar__close" aria-label="Close announcement">✕</button>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar" role="navigation" aria-label="Main navigation">
+  <div class="container navbar__inner">
+      <button class="page-back-btn" onclick="handleBackNavigation()" aria-label="Go back">
+  <span aria-hidden="true">←</span>
+  <span>Back</span>
+</button>
+    <a href="index.html" class="navbar__logo" aria-label="PIA – Pakistan International Airlines">
+      <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="22" fill="#0A6B3D"/><path d="M8 26 L22 12 L36 26" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="22" cy="22" r="4" fill="white"/></svg>
+      <div>
+        <div style="font-family:var(--font-display);font-weight:900;font-size:1.05rem;color:var(--clr-green);line-height:1">PIA</div>
+        <div style="font-size:.6rem;color:var(--clr-slate-400);letter-spacing:.05em;line-height:1;font-weight:500">Great People to Fly With</div>
+      </div>
+    </a>
+    <ul class="navbar__links" role="list">
+      <li class="nav-dropdown">
+        <a href="flights.html" class="nav-link" aria-haspopup="true" aria-expanded="false">
+          Where we Fly <span class="nav-link__chevron">▾</span>
+        </a>
+        <div class="nav-dropdown__menu" role="menu">
+          <a href="flights.html?from=KHI&to=ISB" class="nav-dropdown__item" role="menuitem"><span class="nav-dropdown__icon">🇵🇰</span> Domestic Routes</a>
+          <a href="flights.html?from=KHI&to=DXB" class="nav-dropdown__item" role="menuitem"><span class="nav-dropdown__icon">🌍</span> International Routes</a>
+          <a href="flights.html" class="nav-dropdown__item" role="menuitem"><span class="nav-dropdown__icon">✈</span> Flight Schedule</a>
+        </div>
+      </li>
+      <li class="nav-dropdown">
+        <a href="experience.html" class="nav-link" aria-haspopup="true" aria-expanded="false">
+          Experience <span class="nav-link__chevron">▾</span>
+        </a>
+        <div class="nav-dropdown__menu" role="menu">
+          <a href="experience.html" class="nav-dropdown__item" role="menuitem"><span class="nav-dropdown__icon">💎</span> Business Class</a>
+          <a href="experience.html#baggage" class="nav-dropdown__item" role="menuitem"><span class="nav-dropdown__icon">🧳</span> Baggage Guide</a>
+          <a href="experience.html#special-assistance" class="nav-dropdown__item" role="menuitem"><span class="nav-dropdown__icon">♿</span> Special Assistance</a>
+          <a href="experience.html#nusuk" class="nav-dropdown__item" role="menuitem"><span class="nav-dropdown__icon">🕌</span> Nusuk Travel</a>
+        </div>
+      </li>
+      <li><a href="index.html#awards" class="nav-link">Awards+ Plus</a></li>
+      <li><a href="index.html#deals" class="nav-link">Deals</a></li>
+      <li><a href="about.html" class="nav-link active">About</a></li>
+      <li><a href="contact.html" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="navbar__actions">
+      <button class="navbar__search-btn" data-action="open-search" aria-label="Search">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <a href="booking.html" class="btn btn-primary btn-sm">Book Now</a>
+      <button class="navbar__hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+        <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
+  <a href="index.html" class="mobile-nav__link">Home <span>›</span></a>
+  <a href="flights.html" class="mobile-nav__link">Search Flights <span>›</span></a>
+  <a href="experience.html" class="mobile-nav__link">Experience <span>›</span></a>
+  <a href="about.html" class="mobile-nav__link">About PIA <span>›</span></a>
+  <a href="contact.html" class="mobile-nav__link">Contact <span>›</span></a>
+  <a href="hci-analysis.html" class="mobile-nav__link">HCI Analysis <span>›</span></a>
+  <div style="margin-top:2rem;display:flex;flex-direction:column;gap:1rem">
+    <a href="booking.html" class="btn btn-primary">Book a Flight</a>
+  </div>
+</div>
+
+<main id="main-content">
+
+  <!-- ══ HERO ══ -->
+  <section class="about-hero" aria-labelledby="about-hero-title">
+    <div class="container" style="position:relative;z-index:1">
+      <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-5)">
+        <a href="index.html" style="color:rgba(255,255,255,.55);font-size:var(--text-sm);transition:color .2s" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color='rgba(255,255,255,.55)'">Home</a>
+        <span style="color:rgba(255,255,255,.3)">›</span>
+        <span style="color:rgba(255,255,255,.75);font-size:var(--text-sm)">About PIA</span>
+      </div>
+      <div class="about-hero__eyebrow">✈ Pakistan International Airlines</div>
+      <h1 id="about-hero-title" style="font-family:var(--font-display);font-size:clamp(2.2rem,5vw,4rem);font-weight:900;color:var(--clr-white);line-height:1.06;letter-spacing:-.02em;max-width:18ch;margin-bottom:var(--space-5)">
+        About Pakistan<br>International Airlines
+      </h1>
+      <p style="font-size:var(--text-lg);color:rgba(255,255,255,.75);max-width:52ch;margin-bottom:var(--space-8);line-height:1.65">
+        Pakistan's national airline, redesigned here as a passenger-focused HCI prototype demonstrating usability principles that improve real travel experiences.
+      </p>
+      <div style="display:flex;gap:var(--space-3);flex-wrap:wrap">
+        <a href="hci-analysis.html" class="btn btn-gold btn-lg">View HCI Analysis →</a>
+        <a href="booking.html" class="btn btn-outline-white btn-lg">Book a Flight</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ OVERVIEW ══ -->
+  <section class="section-pad" aria-labelledby="overview-heading">
+    <div class="container">
+
+      <!-- Stat strip -->
+      <div class="stat-strip reveal" style="margin-bottom:var(--space-16)" role="list" aria-label="PIA key figures">
+        <div class="stat-strip__item" role="listitem">
+          <div class="stat-strip__num" data-count-to="1946" data-count-suffix="">0</div>
+          <div class="stat-strip__label">Founded</div>
+        </div>
+        <div class="stat-strip__item" role="listitem">
+          <div class="stat-strip__num" data-count-to="35" data-count-suffix="+">0+</div>
+          <div class="stat-strip__label">Destinations</div>
+        </div>
+        <div class="stat-strip__item" role="listitem">
+          <div class="stat-strip__num" data-count-to="45" data-count-suffix="+">0+</div>
+          <div class="stat-strip__label">Fleet Size</div>
+        </div>
+        <div class="stat-strip__item" role="listitem">
+          <div class="stat-strip__num" data-count-to="70" data-count-suffix="+">0+</div>
+          <div class="stat-strip__label">Years of Service</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8);align-items:start">
+
+        <div class="reveal">
+          <div class="section-eyebrow" style="justify-content:flex-start;margin-bottom:var(--space-4)">Who We Are</div>
+          <h2 class="section-title" id="overview-heading" style="margin-bottom:var(--space-5)">Pakistan's National Carrier</h2>
+          <p style="font-size:var(--text-base);color:var(--clr-slate-600);line-height:1.75;margin-bottom:var(--space-4)">
+            Pakistan International Airlines is the flag carrier of Pakistan, headquartered at Jinnah International Airport in Karachi. Since 1946, PIA has connected the people of Pakistan to each other and to the world.
+          </p>
+          <p style="font-size:var(--text-base);color:var(--clr-slate-600);line-height:1.75;margin-bottom:var(--space-6)">
+            Airline websites play a critical role in the passenger experience. They must support trust, enable clear decision-making, and guide users through booking without confusion — whether the user is a first-time traveller or a seasoned passenger.
+          </p>
+          <div style="display:flex;gap:var(--space-3);flex-wrap:wrap">
+            <a href="flights.html" class="btn btn-primary">Search Flights</a>
+            <a href="hci-analysis.html" class="btn btn-outline">HCI Analysis</a>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:var(--space-4)" class="reveal">
+          <div class="overview-card">
+            <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3)">
+              <span style="font-size:1.5rem" aria-hidden="true">🌏</span>
+              <h3 style="font-weight:700;font-size:var(--text-base)">Domestic Network</h3>
+            </div>
+            <p style="font-size:var(--text-sm);color:var(--clr-slate-600);line-height:1.65">PIA operates direct domestic routes connecting Karachi, Lahore, Islamabad, Peshawar, Multan, Quetta, and more — keeping Pakistan connected.</p>
+          </div>
+          <div class="overview-card">
+            <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3)">
+              <span style="font-size:1.5rem" aria-hidden="true">✈</span>
+              <h3 style="font-weight:700;font-size:var(--text-base)">International Routes</h3>
+            </div>
+            <p style="font-size:var(--text-sm);color:var(--clr-slate-600);line-height:1.65">PIA serves destinations across the Middle East, UK, Europe, North America, and Asia — with flagship routes to London Heathrow, Dubai, and New York.</p>
+          </div>
+          <div class="overview-card">
+            <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3)">
+              <span style="font-size:1.5rem" aria-hidden="true">💻</span>
+              <h3 style="font-weight:700;font-size:var(--text-base)">Digital Transformation</h3>
+            </div>
+            <p style="font-size:var(--text-sm);color:var(--clr-slate-600);line-height:1.65">PIA's digital services — online booking, web check-in, mobile app, and cargo tracking — are central to a modern passenger experience that this prototype improves.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ TIMELINE ══ -->
+  <section class="section-pad" style="background:var(--clr-off-white)" aria-labelledby="timeline-heading">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-eyebrow">Our Journey</div>
+        <h2 class="section-title" id="timeline-heading">PIA Through the Years</h2>
+        <p class="section-subtitle" style="margin-inline:auto">From a national identity to a digital travel experience — PIA's evolution reflects Pakistan's story.</p>
+      </div>
+
+      <div class="timeline-grid">
+
+        <div class="timeline-card reveal delay-1">
+          <div class="timeline-card__dot" aria-hidden="true">1</div>
+          <div class="timeline-card__icon" aria-hidden="true">🇵🇰</div>
+          <h3 class="timeline-card__title">National Airline Identity</h3>
+          <p class="timeline-card__desc">Established in 1946, PIA became a symbol of Pakistani national pride. The green crescent and PIA logo represent a commitment to connecting the people of Pakistan to the world with dignity.</p>
+        </div>
+
+        <div class="timeline-card reveal delay-2">
+          <div class="timeline-card__dot" aria-hidden="true">2</div>
+          <div class="timeline-card__icon" aria-hidden="true">🌐</div>
+          <h3 class="timeline-card__title">Domestic &amp; International Network</h3>
+          <p class="timeline-card__desc">Over decades, PIA expanded from a handful of routes to a comprehensive network covering 35+ cities worldwide — domestically connecting all major Pakistani cities, and internationally reaching the Middle East, Europe, and beyond.</p>
+        </div>
+
+        <div class="timeline-card reveal delay-3">
+          <div class="timeline-card__dot" aria-hidden="true">3</div>
+          <div class="timeline-card__icon" aria-hidden="true">🛎</div>
+          <h3 class="timeline-card__title">Passenger Services</h3>
+          <p class="timeline-card__desc">PIA introduced Business Class, special meals, Umrah packages, cargo services, and special assistance programmes — building a full-service experience for diverse passenger needs including accessibility-focused support.</p>
+        </div>
+
+        <div class="timeline-card reveal delay-4">
+          <div class="timeline-card__dot" aria-hidden="true">4</div>
+          <div class="timeline-card__icon" aria-hidden="true">📱</div>
+          <h3 class="timeline-card__title">Digital Travel Experience</h3>
+          <p class="timeline-card__desc">Today, PIA's passengers expect to book, check in, track flights, and get support online. This HCI prototype reimagines that digital experience — making every passenger task faster, clearer, and more accessible.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ MISSION & VALUES ══ -->
+  <section class="section-pad" aria-labelledby="values-heading">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-eyebrow">Our Commitments</div>
+        <h2 class="section-title" id="values-heading">Mission &amp; Values</h2>
+        <p class="section-subtitle" style="margin-inline:auto">Four core values that guide every passenger experience, from the booking screen to the aircraft door.</p>
+      </div>
+
+      <div class="grid-4 gap-5">
+
+        <div class="value-card reveal delay-1">
+          <div class="value-card__icon" aria-hidden="true">🛡</div>
+          <h3 class="value-card__title">Safety</h3>
+          <p class="value-card__desc">Safety is the foundation of every flight. PIA maintains strict international aviation standards, regular aircraft maintenance, and crew training — so passengers can travel with full confidence.</p>
+        </div>
+
+        <div class="value-card reveal delay-2">
+          <div class="value-card__icon" aria-hidden="true">🤝</div>
+          <h3 class="value-card__title">Service</h3>
+          <p class="value-card__desc">Warm, culturally connected service from booking to landing. PIA's cabin crew, ground staff, and digital touchpoints all reflect the spirit of Pakistani hospitality — attentive, respectful, and genuinely helpful.</p>
+        </div>
+
+        <div class="value-card reveal delay-3">
+          <div class="value-card__icon" aria-hidden="true">♿</div>
+          <h3 class="value-card__title">Accessibility</h3>
+          <p class="value-card__desc">Every passenger deserves to fly with dignity. PIA provides wheelchair support, priority boarding, medical assistance, and — in this redesign — a full digital accessibility panel so all users can navigate comfortably.</p>
+        </div>
+
+        <div class="value-card reveal delay-4">
+          <div class="value-card__icon" aria-hidden="true">⭐</div>
+          <h3 class="value-card__title">Reliability</h3>
+          <p class="value-card__desc">Passengers depend on PIA for important journeys — work trips, family visits, Umrah. Reliability means accurate schedules, clear communication, and fast support when things change.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ WHY REDESIGN MATTERS ══ -->
+  <section class="section-pad" style="background:var(--clr-off-white)" aria-labelledby="redesign-heading">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-12);align-items:start">
+
+        <div class="reveal">
+          <div class="section-eyebrow" style="justify-content:flex-start;margin-bottom:var(--space-4)">HCI Rationale</div>
+          <h2 class="section-title" id="redesign-heading" style="margin-bottom:var(--space-5)">Why Redesign Matters</h2>
+          <p style="font-size:var(--text-base);color:var(--clr-slate-600);line-height:1.75;margin-bottom:var(--space-5)">
+            Airline websites are among the most complex consumer-facing products. They handle high-stakes decisions — money, travel plans, schedules — often under time pressure. Poor usability directly leads to booking errors, missed flights, and lost trust.
+          </p>
+          <p style="font-size:var(--text-base);color:var(--clr-slate-600);line-height:1.75;margin-bottom:var(--space-6)">
+            This prototype applies five HCI principles — accessibility, consistency, navigation, user feedback, and efficiency — to redesign the core passenger journey with a focus on usability, clarity, and inclusive design.
+          </p>
+          <a href="hci-analysis.html" class="btn btn-primary btn-lg">Read Full HCI Analysis →</a>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:var(--space-3)" class="reveal">
+
+          <div class="redesign-point delay-1">
+            <div class="redesign-point__icon" aria-hidden="true">🧠</div>
+            <div>
+              <div class="redesign-point__title">Reduce Confusion</div>
+              <p class="redesign-point__desc">Complex menus and scattered services create decision fatigue. Redesigned navigation groups related tasks logically and uses clear labels so passengers always know where they are.</p>
+            </div>
+          </div>
+
+          <div class="redesign-point delay-2">
+            <div class="redesign-point__icon" aria-hidden="true">🚫</div>
+            <div>
+              <div class="redesign-point__title">Prevent Booking Mistakes</div>
+              <p class="redesign-point__desc">Smart form validation, city autocomplete, same-city prevention, and date constraints stop errors before they happen — rather than punishing users after submission.</p>
+            </div>
+          </div>
+
+          <div class="redesign-point delay-3">
+            <div class="redesign-point__icon" aria-hidden="true">🔍</div>
+            <div>
+              <div class="redesign-point__title">Make Support Easy to Find</div>
+              <p class="redesign-point__desc">Special assistance, refund requests, and contact options are placed where users actually need them — prominently visible, not buried in sub-menus or footnotes.</p>
+            </div>
+          </div>
+
+          <div class="redesign-point delay-4">
+            <div class="redesign-point__icon" aria-hidden="true">💬</div>
+            <div>
+              <div class="redesign-point__title">Provide Clear Feedback</div>
+              <p class="redesign-point__desc">Every action gets a response: loading states, success toasts, inline validation, empty states. Passengers always know the status of their request — reducing anxiety and support calls.</p>
+            </div>
+          </div>
+
+          <div class="redesign-point delay-5">
+            <div class="redesign-point__icon" aria-hidden="true">♿</div>
+            <div>
+              <div class="redesign-point__title">Work for All Passengers</div>
+              <p class="redesign-point__desc">High contrast mode, adjustable font size, reduced motion, and visible skip links ensure the redesign works for users with visual, motor, or cognitive differences — not just the majority.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ ACADEMIC PROTOTYPE NOTE ══ -->
+  <section class="section-pad-sm" aria-labelledby="prototype-heading">
+    <div class="container">
+      <div class="prototype-note reveal">
+        <div class="prototype-note__badge" aria-hidden="true">🎓</div>
+        <div style="position:relative;z-index:1">
+          <h2 id="prototype-heading" style="font-family:var(--font-display);font-size:clamp(1.4rem,3vw,2rem);font-weight:900;color:var(--clr-white);margin-bottom:var(--space-3)">Academic Prototype Note</h2>
+          <p style="font-size:var(--text-base);color:rgba(255,255,255,.75);line-height:1.7;max-width:68ch;margin-bottom:var(--space-5)">
+            This project is an academic HCI redesign prototype submitted for a Human Computer Interaction course. It uses mock flight data and focuses entirely on usability, interaction design, and passenger task completion. It does not represent real airline operations, real payment processing, or real booking confirmations.
+          </p>
+          <div style="display:flex;gap:var(--space-4);flex-wrap:wrap">
+            <div style="display:flex;align-items:center;gap:var(--space-2);color:rgba(255,255,255,.6);font-size:var(--text-sm)">
+              <span style="color:var(--clr-gold)" aria-hidden="true">✓</span> HTML + Tailwind CSS + Vanilla JS
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--space-2);color:rgba(255,255,255,.6);font-size:var(--text-sm)">
+              <span style="color:var(--clr-gold)" aria-hidden="true">✓</span> No backend · No real payment
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--space-2);color:rgba(255,255,255,.6);font-size:var(--text-sm)">
+              <span style="color:var(--clr-gold)" aria-hidden="true">✓</span> 6 pages · 5 HCI principles
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--space-2);color:rgba(255,255,255,.6);font-size:var(--text-sm)">
+              <span style="color:var(--clr-gold)" aria-hidden="true">✓</span> 3 Group Members
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CTA STRIP ══ -->
+  <section class="section-pad-sm" aria-label="Quick actions">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-5)" class="reveal">
+
+        <div class="card" style="text-align:center;padding:var(--space-8)">
+          <div style="font-size:2rem;margin-bottom:var(--space-3)" aria-hidden="true">📊</div>
+          <h3 style="font-family:var(--font-display);font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">HCI Analysis</h3>
+          <p style="font-size:var(--text-sm);color:var(--clr-slate-600);margin-bottom:var(--space-4)">Explore how each HCI principle is applied throughout the prototype.</p>
+          <a href="hci-analysis.html" class="btn btn-primary" style="width:100%">View Analysis</a>
+        </div>
+
+        <div class="card" style="text-align:center;padding:var(--space-8)">
+          <div style="font-size:2rem;margin-bottom:var(--space-3)" aria-hidden="true">✈</div>
+          <h3 style="font-family:var(--font-display);font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">Book a Flight</h3>
+          <p style="font-size:var(--text-sm);color:var(--clr-slate-600);margin-bottom:var(--space-4)">Experience the redesigned booking flow with guided steps and error prevention.</p>
+          <a href="booking.html" class="btn btn-gold" style="width:100%">Book Now</a>
+        </div>
+
+        <div class="card" style="text-align:center;padding:var(--space-8)">
+          <div style="font-size:2rem;margin-bottom:var(--space-3)" aria-hidden="true">🛎</div>
+          <h3 style="font-family:var(--font-display);font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-2)">Travel Experience</h3>
+          <p style="font-size:var(--text-sm);color:var(--clr-slate-600);margin-bottom:var(--space-4)">Explore services, baggage guide, special assistance, and Nusuk packages.</p>
+          <a href="experience.html" class="btn btn-outline" style="width:100%">Explore</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer" role="contentinfo">
+  <div class="footer__main">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem">
+            <svg width="40" height="40" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="22" fill="#0A6B3D"/><path d="M8 26 L22 12 L36 26" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="22" cy="22" r="4" fill="white"/></svg>
+            <div>
+              <div style="font-family:var(--font-display);font-weight:900;font-size:1.2rem;color:white">PIA</div>
+              <div style="font-size:.65rem;color:rgba(255,255,255,.5);letter-spacing:.05em">Great People to Fly With</div>
+            </div>
+          </div>
+          <p class="footer__brand-desc">Pakistan International Airlines — connecting Pakistan to the world since 1946. HCI Redesign Prototype.</p>
+          <address style="font-style:normal;margin-top:1.25rem">
+            <p style="font-size:.8rem;color:rgba(255,255,255,.4);line-height:1.6">
+              PIA Building, Jinnah International Airport<br>Karachi, 75200, Pakistan<br>
+              <a href="tel:+922111786786" style="color:rgba(255,255,255,.5)" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color='rgba(255,255,255,.5)'">(+92-21) 111-786-786</a>
+            </p>
+          </address>
+          <div class="footer__socials" aria-label="Social media links">
+            <a href="https://facebook.com" class="footer__social-link" aria-label="Facebook" target="_blank" rel="noopener">f</a>
+            <a href="https://twitter.com" class="footer__social-link" aria-label="Twitter" target="_blank" rel="noopener">𝕏</a>
+            <a href="https://instagram.com" class="footer__social-link" aria-label="Instagram" target="_blank" rel="noopener">◎</a>
+            <a href="https://linkedin.com" class="footer__social-link" aria-label="LinkedIn" target="_blank" rel="noopener">in</a>
+          </div>
+        </div>
+        <div>
+          <h3 class="footer__heading">About Us</h3>
+          <ul class="footer__links">
+            <li><a href="about.html" class="footer__link">About PIA</a></li>
+            <li><a href="about.html#values-heading" class="footer__link">Mission &amp; Values</a></li>
+            <li><a href="about.html#redesign-heading" class="footer__link">Why Redesign</a></li>
+            <li><a href="hci-analysis.html" class="footer__link">HCI Analysis</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__heading">Facilities</h3>
+          <ul class="footer__links">
+            <li><a href="experience.html#baggage" class="footer__link">Baggage Guide</a></li>
+            <li><a href="experience.html#special-assistance" class="footer__link">Special Assistance</a></li>
+            <li><a href="experience.html#nusuk" class="footer__link">Nusuk Packages</a></li>
+            <li><a href="experience.html" class="footer__link">Business Class</a></li>
+            <li><a href="contact.html" class="footer__link">Contact Support</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__heading">Quick Book</h3>
+          <ul class="footer__links">
+            <li><a href="flights.html?from=KHI&to=ISB" class="footer__link">KHI → ISB</a></li>
+            <li><a href="flights.html?from=KHI&to=LHE" class="footer__link">KHI → LHE</a></li>
+            <li><a href="flights.html?from=KHI&to=PEW" class="footer__link">KHI → PEW</a></li>
+            <li><a href="flights.html?from=KHI&to=DXB" class="footer__link">KHI → DXB</a></li>
+            <li><a href="flights.html?from=KHI&to=LHR" class="footer__link">KHI → LHR</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <div class="container" style="display:contents">
+      <p class="footer__copyright">© 2024 Pakistan International Airlines. HCI Redesign Prototype — Academic Use Only.</p>
+      <nav class="footer__bottom-links" aria-label="Legal links">
+        <a href="hci-analysis.html" class="footer__bottom-link">HCI Analysis</a>
+        <a href="about.html" class="footer__bottom-link">About</a>
+        <a href="contact.html" class="footer__bottom-link">Accessibility</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<!-- Search Overlay -->
+  <div class="search-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Search PIA">
+  <div class="search-overlay__box" role="document">
+    <div class="search-overlay__header">
+      <div>
+        <p class="search-overlay__eyebrow">Search PIA</p>
+        <h2 class="search-overlay__title">Where would you like to go?</h2>
+      </div>
+
+      <button class="search-overlay__close" type="button" aria-label="Close search">
+        ✕
+      </button>
+    </div>
+
+    <form class="search-overlay__form">
+      <span class="search-overlay__icon" aria-hidden="true">⌕</span>
+      <input
+        class="search-overlay__input"
+        type="search"
+        placeholder="Search flights, baggage, check-in, support..."
+        aria-label="Search query"
+      />
+      <button class="search-overlay__submit" type="submit">
+        Search
+      </button>
+    </form>
+
+    <div class="search-overlay__quick">
+      <p class="search-overlay__label">Popular searches</p>
+
+      <div class="search-overlay__tags">
+        <button class="search-tag" type="button" data-url="flights.html?from=KHI&to=DXB">
+          Dubai Flights
+        </button>
+        <button class="search-tag" type="button" data-url="flights.html?from=KHI&to=ISB">
+          Islamabad
+        </button>
+        <button class="search-tag" type="button" data-url="index.html#booking">
+          Online Check-In
+        </button>
+        <button class="search-tag" type="button" data-url="experience.html#baggage">
+          Baggage Policy
+        </button>
+        <button class="search-tag" type="button" data-url="experience.html">
+          Business Class
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Accessibility trigger -->
+<button class="a11y-trigger" aria-label="Open accessibility options" aria-expanded="false" aria-controls="a11y-panel">
+  <span aria-hidden="true">♿</span>
+  <!-- <span class="a11y-trigger__label">Accessibility</span> -->
+</button>
+<aside id="a11y-panel" class="a11y-panel" aria-hidden="true" aria-label="Accessibility options">
+  <div class="a11y-panel__header">
+    <span>Accessibility</span>
+    <button class="a11y-trigger btn-ghost btn-sm" aria-label="Close accessibility panel" style="font-size:.85rem">✕</button>
+  </div>
+  <div class="a11y-option">
+    <div class="a11y-option__label"><span aria-hidden="true">🔤</span> Text Size</div>
+    <div class="a11y-size-controls">
+      <button class="a11y-size-btn a11y-font-decrease" aria-label="Decrease font size">A−</button>
+      <span class="a11y-font-size-val" aria-live="polite">16px</span>
+      <button class="a11y-size-btn a11y-font-increase" aria-label="Increase font size">A+</button>
+    </div>
+  </div>
+  <div class="a11y-option">
+    <label class="a11y-option__label" for="ab-toggle-contrast"><span aria-hidden="true">◑</span> High Contrast</label>
+    <button id="ab-toggle-contrast" class="a11y-toggle" role="switch" aria-pressed="false" data-action="high-contrast"></button>
+  </div>
+  <div class="a11y-option">
+    <label class="a11y-option__label" for="ab-toggle-motion"><span aria-hidden="true">⏸</span> Reduce Motion</label>
+    <button id="ab-toggle-motion" class="a11y-toggle" role="switch" aria-pressed="false" data-action="reduced-motion"></button>
+  </div>
+  <div class="a11y-option">
+    <label class="a11y-option__label" for="ab-toggle-underline"><span aria-hidden="true">U̲</span> Underline Links</label>
+    <button id="ab-toggle-underline" class="a11y-toggle" role="switch" aria-pressed="false" data-action="underline-links"></button>
+  </div>
+  <div class="a11y-option">
+    <label class="a11y-option__label" for="ab-toggle-large"><span aria-hidden="true">🅰</span> Large Text</label>
+    <button id="ab-toggle-large" class="a11y-toggle" role="switch" aria-pressed="false" data-action="large-text"></button>
+  </div>
+  <button class="btn btn-ghost btn-sm a11y-reset" style="width:100%;margin-top:1rem">Reset All</button>
+</aside>
+
+<button class="back-to-top" aria-label="Back to top">↑</button>
+<div class="toast-container" aria-live="polite" aria-atomic="true"></div>
+<script src="js/main.js"></script>
+</body>
+</html>

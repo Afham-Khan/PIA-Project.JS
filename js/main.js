@@ -576,6 +576,19 @@ const ROUTES = {
     { flight: 'PK-786', depart: '23:00', arrive: '06:30+1', duration: '8h 30m', class: 'Economy', price: 120000, seats: 180, aircraft: 'Boeing 777' },
     { flight: 'PK-787', depart: '10:00', arrive: '17:30', duration: '8h 30m', class: 'Business', price: 320000, seats: 24, aircraft: 'Boeing 777' },
   ],
+  'SYD-LHR': [
+    { flight: 'PK-786', depart: '23:00', arrive: '06:30+1', duration: '8h 30m', class: 'Economy', price: 120000, seats: 180, aircraft: 'Boeing 777' },
+    { flight: 'PK-787', depart: '10:00', arrive: '17:30', duration: '8h 30m', class: 'Business', price: 320000, seats: 24, aircraft: 'Boeing 777' },
+  ],
+  'MEL-LHR': [
+    { flight: 'PK-786', depart: '23:00', arrive: '06:30+1', duration: '8h 30m', class: 'Economy', price: 120000, seats: 180, aircraft: 'Boeing 777' },
+    { flight: 'PK-787', depart: '10:00', arrive: '17:30', duration: '8h 30m', class: 'Business', price: 320000, seats: 24, aircraft: 'Boeing 777' },
+  ],
+   'HKG-LHR': [
+    { flight: 'PK-786', depart: '23:00', arrive: '06:30+1', duration: '8h 30m', class: 'Economy', price: 120000, seats: 180, aircraft: 'Boeing 777' },
+    { flight: 'PK-787', depart: '10:00', arrive: '17:30', duration: '8h 30m', class: 'Business', price: 320000, seats: 24, aircraft: 'Boeing 777' },
+  ],
+  
 };
 
 const CITIES = [
@@ -589,6 +602,10 @@ const CITIES = [
   { code: 'JFK', name: 'New York', airport: 'John F. Kennedy International Airport' },
   { code: 'AMS', name: 'Amsterdam', airport: 'Amsterdam Airport Schiphol' },
   { code: 'BKK', name: 'Bangkok', airport: 'Suvarnabhumi Airport' },
+  { code: 'SYD', name: 'Sydney', airport: 'Sydney Airport' },
+  { code: 'MEL', name: 'Melbourne', airport: 'Melbourne Airport' },
+  { code: 'BKK', name: 'Bangkok', airport: 'Suvarnabhumi Airport' },
+  { code: 'HKG', name: 'Hong Kong', airport: 'Hong Kong International Airport' },
 ];
 
 function initBookingWidget() {
@@ -1040,13 +1057,17 @@ function initBookingPage() {
 
   // passenger dropdown
   on(passengerBtn, 'click', (e) => {
-    e.stopPropagation();
-    passengerDropdown?.classList.toggle('open');
-  });
+  e.stopPropagation();
 
-  on(document, 'click', () => {
-    passengerDropdown?.classList.remove('open');
-  });
+  const isOpen = passengerDropdown?.classList.toggle('open');
+
+  passengerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+});
+
+on(document, 'click', () => {
+  passengerDropdown?.classList.remove('open');
+  passengerBtn?.setAttribute('aria-expanded', 'false');
+});
 
   on(passengerDropdown, 'click', e => e.stopPropagation());
 
@@ -1211,6 +1232,39 @@ function initBookingPage() {
     if (totalEl) totalEl.textContent = `PKR ${total.toLocaleString()}`;
   }
 
+  // confirm booking
+on($('.confirm-booking-btn', page), 'click', () => {
+  const btn = $('.confirm-booking-btn', page);
+  if (!btn || btn.disabled) return;
+
+  const passengerName = $('#pax-name')?.value?.trim() || 'Passenger';
+  const flightNumber = selectedFlight?.flight || $('.booking-summary__flight')?.textContent || 'your flight';
+
+  btn.disabled = true;
+  btn.textContent = 'Booking Confirmed ✓';
+
+  showToast(`Booking confirmed for ${passengerName} on ${flightNumber}.`, 'success');
+
+  setFeedback(
+    `Mock booking confirmed. Confirmation details have been generated for ${passengerName}.`
+  );
+
+  const reviewStep = $('#step-3');
+
+  const existing = $('.booking-confirmation-card', page);
+  if (existing) existing.remove();
+
+  reviewStep.insertAdjacentHTML('beforeend', `
+    <div class="booking-confirmation-card" role="status" aria-live="polite">
+      <div class="booking-confirmation-card__icon">✓</div>
+      <div>
+        <h3>Booking Confirmed</h3>
+        <p>Your mock booking for <strong>${flightNumber}</strong> has been confirmed for <strong>${passengerName}</strong>.</p>
+      </div>
+    </div>
+  `);
+});
+
   goToStep(0);
 }
 
@@ -1368,6 +1422,37 @@ function initSmoothScroll() {
   });
 }
 
+// back btn 
+
+function handleBackNavigation() {
+  if (document.referrer && document.referrer.includes(window.location.hostname)) {
+    window.history.back();
+  } else {
+    window.location.href = 'index.html';
+  }
+}
+
+// page Loader 
+
+function initPageLoader() {
+  const loader = document.getElementById('page-loader');
+  if (!loader) return;
+
+  const minDelay = 3200;
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      loader.classList.add('hide');
+
+      setTimeout(() => {
+        loader.remove();
+      }, 450);
+    }, minDelay);
+  });
+}
+
+initPageLoader();
+
 /* ══════════════════════════════════════════════════════════
    BACK TO TOP
 ══════════════════════════════════════════════════════════ */
@@ -1379,6 +1464,7 @@ function initBackToTop() {
   }, 100), { passive: true });
   on(btn, 'click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 }
+
 
 /* ══════════════════════════════════════════════════════════
    INIT ALL
@@ -1400,4 +1486,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initBackToTop();
   initMockLogin();
   initFaqAccordion();
+  initPageLoader();
+  // handleBackNavigation();
 });
