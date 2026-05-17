@@ -148,32 +148,62 @@ function initSearch() {
 function initA11yPanel() {
   const trigger = $('.a11y-trigger');
   const panel = $('.a11y-panel');
+  const closeBtn = $('.a11y-close');
+
   if (!trigger || !panel) return;
 
-  let isOpen = false;
+  function openPanel() {
+    panel.classList.add('open');
+    trigger.setAttribute('aria-expanded', 'true');
+    panel.setAttribute('aria-hidden', 'false');
+  }
 
-  function togglePanel() {
-    isOpen = !isOpen;
-    panel.classList.toggle('open', isOpen);
-    trigger.setAttribute('aria-expanded', isOpen);
-    panel.setAttribute('aria-hidden', !isOpen);
+  function closePanel() {
+    panel.classList.remove('open');
+    trigger.setAttribute('aria-expanded', 'false');
+    panel.setAttribute('aria-hidden', 'true');
+  }
+
+  function togglePanel(e) {
+    e.stopPropagation();
+
+    if (panel.classList.contains('open')) {
+      closePanel();
+    } else {
+      openPanel();
+    }
   }
 
   on(trigger, 'click', togglePanel);
 
-  // Close when clicking outside
-  on(document, 'click', e => {
-    if (isOpen && !panel.contains(e.target) && e.target !== trigger) {
-      isOpen = false;
-      panel.classList.remove('open');
+  on(closeBtn, 'click', (e) => {
+    e.stopPropagation();
+    closePanel();
+  });
+
+  on(panel, 'click', (e) => {
+    e.stopPropagation();
+  });
+
+  on(document, 'click', () => {
+    if (panel.classList.contains('open')) {
+      closePanel();
     }
   });
 
-  // Toggle options
+  on(document, 'keydown', (e) => {
+    if (e.key === 'Escape' && panel.classList.contains('open')) {
+      closePanel();
+      trigger.focus();
+    }
+  });
+
   $$('.a11y-toggle').forEach(toggle => {
     const action = toggle.dataset.action;
+
     on(toggle, 'click', () => {
       toggle.classList.toggle('on');
+
       const isOn = toggle.classList.contains('on');
       toggle.setAttribute('aria-pressed', isOn);
 
@@ -194,32 +224,46 @@ function initA11yPanel() {
     });
   });
 
-  // Font size controls
   let baseFontSize = 16;
   const fontSizeDisplay = $('.a11y-font-size-val');
 
   on($('.a11y-font-increase'), 'click', () => {
     baseFontSize = Math.min(baseFontSize + 2, 22);
     document.documentElement.style.fontSize = baseFontSize + 'px';
-    if (fontSizeDisplay) fontSizeDisplay.textContent = baseFontSize + 'px';
+
+    if (fontSizeDisplay) {
+      fontSizeDisplay.textContent = baseFontSize + 'px';
+    }
   });
 
   on($('.a11y-font-decrease'), 'click', () => {
     baseFontSize = Math.max(baseFontSize - 2, 12);
     document.documentElement.style.fontSize = baseFontSize + 'px';
-    if (fontSizeDisplay) fontSizeDisplay.textContent = baseFontSize + 'px';
+
+    if (fontSizeDisplay) {
+      fontSizeDisplay.textContent = baseFontSize + 'px';
+    }
   });
 
   on($('.a11y-reset'), 'click', () => {
     baseFontSize = 16;
     document.documentElement.style.fontSize = '16px';
-    if (fontSizeDisplay) fontSizeDisplay.textContent = '16px';
+
+    if (fontSizeDisplay) {
+      fontSizeDisplay.textContent = '16px';
+    }
+
     $$('.a11y-toggle').forEach(t => {
       t.classList.remove('on');
-      t.setAttribute('aria-pressed', false);
+      t.setAttribute('aria-pressed', 'false');
     });
-    document.body.className = document.body.className
-      .replace(/a11y-\S+/g, '').trim();
+
+    document.body.classList.remove(
+      'a11y-large-text',
+      'a11y-high-contrast',
+      'a11y-reduced-motion',
+      'a11y-underline-links'
+    );
   });
 }
 
@@ -689,94 +733,324 @@ function renderFlights(container, flights, from, to, date) {
    BOOKING FORM PAGE
 ══════════════════════════════════════════════════════════ */
 function initBookingPage() {
-  if (!$('.booking-page')) return;
+  const page = $('.booking-page');
+  if (!page) return;
 
-  const params = new URLSearchParams(location.search);
-  const flight  = params.get('flight') || '';
-  const from    = params.get('from')   || '';
-  const to      = params.get('to')     || '';
-  const date    = params.get('date')   || '';
-  const price   = params.get('price')  || '';
-  const cls     = params.get('class')  || '';
-
-  // Populate summary
-  const fields = {
-    '.booking-summary__flight': flight,
-    '.booking-summary__route':  `${from} → ${to}`,
-    '.booking-summary__date':   date ? new Date(date).toLocaleDateString('en-PK', { weekday:'long', year:'numeric', month:'long', day:'numeric' }) : '',
-    '.booking-summary__class':  cls,
-    '.booking-summary__price':  `PKR ${parseInt(price).toLocaleString()}`,
-  };
-  Object.entries(fields).forEach(([sel, val]) => {
-    const el = $(sel);
-    if (el) el.textContent = val;
-  });
-
-  // Step navigation
   const steps = $$('.booking-step');
   const stepIndicators = $$('.step-indicator');
+
+  const fromInput = $('.from-input', page);
+  const toInput = $('.to-input', page);
+  const departInput = $('.depart-input', page);
+  const returnInput = $('.return-input', page);
+  const passengerBtn = $('.passenger-btn', page);
+  const passengerDropdown = $('.passenger-dropdown', page);
+  const classSelect = $('.class-select', page);
+  const feedback = $('#booking-page-feedback');
+
   let currentStep = 0;
+  let selectedFlight = null;
 
   function goToStep(n) {
-    steps.forEach((s, i) => {
-      s.classList.toggle('active', i === n);
-      s.setAttribute('aria-hidden', i !== n);
+    steps.forEach((step, i) => {
+      step.classList.toggle('active', i === n);
+      step.setAttribute('aria-hidden', i !== n);
     });
-    stepIndicators.forEach((ind, i) => {
-      ind.classList.toggle('completed', i < n);
-      ind.classList.toggle('current', i === n);
+
+    stepIndicators.forEach((indicator, i) => {
+      indicator.classList.toggle('completed', i < n);
+      indicator.classList.toggle('current', i === n);
+      indicator.setAttribute('aria-current', i === n ? 'step' : 'false');
     });
+
     currentStep = n;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  $$('[data-next-step]').forEach(btn => {
-    on(btn, 'click', () => {
-      const step = parseInt(btn.dataset.nextStep);
-      const form = btn.closest('.booking-step');
+  function getCityCode(input) {
+    if (!input) return '';
 
-      // Validate required fields
-      const required = $$('[required]', form);
-      let valid = true;
-      required.forEach(field => {
-        if (!field.value.trim()) {
-          field.classList.add('form-control--error');
-          valid = false;
-        } else {
-          field.classList.remove('form-control--error');
-        }
+    if (input.dataset.code) return input.dataset.code;
+
+    const value = input.value.trim().toLowerCase();
+    const city = CITIES.find(c =>
+      c.name.toLowerCase() === value ||
+      c.code.toLowerCase() === value ||
+      value.includes(c.name.toLowerCase()) ||
+      value.includes(c.code.toLowerCase())
+    );
+
+    return city?.code || '';
+  }
+
+  function setFeedback(message) {
+    if (feedback) feedback.textContent = message;
+  }
+
+  // date defaults
+  const today = new Date().toISOString().split('T')[0];
+  if (departInput) {
+    departInput.min = today;
+    if (!departInput.value) departInput.value = today;
+  }
+
+  if (returnInput) {
+    returnInput.min = departInput?.value || today;
+  }
+
+  // trip toggle
+  $$('[data-trip]', page).forEach(tab => {
+    on(tab, 'click', () => {
+      $$('[data-trip]', page).forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-pressed', 'false');
       });
 
-      if (!valid) {
-        showToast('Please fill in all required fields.', 'warning');
-        return;
-      }
+      tab.classList.add('active');
+      tab.setAttribute('aria-pressed', 'true');
 
-      if (step === 2) updatePaymentSummary(price);
-      goToStep(step);
+      const returnGroup = $('.return-date-group', page);
+      if (returnGroup) {
+        returnGroup.style.display = tab.dataset.trip === 'roundtrip' ? '' : 'none';
+      }
     });
   });
 
-  $$('[data-prev-step]').forEach(btn => {
-    on(btn, 'click', () => goToStep(parseInt(btn.dataset.prevStep)));
+  // swap cities
+  on($('.swap-btn', page), 'click', () => {
+    const tempValue = fromInput.value;
+    const tempCode = fromInput.dataset.code;
+
+    fromInput.value = toInput.value;
+    fromInput.dataset.code = toInput.dataset.code || '';
+
+    toInput.value = tempValue;
+    toInput.dataset.code = tempCode || '';
   });
 
-  // Confirm booking
-  const confirmBtn = $('.confirm-booking-btn');
-  on(confirmBtn, 'click', () => {
-    const confirmation = Math.random().toString(36).substring(2, 10).toUpperCase();
-    goToStep(3);
-    const confEl = $('.booking-confirmation__code');
-    if (confEl) confEl.textContent = confirmation;
+  // city autocomplete
+  [fromInput, toInput].forEach(input => {
+    if (!input) return;
+
+    const list = input.closest('.bk-input-wrap')?.querySelector('.city-dropdown');
+
+    on(input, 'input', () => {
+      input.dataset.code = '';
+
+      const query = input.value.trim().toLowerCase();
+      if (!query || !list) {
+        if (list) list.hidden = true;
+        return;
+      }
+
+      const matches = CITIES.filter(c =>
+        c.name.toLowerCase().includes(query) ||
+        c.code.toLowerCase().includes(query) ||
+        c.airport.toLowerCase().includes(query)
+      );
+
+      if (!matches.length) {
+        list.hidden = true;
+        return;
+      }
+
+      list.innerHTML = matches.slice(0, 6).map(c => `
+        <button class="city-option" type="button" data-code="${c.code}" data-name="${c.name}">
+          <span class="city-option__code">${c.code}</span>
+          <span class="city-option__info">
+            <span class="city-option__name">${c.name}</span>
+            <span class="city-option__airport">${c.airport}</span>
+          </span>
+        </button>
+      `).join('');
+
+      $$('.city-option', list).forEach(option => {
+        on(option, 'click', () => {
+          input.value = `${option.dataset.name} (${option.dataset.code})`;
+          input.dataset.code = option.dataset.code;
+          list.hidden = true;
+        });
+      });
+
+      list.hidden = false;
+    });
+
+    on(input, 'blur', () => {
+      setTimeout(() => {
+        if (list) list.hidden = true;
+      }, 180);
+    });
   });
 
-  function updatePaymentSummary(price) {
-    const tax = Math.round(parseInt(price) * 0.16);
-    const total = parseInt(price) + tax;
-    const basePriceEl = $('.pay-base-price');
+  // passenger dropdown
+  on(passengerBtn, 'click', (e) => {
+    e.stopPropagation();
+    passengerDropdown?.classList.toggle('open');
+  });
+
+  on(document, 'click', () => {
+    passengerDropdown?.classList.remove('open');
+  });
+
+  on(passengerDropdown, 'click', e => e.stopPropagation());
+
+  const counters = { adults: 1, children: 0 };
+
+  $$('[data-counter]', page).forEach(btn => {
+    on(btn, 'click', () => {
+      const type = btn.dataset.counter;
+      const dir = btn.dataset.dir;
+      const min = type === 'adults' ? 1 : 0;
+      const max = type === 'adults' ? 9 : 6;
+
+      if (dir === 'inc') counters[type] = Math.min(counters[type] + 1, max);
+      if (dir === 'dec') counters[type] = Math.max(counters[type] - 1, min);
+
+      const val = $(`.counter-val[data-type="${type}"]`, page);
+      if (val) val.textContent = counters[type];
+
+      const total = counters.adults + counters.children;
+      passengerBtn.textContent = `${total} Passenger${total > 1 ? 's' : ''}`;
+
+      const hidden = $('.passenger-select', page);
+      if (hidden) hidden.value = total;
+    });
+  });
+
+  // search flights button
+  on($('.booking-form', page), 'submit', e => {
+    e.preventDefault();
+
+    const from = getCityCode(fromInput);
+    const to = getCityCode(toInput);
+    const date = departInput?.value;
+
+    if (!from || !to || !date) {
+      showToast('Please select From, To, and Departure date.', 'warning');
+      setFeedback('Please select From, To, and Departure date.');
+      return;
+    }
+
+    if (from === to) {
+      showToast('Origin and destination cannot be the same.', 'error');
+      setFeedback('Origin and destination cannot be the same.');
+      return;
+    }
+
+    const routeFlights = ROUTES[`${from}-${to}`] || [];
+
+    if (!routeFlights.length) {
+      showToast('No mock flights found for this route.', 'warning');
+      setFeedback('No mock flights found for this route. Try Karachi to Islamabad or Karachi to Lahore.');
+      return;
+    }
+
+    $$('.booking-summary__route').forEach(el => {
+      el.textContent = `${from} → ${to}`;
+    });
+
+    $$('.booking-summary__date').forEach(el => {
+      el.textContent = new Date(date).toLocaleDateString('en-PK', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+    });
+
+    setFeedback(`${routeFlights.length} flights found. Please select a flight.`);
+    showToast(`${routeFlights.length} flights found.`, 'success');
+    goToStep(1);
+  });
+
+  // select flight
+  $$('.bk-select-flight', page).forEach(btn => {
+    on(btn, 'click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const card = btn.closest('.bk-flight-card');
+
+      $$('.bk-flight-card', page).forEach(c => c.classList.remove('selected'));
+      card?.classList.add('selected');
+
+      selectedFlight = {
+        flight: btn.dataset.flight,
+        price: parseInt(btn.dataset.price || '0', 10),
+        class: btn.dataset.class || classSelect?.value || 'Economy',
+      };
+
+      const flightEl = $('.booking-summary__flight');
+      const classEl = $('.booking-summary__class');
+
+      if (flightEl) flightEl.textContent = selectedFlight.flight;
+      if (classEl) classEl.textContent = selectedFlight.class;
+
+      updatePaymentSummary(selectedFlight.price);
+
+      showToast(`${selectedFlight.flight} selected. Continue to passenger details.`, 'success');
+      goToStep(2);
+    });
+  });
+
+  // step buttons
+  $$('[data-next-step]', page).forEach(btn => {
+    on(btn, 'click', () => {
+      const nextStep = parseInt(btn.dataset.nextStep, 10);
+
+      if (currentStep === 1 && !selectedFlight) {
+        showToast('Please select a flight first.', 'warning');
+        return;
+      }
+
+      if (currentStep === 2) {
+        const currentPanel = steps[currentStep];
+        const required = $$('[required]', currentPanel);
+        let valid = true;
+
+        required.forEach(field => {
+          if (!field.value.trim()) {
+            field.classList.add('form-control--error');
+            valid = false;
+          } else {
+            field.classList.remove('form-control--error');
+          }
+        });
+
+        if (!valid) {
+          showToast('Please complete passenger details.', 'warning');
+          return;
+        }
+
+        const name = $('#pax-name')?.value || 'Passenger';
+        const reviewName = $('#review-pax-name');
+        if (reviewName) reviewName.textContent = name;
+
+        updatePaymentSummary(selectedFlight?.price || 12500);
+      }
+
+     if (!Number.isNaN(nextStep)) {
+  goToStep(nextStep);
+}
+    });
+  });
+
+  $$('[data-prev-step]', page).forEach(btn => {
+    on(btn, 'click', () => {
+      goToStep(parseInt(btn.dataset.prevStep, 10));
+    });
+  });
+
+  function updatePaymentSummary(priceValue) {
+    const base = parseInt(priceValue, 10) || 12500;
+    const tax = Math.round(base * 0.16);
+    const total = base + tax;
+
+    const baseEl = $('.pay-base-price');
     const taxEl = $('.pay-tax');
     const totalEl = $('.pay-total');
-    if (basePriceEl) basePriceEl.textContent = `PKR ${parseInt(price).toLocaleString()}`;
+
+    if (baseEl) baseEl.textContent = `PKR ${base.toLocaleString()}`;
     if (taxEl) taxEl.textContent = `PKR ${tax.toLocaleString()}`;
     if (totalEl) totalEl.textContent = `PKR ${total.toLocaleString()}`;
   }

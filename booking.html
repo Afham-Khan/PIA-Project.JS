@@ -110,12 +110,15 @@
       align-items: end;
       margin-bottom: var(--space-4);
     }
-    .bk-fields-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr auto;
-      gap: var(--space-4);
-      align-items: end;
-    }
+  .bk-fields-2 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  align-items: end;
+}
+.bk-fields-2 > div:last-child {
+  align-self: end;
+}
     .bk-swap {
       width: 40px;
       height: 40px;
@@ -607,7 +610,7 @@
 
         <div style="margin-top:var(--space-5);display:flex;justify-content:space-between">
           <button class="btn btn-ghost" data-prev-step="1">← Back</button>
-          <button class="btn btn-primary btn-lg" data-next-step="2">Review Booking →</button>
+         <button class="btn btn-primary btn-lg" data-next-step="3">Review Booking →</button>
         </div>
       </div>
 
