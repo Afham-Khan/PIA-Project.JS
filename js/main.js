@@ -95,6 +95,30 @@ function initNavbar() {
   }
 }
 
+// flights.js 
+
+(function() {
+    const p = new URLSearchParams(location.search);
+    const cities = {
+      KHI:'Karachi', ISB:'Islamabad', LHE:'Lahore', PEW:'Peshawar',
+      MUX:'Multan', DXB:'Dubai', LHR:'London', JFK:'New York', AMS:'Amsterdam', BKK:'Bangkok'
+    };
+    const from = p.get('from') || '';
+    const to   = p.get('to')   || '';
+    const date = p.get('date') || '';
+    const pax  = p.get('passengers') || '1';
+    const cls  = p.get('class') || 'economy';
+
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    set('sum-from', cities[from] || from || '—');
+    set('sum-to',   cities[to]   || to   || '—');
+    set('sum-pax',  pax + ' Passenger' + (parseInt(pax) !== 1 ? 's' : ''));
+    set('sum-class', cls.charAt(0).toUpperCase() + cls.slice(1));
+    if (date) {
+      set('sum-date', new Date(date).toLocaleDateString('en-PK', { weekday:'short', year:'numeric', month:'short', day:'numeric' }));
+    }
+  })();
+
 /* ══════════════════════════════════════════════════════════
    SEARCH OVERLAY
 ══════════════════════════════════════════════════════════ */
@@ -103,13 +127,18 @@ function initSearch() {
   const openBtns = $$('[data-action="open-search"]');
   const input = $('.search-overlay__input');
   const closeBtn = $('.search-overlay__close');
+  const form = $('.search-overlay__form');
+
   if (!overlay) return;
 
   function openSearch() {
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    setTimeout(() => input && input.focus(), 100);
+
+    setTimeout(() => {
+      input?.focus();
+    }, 80);
   }
 
   function closeSearch() {
@@ -118,27 +147,154 @@ function initSearch() {
     document.body.style.overflow = '';
   }
 
-  openBtns.forEach(btn => on(btn, 'click', openSearch));
+  function goToSearchResult(query) {
+    const q = query.trim().toLowerCase();
+
+    if (!q) {
+      showToast('Type something to search.', 'warning');
+      return;
+    }
+
+    if (q.includes('dubai')) {
+      window.location.href = 'flights.html?from=KHI&to=DXB';
+      return;
+    }
+
+    if (q.includes('islamabad')) {
+      window.location.href = 'flights.html?from=KHI&to=ISB';
+      return;
+    }
+
+    if (q.includes('check')) {
+      window.location.href = 'index.html#booking';
+      return;
+    }
+
+    if (q.includes('baggage')) {
+      window.location.href = 'experience.html#baggage';
+      return;
+    }
+
+    if (q.includes('business')) {
+      window.location.href = 'experience.html';
+      return;
+    }
+
+    if (q.includes('help') || q.includes('contact') || q.includes('assistance')) {
+      window.location.href = 'contact.html';
+      return;
+    }
+
+    showToast('No exact result found. Opening flight search.', 'info');
+    window.location.href = 'flights.html';
+  }
+
+  openBtns.forEach(btn => {
+    on(btn, 'click', openSearch);
+  });
+
   on(closeBtn, 'click', closeSearch);
 
   on(overlay, 'click', e => {
     if (e.target === overlay) closeSearch();
   });
 
+  on(form, 'submit', e => {
+    e.preventDefault();
+    goToSearchResult(input?.value || '');
+  });
+
+  $$('.search-tag').forEach(tag => {
+    on(tag, 'click', () => {
+      const url = tag.dataset.url;
+
+      if (url) {
+        window.location.href = url;
+        return;
+      }
+
+      if (input) {
+        input.value = tag.textContent.trim();
+        input.focus();
+      }
+    });
+  });
+
   on(document, 'keydown', e => {
     if (e.key === 'Escape') closeSearch();
-    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
       e.preventDefault();
       openSearch();
     }
   });
+}
 
-  // Popular search tags
-  $$('.search-tag').forEach(tag => {
-    on(tag, 'click', () => {
-      if (input) input.value = tag.textContent.trim();
-      input.focus();
+// Login Modal
+
+function initMockLogin() {
+  const modal = $('.login-modal');
+  const openBtns = $$('.login-trigger');
+  const closeBtn = $('.login-modal__close');
+  const form = $('.login-form');
+
+  if (!modal || !openBtns.length) return;
+
+  function openModal() {
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    setTimeout(() => {
+      $('#login-email')?.focus();
+    }, 80);
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  openBtns.forEach(btn => {
+    on(btn, 'click', openModal);
+  });
+
+  on(closeBtn, 'click', closeModal);
+
+  on(modal, 'click', e => {
+    if (e.target === modal) closeModal();
+  });
+
+  on(document, 'keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  on(form, 'submit', e => {
+    e.preventDefault();
+
+    const email = $('#login-email')?.value.trim();
+    const password = $('#login-password')?.value.trim();
+
+    if (!email || !password) {
+      showToast('Please enter email and password.', 'warning');
+      return;
+    }
+
+    closeModal();
+
+    openBtns.forEach(btn => {
+      btn.classList.add('logged-in');
+      btn.innerHTML = `
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        <span>Hi, Passenger</span>
+      `;
     });
+
+    showToast('Login successful. Welcome back!', 'success');
   });
 }
 
@@ -1130,6 +1286,34 @@ function initHeroSlider() {
   autoPlay();
 }
 
+// FAQ Accordian
+
+function initFaqAccordion() {
+  const faqItems = document.querySelectorAll(".faq-item");
+
+  faqItems.forEach((item) => {
+    const trigger = item.querySelector(".faq-trigger");
+    const panel = item.querySelector(".faq-panel");
+
+    trigger.addEventListener("click", () => {
+      const isOpen = item.classList.contains("is-open");
+
+      faqItems.forEach((otherItem) => {
+        const otherTrigger = otherItem.querySelector(".faq-trigger");
+
+        otherItem.classList.remove("is-open");
+        otherTrigger.setAttribute("aria-expanded", "false");
+      });
+
+      if (!isOpen) {
+        item.classList.add("is-open");
+        trigger.setAttribute("aria-expanded", "true");
+      }
+    });
+  });
+}
+
+
 /* ══════════════════════════════════════════════════════════
    CONTACT FORM
 ══════════════════════════════════════════════════════════ */
@@ -1214,4 +1398,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   initSmoothScroll();
   initBackToTop();
+  initMockLogin();
+  initFaqAccordion();
 });
