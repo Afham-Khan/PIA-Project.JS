@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Contact PIA for booking support, baggage help, refund guidance, and special assistance." />
+  <title>Contact &amp; Support — PIA Pakistan International Airlines</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="css/global.css" />
+  <style>
+    /* ── contact.html specific ── */
+    .contact-hero {
+      background: linear-gradient(135deg, var(--clr-slate-800) 0%, #14304a 100%);
+      padding-block: var(--space-16) var(--space-20);
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-hero::before {
+      content: '?';
+      position: absolute;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-display);
+      font-size: 14rem;
+      font-weight: 900;
+      color: rgba(255,255,255,.04);
+      pointer-events: none;
+    }
+
+    .support-card {
+      background: var(--clr-white);
+      border: 1px solid var(--clr-slate-200);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+      transition: all var(--duration-base) var(--ease-out);
+    }
+    .support-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+    .support-card__icon {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-lg);
+      background: var(--clr-green-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      transition: background var(--duration-fast);
+    }
+    .support-card:hover .support-card__icon { background: var(--clr-green); }
+    .support-card__title { font-weight: 700; font-size: var(--text-base); margin-bottom: var(--space-1); }
+    .support-card__desc { font-size: var(--text-sm); color: var(--clr-slate-600); line-height: 1.6; margin-bottom: var(--space-3); }
+    .support-card__action { font-size: var(--text-sm); font-weight: 700; color: var(--clr-green); transition: gap var(--duration-fast); display: flex; align-items: center; gap: var(--space-1); }
+    .support-card:hover .support-card__action { gap: var(--space-2); }
+
+    /* Special assistance highlight */
+    .assistance-banner {
+      background: linear-gradient(135deg, var(--clr-green) 0%, #0d8a4f 100%);
+      border-radius: var(--radius-xl);
+      padding: var(--space-10);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-8);
+      color: var(--clr-white);
+      position: relative;
+      overflow: hidden;
+    }
+    .assistance-banner::before {
+      content: '♿';
+      position: absolute;
+      right: 3%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 8rem;
+      color: rgba(255,255,255,.08);
+      pointer-events: none;
+    }
+    .assistance-banner__icon {
+      font-size: 3rem;
+      flex-shrink: 0;
+    }
+    .assistance-banner h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 900;
+      color: var(--clr-white);
+      margin-bottom: var(--space-2);
+    }
+    .assistance-banner p {
+      color: rgba(255,255,255,.8);
+      font-size: var(--text-sm);
+      line-height: 1.6;
+      max-width: 48ch;
+    }
+
+    /* Contact form card */
+    .form-card {
+      background: var(--clr-white);
+      border: 1px solid var(--clr-slate-200);
+      border-radius: var(--radius-xl);
+      padding: var(--space-10);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* FAQ */
+    .faq-item {
+      border: 1px solid var(--clr-slate-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: box-shadow var(--duration-fast);
+    }
+    .faq-item:hover { box-shadow: var(--shadow-sm); }
+
+    .faq-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-5) var(--space-6);
+      font-weight: 700;
+      font-size: var(--text-sm);
+      color: var(--clr-slate-800);
+      background: var(--clr-white);
+      text-align: left;
+      transition: background var(--duration-fast);
+      cursor: pointer;
+      border: none;
+      font-family: var(--font-body);
+    }
+    .faq-trigger:hover { background: var(--clr-green-light); color: var(--clr-green); }
+    .faq-trigger[aria-expanded="true"] { background: var(--clr-green-light); color: var(--clr-green); }
+
+    .faq-chevron {
+      font-size: .75rem;
+      transition: transform var(--duration-base) var(--ease-out);
+      flex-shrink: 0;
+      margin-left: var(--space-4);
+    }
+    .faq-trigger[aria-expanded="true"] .faq-chevron { transform: rotate(180deg); }
+
+    .faq-panel {
+      padding: 0 var(--space-6);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--duration-slow) var(--ease-out), padding var(--duration-slow);
+      font-size: var(--text-sm);
+      color: var(--clr-slate-600);
+      line-height: 1.7;
+    }
+    .faq-panel.open {
+      max-height: 300px;
+      padding: 0 var(--space-6) var(--space-5);
+    }
+
+    /* Info sidebar */
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--clr-slate-100);
+      background: var(--clr-white);
+    }
+    .info-item__icon {
+      width: 40px;
+      height: 40px;
+      background: var(--clr-green-light);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .info-item__label { font-size: var(--text-xs); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--clr-slate-400); margin-bottom: 2px; }
+    .info-item__val { font-size: var(--text-sm); font-weight: 600; color: var(--clr-slate-800); }
+
+    @media (max-width: 768px) {
+      .assistance-banner { flex-direction: column; text-align: center; }
+      .assistance-banner::before { display: none; }
+      .form-card { padding: var(--space-6); }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- Announcement Bar -->
+<div class="announce-bar" role="banner" aria-label="Service announcements">
+  <div class="announce-bar__track" aria-live="off">
+    <span class="announce-bar__item"><span class="announce-bar__dot"></span>Special Assistance available on all PIA flights — Request before departure</span>
+    <span class="announce-bar__item"><span class="announce-bar__dot"></span>24/7 Call Support: (+92-21) 111-786-786</span>
+    <span class="announce-bar__item"><span class="announce-bar__dot"></span>Special Assistance available on all PIA flights — Request before departure</span>
+    <span class="announce-bar__item"><span class="announce-bar__dot"></span>24/7 Call Support: (+92-21) 111-786-786</span>
+  </div>
+  <button class="announce-bar__close" aria-label="Close announcement">✕</button>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar" role="navigation" aria-label="Main navigation">
+  <div class="container navbar__inner">
+    <a href="index.html" class="navbar__logo" aria-label="PIA – Pakistan International Airlines">
+      <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="22" fill="#0A6B3D"/><path d="M8 26 L22 12 L36 26" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="22" cy="22" r="4" fill="white"/></svg>
+      <div>
+        <div style="font-family:var(--font-display);font-weight:900;font-size:1.05rem;color:var(--clr-green);line-height:1">PIA</div>
+        <div style="font-size:.6rem;color:var(--clr-slate-400);letter-spacing:.05em;line-height:1;font-weight:500">Great People to Fly With</div>
+      </div>
+    </a>
+    <ul class="navbar__links" role="list">
+      <li class="nav-dropdown">
+        <a href="flights.html" class="nav-link" aria-haspopup="true">Where we Fly <span class="nav-link__chevron">▾</span></a>
+        <div class="nav-dropdown__menu" role="menu">
+          <a href="flights.html?from=KHI&to=ISB" class="nav-dropdown__item" role="menuitem"><span class="nav-dropdown__icon">🇵🇰</span> Domestic Routes</a>
+          <a href="flights.html?from=KHI&to=DXB" class="nav-dropdown__item" role="menuitem"><span class="nav-dropdown__icon">🌍</span> International Routes</a>
+        </div>
+      </li>
+      <li><a href="experience.html" class="nav-link">Experience</a></li>
+      <li><a href="index.html#awards" class="nav-link">Awards+ Plus</a></li>
+      <li><a href="index.html#deals" class="nav-link">Deals</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="contact.html" class="nav-link active">Contact</a></li>
+    </ul>
+    <div class="navbar__actions">
+      <button class="navbar__search-btn" data-action="open-search" aria-label="Search">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <a href="booking.html" class="btn btn-primary btn-sm">Book Now</a>
+      <button class="navbar__hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+        <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
+  <a href="index.html" class="mobile-nav__link">Home <span>›</span></a>
+  <a href="flights.html" class="mobile-nav__link">Search Flights <span>›</span></a>
+  <a href="experience.html" class="mobile-nav__link">Experience <span>›</span></a>
+  <a href="about.html" class="mobile-nav__link">About PIA <span>›</span></a>
+  <a href="contact.html" class="mobile-nav__link">Contact <span>›</span></a>
+  <a href="hci-analysis.html" class="mobile-nav__link">HCI Analysis <span>›</span></a>
+  <div style="margin-top:2rem;display:flex;flex-direction:column;gap:1rem">
+    <a href="booking.html" class="btn btn-primary">Book a Flight</a>
+  </div>
+</div>
+
+<main id="main-content">
+
+  <!-- ══ HERO ══ -->
+  <section class="contact-hero" aria-labelledby="contact-hero-title">
+    <div class="container" style="position:relative;z-index:1">
+      <div style="display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-3)">
+        <a href="index.html" style="color:rgba(255,255,255,.6);font-size:var(--text-sm)" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color='rgba(255,255,255,.6)'">Home</a>
+        <span style="color:rgba(255,255,255,.3)">›</span>
+        <span style="color:rgba(255,255,255,.8);font-size:var(--text-sm)">Contact &amp; Support</span>
+      </div>
+      <h1 id="contact-hero-title" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);font-weight:900;color:var(--clr-white);max-width:16ch;line-height:1.1;margin-bottom:var(--space-4)">How can we help?</h1>
+      <p style="font-size:var(--text-lg);color:rgba(255,255,255,.75);max-width:52ch;line-height:1.65;margin-bottom:var(--space-8)">Find booking support, baggage help, refund guidance, and special assistance in one accessible place.</p>
+      <div style="display:flex;gap:var(--space-3);flex-wrap:wrap">
+        <a href="#contact-form" class="btn btn-gold btn-lg">Send a Message</a>
+        <a href="#special-assistance" class="btn btn-outline-white btn-lg">Special Assistance</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SUPPORT CARDS ══ -->
+  <section class="section-pad-sm" style="background:var(--clr-off-white)" aria-labelledby="support-heading">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:left;margin-bottom:var(--space-8)">
+        <div class="section-eyebrow" style="justify-content:flex-start">Support Options</div>
+        <h2 class="section-title" id="support-heading">Get Help Your Way</h2>
+        <p class="section-subtitle">Choose the support channel that works best for you.</p>
+      </div>
+
+      <div class="grid-3 gap-5">
+        <div class="support-card reveal delay-1">
+          <div class="support-card__icon" aria-hidden="true">📞</div>
+          <div>
+            <div class="support-card__title">Call Centre</div>
+            <p class="support-card__desc">Speak directly with a PIA representative for urgent bookings, refunds, or flight queries. Available 24/7.</p>
+            <a href="tel:+922111786786" class="support-card__action" aria-label="Call PIA at +92-21-111-786-786">(+92-21) 111-786-786 →</a>
+          </div>
+        </div>
+
+        <div class="support-card reveal delay-2">
+          <div class="support-card__icon" aria-hidden="true">✉</div>
+          <div>
+            <div class="support-card__title">Email Support</div>
+            <p class="support-card__desc">Send detailed queries to our support team. Responses within 24 hours for non-urgent matters.</p>
+            <a href="#contact-form" class="support-card__action">Send a message →</a>
+          </div>
+        </div>
+
+        <div class="support-card reveal delay-3">
+          <div class="support-card__icon" aria-hidden="true">🏢</div>
+          <div>
+            <div class="support-card__title">Booking Office</div>
+            <p class="support-card__desc">Visit PIA's main booking office at Jinnah International Airport, Karachi for in-person assistance.</p>
+            <a href="#contact-form" class="support-card__action">Get directions →</a>
+          </div>
+        </div>
+
+        <div class="support-card reveal delay-4">
+          <div class="support-card__icon" aria-hidden="true">♿</div>
+          <div>
+            <div class="support-card__title">Special Assistance</div>
+            <p class="support-card__desc">Wheelchair support, priority boarding, and medical assistance for passengers who need additional help.</p>
+            <a href="#special-assistance" class="support-card__action">Request assistance →</a>
+          </div>
+        </div>
+
+        <div class="support-card reveal delay-5">
+          <div class="support-card__icon" aria-hidden="true">🧳</div>
+          <div>
+            <div class="support-card__title">Baggage Help</div>
+            <p class="support-card__desc">Lost, damaged, or delayed baggage? Our baggage team is available to track and resolve your claim.</p>
+            <a href="experience.html#baggage" class="support-card__action">View baggage guide →</a>
+          </div>
+        </div>
+
+        <div class="support-card reveal delay-1">
+          <div class="support-card__icon" aria-hidden="true">💰</div>
+          <div>
+            <div class="support-card__title">Refund Support</div>
+            <p class="support-card__desc">Request ticket refunds, fare adjustments, or vouchers. Use the form below and select "Refund".</p>
+            <a href="#contact-form" class="support-card__action">Submit refund request →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SPECIAL ASSISTANCE ══ -->
+  <section id="special-assistance" class="section-pad-sm" aria-labelledby="assistance-heading">
+    <div class="container">
+      <div class="assistance-banner reveal">
+        <span class="assistance-banner__icon" aria-hidden="true">♿</span>
+        <div style="flex:1;position:relative;z-index:1">
+          <h2 id="assistance-heading">Accessible Travel Support</h2>
+          <p>Passengers who need wheelchair support, medical assistance, or mobility guidance can request help before departure. PIA ensures all passengers can travel comfortably and with dignity.</p>
+          <ul style="margin-top:var(--space-4);display:flex;gap:var(--space-3);flex-wrap:wrap">
+            <li style="display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-sm);color:rgba(255,255,255,.85)"><span aria-hidden="true">✓</span> Wheelchair support</li>
+            <li style="display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-sm);color:rgba(255,255,255,.85)"><span aria-hidden="true">✓</span> Priority boarding</li>
+            <li style="display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-sm);color:rgba(255,255,255,.85)"><span aria-hidden="true">✓</span> Medical assistance</li>
+            <li style="display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-sm);color:rgba(255,255,255,.85)"><span aria-hidden="true">✓</span> Family travel support</li>
+          </ul>
+        </div>
+        <div style="flex-shrink:0;position:relative;z-index:1">
+          <a href="#contact-form" class="btn btn-gold btn-lg">Request Assistance</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONTACT FORM + SIDEBAR ══ -->
+  <section id="contact-form" class="section-pad" style="background:var(--clr-off-white)" aria-labelledby="form-heading">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 340px;gap:var(--space-8);align-items:start">
+
+        <!-- Form -->
+        <div class="form-card reveal">
+          <div style="margin-bottom:var(--space-8)">
+            <div class="section-eyebrow" style="justify-content:flex-start;margin-bottom:var(--space-3)">Send a Message</div>
+            <h2 class="section-title" id="form-heading" style="font-size:var(--text-3xl)">We'll get back to you</h2>
+            <p class="section-subtitle">Fill in the form and our team will respond within 24 hours.</p>
+          </div>
+
+          <!-- Feedback region (aria-live) -->
+          <div id="form-feedback" aria-live="polite" aria-atomic="true" style="margin-bottom:var(--space-4)"></div>
+
+          <form class="contact-form" novalidate aria-label="Contact support form">
+            <div class="grid-2 gap-4" style="margin-bottom:var(--space-4)">
+              <div class="form-group">
+                <label class="form-label" for="full-name">Full Name <span aria-hidden="true" style="color:var(--clr-danger)">*</span></label>
+                <input id="full-name" class="form-control" type="text" placeholder="e.g. Ali Hassan" required autocomplete="name" aria-required="true" />
+                <div class="form-error" id="name-error" role="alert" hidden>⚠ Please enter your full name.</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="email">Email Address <span aria-hidden="true" style="color:var(--clr-danger)">*</span></label>
+                <input id="email" class="form-control" type="email" placeholder="e.g. ali@email.com" required autocomplete="email" aria-required="true" />
+                <div class="form-error" id="email-error" role="alert" hidden>⚠ Please enter a valid email address.</div>
+              </div>
+            </div>
+
+            <div class="grid-2 gap-4" style="margin-bottom:var(--space-4)">
+              <div class="form-group">
+                <label class="form-label" for="phone">Phone Number</label>
+                <input id="phone" class="form-control" type="tel" placeholder="+92 300 000 0000" autocomplete="tel" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="topic">Topic <span aria-hidden="true" style="color:var(--clr-danger)">*</span></label>
+                <select id="topic" class="form-control form-select" required aria-required="true">
+                  <option value="">Select a topic</option>
+                  <option value="booking">Booking Assistance</option>
+                  <option value="refund">Refund Request</option>
+                  <option value="baggage">Baggage Query</option>
+                  <option value="special-assistance">Special Assistance</option>
+                  <option value="flight-status">Flight Status</option>
+                  <option value="other">Other</option>
+                </select>
+                <div class="form-error" id="topic-error" role="alert" hidden>⚠ Please select a topic.</div>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom:var(--space-6)">
+              <label class="form-label" for="message">Your Message <span aria-hidden="true" style="color:var(--clr-danger)">*</span></label>
+              <textarea id="message" class="form-control" rows="5" placeholder="Please describe how we can help you…" required aria-required="true" style="resize:vertical"></textarea>
+              <div class="form-error" id="msg-error" role="alert" hidden>⚠ Please enter your message.</div>
+              <span class="form-hint">Minimum 20 characters. Include your booking reference if applicable.</span>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" style="min-width:200px" aria-label="Submit contact form">
+              Send Message
+            </button>
+          </form>
+        </div>
+
+        <!-- Sidebar info -->
+        <div style="display:flex;flex-direction:column;gap:var(--space-4)" class="reveal">
+          <div style="font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);color:var(--clr-slate-800);margin-bottom:var(--space-2)">Contact Information</div>
+
+          <div class="info-item">
+            <div class="info-item__icon" aria-hidden="true">📞</div>
+            <div>
+              <div class="info-item__label">Call Centre (24/7)</div>
+              <div class="info-item__val">(+92-21) 111-786-786</div>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-item__icon" aria-hidden="true">✉</div>
+            <div>
+              <div class="info-item__label">Email Support</div>
+              <div class="info-item__val">support@piac.com.pk</div>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-item__icon" aria-hidden="true">🏢</div>
+            <div>
+              <div class="info-item__label">Head Office</div>
+              <div class="info-item__val">PIA Building, Jinnah International Airport, Karachi 75200</div>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-item__icon" aria-hidden="true">⏰</div>
+            <div>
+              <div class="info-item__label">Office Hours</div>
+              <div class="info-item__val">Mon–Fri: 9:00 AM – 6:00 PM<br>Sat: 9:00 AM – 2:00 PM</div>
+            </div>
+          </div>
+
+          <!-- HCI note -->
+          <div style="background:var(--clr-green-light);border:1px solid rgba(10,107,61,.2);border-radius:var(--radius-lg);padding:var(--space-4)">
+            <p style="font-size:var(--text-xs);color:var(--clr-green);font-weight:600;margin-bottom:var(--space-1)">♿ HCI: Accessibility</p>
+            <p style="font-size:var(--text-xs);color:var(--clr-slate-600);line-height:1.5">Special Assistance information is prominently placed at the top of this page — not buried. Users with accessibility needs should never have to work harder to find support.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FAQ ══ -->
+  <section class="section-pad" aria-labelledby="faq-heading">
+    <div class="container" style="max-width:780px">
+      <div class="section-header reveal">
+        <div class="section-eyebrow">Common Questions</div>
+        <h2 class="section-title" id="faq-heading">Frequently Asked Questions</h2>
+        <p class="section-subtitle" style="margin-inline:auto">Quick answers to the most common passenger queries.</p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:var(--space-3)" role="list">
+
+        <div class="faq-item reveal delay-1" role="listitem">
+          <button class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-1" id="faq-btn-1">
+            When can I check in online?
+            <span class="faq-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div id="faq-panel-1" class="faq-panel" role="region" aria-labelledby="faq-btn-1">
+            Online check-in opens 24 hours before your scheduled departure and closes 2 hours before. Log in with your booking reference on the PIA website or app. You can also select or change your seat during online check-in at no extra charge for Economy passengers.
+          </div>
+        </div>
+
+        <div class="faq-item reveal delay-2" role="listitem">
+          <button class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-2" id="faq-btn-2">
+            How do I request wheelchair assistance?
+            <span class="faq-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div id="faq-panel-2" class="faq-panel" role="region" aria-labelledby="faq-btn-2">
+            Wheelchair assistance can be requested at the time of booking by selecting "Special Assistance" in the passenger details form, or by contacting PIA's call centre at (+92-21) 111-786-786 at least 48 hours before departure. You can also use the contact form on this page and select "Special Assistance" as the topic.
+          </div>
+        </div>
+
+        <div class="faq-item reveal delay-3" role="listitem">
+          <button class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-3" id="faq-btn-3">
+            What should I do if my flight is delayed?
+            <span class="faq-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div id="faq-panel-3" class="faq-panel" role="region" aria-labelledby="faq-btn-3">
+            If your flight is delayed by more than 2 hours, PIA will provide refreshments at the airport. For delays over 5 hours, you may be entitled to alternative arrangements or a full refund under the Air Passenger Protection Regulations. Contact PIA staff at the airport or call our 24/7 helpline for real-time updates.
+          </div>
+        </div>
+
+        <div class="faq-item reveal delay-4" role="listitem">
+          <button class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-4" id="faq-btn-4">
+            Where can I find baggage information?
+            <span class="faq-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div id="faq-panel-4" class="faq-panel" role="region" aria-labelledby="faq-btn-4">
+            Full baggage allowances for Economy and Business class on domestic and international routes are listed on our Experience page. Cabin baggage is limited to 7kg for Economy and 12kg for Business. Checked baggage varies by route. Extra baggage can be purchased at time of booking for a discounted rate.
+          </div>
+        </div>
+
+      </div>
+
+      <div style="text-align:center;margin-top:var(--space-8)">
+        <a href="experience.html" class="btn btn-outline">View All Services & Information →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer" role="contentinfo">
+  <div class="footer__main">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem">
+            <svg width="40" height="40" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="22" fill="#0A6B3D"/><path d="M8 26 L22 12 L36 26" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="22" cy="22" r="4" fill="white"/></svg>
+            <div>
+              <div style="font-family:var(--font-display);font-weight:900;font-size:1.2rem;color:white">PIA</div>
+              <div style="font-size:.65rem;color:rgba(255,255,255,.5);letter-spacing:.05em">Great People to Fly With</div>
+            </div>
+          </div>
+          <p class="footer__brand-desc">Pakistan International Airlines — connecting Pakistan to the world since 1946.</p>
+          <div class="footer__socials" aria-label="Social media links">
+            <a href="https://facebook.com" class="footer__social-link" aria-label="Facebook" target="_blank" rel="noopener">f</a>
+            <a href="https://twitter.com" class="footer__social-link" aria-label="Twitter" target="_blank" rel="noopener">𝕏</a>
+            <a href="https://instagram.com" class="footer__social-link" aria-label="Instagram" target="_blank" rel="noopener">◎</a>
+          </div>
+        </div>
+        <div>
+          <h3 class="footer__heading">Pages</h3>
+          <ul class="footer__links">
+            <li><a href="index.html" class="footer__link">Homepage</a></li>
+            <li><a href="flights.html" class="footer__link">Search Flights</a></li>
+            <li><a href="booking.html" class="footer__link">Book a Flight</a></li>
+            <li><a href="experience.html" class="footer__link">Experience</a></li>
+            <li><a href="about.html" class="footer__link">About PIA</a></li>
+            <li><a href="hci-analysis.html" class="footer__link">HCI Analysis</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__heading">Support</h3>
+          <ul class="footer__links">
+            <li><a href="contact.html#special-assistance" class="footer__link">Special Assistance</a></li>
+            <li><a href="experience.html#baggage" class="footer__link">Baggage Guide</a></li>
+            <li><a href="contact.html#faq-heading" class="footer__link">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__heading">Quick Book</h3>
+          <ul class="footer__links">
+            <li><a href="flights.html?from=KHI&to=ISB" class="footer__link">KHI → ISB</a></li>
+            <li><a href="flights.html?from=KHI&to=LHE" class="footer__link">KHI → LHE</a></li>
+            <li><a href="flights.html?from=KHI&to=DXB" class="footer__link">KHI → DXB</a></li>
+            <li><a href="flights.html?from=KHI&to=LHR" class="footer__link">KHI → LHR</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <div class="container" style="display:contents">
+      <p class="footer__copyright">© 2024 Pakistan International Airlines. All Rights Reserved.</p>
+      <nav class="footer__bottom-links" aria-label="Legal links">
+        <a href="hci-analysis.html" class="footer__bottom-link">HCI Analysis</a>
+        <a href="about.html" class="footer__bottom-link">About</a>
+        <a href="contact.html" class="footer__bottom-link">Accessibility</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<!-- Search Overlay -->
+<div class="search-overlay" aria-hidden="true" role="dialog" aria-label="Search">
+  <div class="search-overlay__box">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
+      <span style="font-family:var(--font-display);font-weight:700;color:var(--clr-slate-800)">Search PIA</span>
+      <button class="search-overlay__close btn btn-ghost btn-sm" aria-label="Close search">✕ Close</button>
+    </div>
+    <input class="search-overlay__input" type="search" placeholder="Flights, destinations, services…" aria-label="Search query" />
+  </div>
+</div>
+
+<!-- Accessibility -->
+<button class="a11y-trigger" aria-label="Open accessibility options" aria-expanded="false" aria-controls="a11y-panel">
+  <span aria-hidden="true">♿</span>
+  <span class="a11y-trigger__label">Accessibility</span>
+</button>
+<aside id="a11y-panel" class="a11y-panel" aria-hidden="true" aria-label="Accessibility options">
+  <div class="a11y-panel__header">
+    <span>Accessibility</span>
+    <button class="a11y-trigger btn-ghost btn-sm" aria-label="Close" style="font-size:.85rem">✕</button>
+  </div>
+  <div class="a11y-option">
+    <div class="a11y-option__label"><span aria-hidden="true">🔤</span> Text Size</div>
+    <div class="a11y-size-controls">
+      <button class="a11y-size-btn a11y-font-decrease" aria-label="Decrease font size">A−</button>
+      <span class="a11y-font-size-val" aria-live="polite">16px</span>
+      <button class="a11y-size-btn a11y-font-increase" aria-label="Increase font size">A+</button>
+    </div>
+  </div>
+  <div class="a11y-option">
+    <label class="a11y-option__label" for="ct-toggle-contrast"><span aria-hidden="true">◑</span> High Contrast</label>
+    <button id="ct-toggle-contrast" class="a11y-toggle" role="switch" aria-pressed="false" data-action="high-contrast"></button>
+  </div>
+  <div class="a11y-option">
+    <label class="a11y-option__label" for="ct-toggle-motion"><span aria-hidden="true">⏸</span> Reduce Motion</label>
+    <button id="ct-toggle-motion" class="a11y-toggle" role="switch" aria-pressed="false" data-action="reduced-motion"></button>
+  </div>
+  <div class="a11y-option">
+    <label class="a11y-option__label" for="ct-toggle-underline"><span aria-hidden="true">U̲</span> Underline Links</label>
+    <button id="ct-toggle-underline" class="a11y-toggle" role="switch" aria-pressed="false" data-action="underline-links"></button>
+  </div>
+  <button class="btn btn-ghost btn-sm a11y-reset" style="width:100%;margin-top:1rem">Reset All</button>
+</aside>
+
+<button class="back-to-top" aria-label="Back to top">↑</button>
+<div class="toast-container" aria-live="polite" aria-atomic="true"></div>
+<script src="js/main.js"></script>
+</body>
+</html>
