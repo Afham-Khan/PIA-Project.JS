@@ -2374,6 +2374,10 @@ body.a11y-underline-links a {
   border-color: var(--clr-green);
 }
 
+.login-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
 .login-modal__hint {
   margin-top: 0.85rem;
   text-align: center;
