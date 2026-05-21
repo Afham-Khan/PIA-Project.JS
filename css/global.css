@@ -5557,3 +5557,437 @@ body.a11y-underline-links a {
     font-size: 12pt;
   }
 }
+
+/* ============================================================
+   MOBILE RESPONSIVE ADDITIONS — append to bottom of global.css
+   Targets: contact, about, experience, booking pages
+   Safe: all rules scoped to max-width, desktop untouched
+   ============================================================ */
+
+/* ── CONTACT PAGE ── */
+@media (max-width: 768px) {
+  /* Form + sidebar stack */
+  #contact-form .container > div[style*="grid-template-columns:1fr 340px"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+  }
+
+  /* Support cards grid → single col */
+  .support-card {
+    flex-direction: column;
+  }
+
+  /* Assistance banner already handled but double-check */
+  .assistance-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: var(--space-6);
+  }
+
+  .assistance-banner > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .assistance-banner ul {
+    justify-content: center;
+  }
+
+  /* Info sidebar items full width */
+  .info-item {
+    width: 100%;
+  }
+
+  /* FAQ items full width readable */
+  .faq-trigger {
+    font-size: var(--text-sm);
+    padding: 18px 20px;
+    line-height: 1.5;
+    text-align: left;
+  }
+
+  .faq-panel {
+    padding: 0 20px;
+    font-size: var(--text-sm);
+  }
+
+  .faq-item.is-open .faq-panel {
+    padding: 0 20px 18px;
+  }
+}
+
+/* ── ABOUT PAGE ── */
+@media (max-width: 768px) {
+  /* Overview two-column → stack */
+  .section-pad > .container > div[style*="grid-template-columns:1fr 1fr"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+  }
+
+  /* Redesign matters two-column → stack */
+  #redesign-heading ~ * ,
+  div[style*="grid-template-columns:1fr 1fr"] {
+    /* handled below per section */
+  }
+
+  /* Stat strip 2-col on mobile */
+  .stat-strip {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .stat-strip__item:nth-child(2) {
+    border-right: none;
+  }
+
+  .stat-strip__item:nth-child(3) {
+    border-top: 1px solid var(--clr-slate-200);
+  }
+
+  /* Timeline 1-col */
+  .timeline-grid {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-8);
+  }
+
+  .timeline-grid::before {
+    display: none;
+  }
+
+  .timeline-card__dot {
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Value cards 1-col */
+  .grid-4.gap-5 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Prototype note stack */
+  .prototype-note {
+    flex-direction: column;
+    text-align: center;
+    padding: var(--space-6);
+  }
+
+  .prototype-note::before {
+    display: none;
+  }
+
+  /* CTA strip 1-col */
+  div[style*="grid-template-columns:repeat(3,1fr)"] {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Redesign section two cols → stack */
+  #redesign-heading {
+    display: block;
+  }
+}
+
+/* ── EXPERIENCE PAGE ── */
+@media (max-width: 768px) {
+  /* Assist grid already 1-col in existing CSS — reinforce */
+  .assist-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .assist-item {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  /* Special assistance section — two-column layout stack */
+  #special-assistance .container > div[style*="grid-template-columns:1fr 1fr"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+  }
+
+  /* Nusuk two-column → stack */
+  .nusuk-section > div > div[style*="grid-template-columns:1fr 1fr"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+  }
+
+  .nusuk-section {
+    padding: var(--space-6) !important;
+  }
+
+  .nusuk-section::before {
+    display: none;
+  }
+
+  /* Baggage grid → 1-col */
+  .grid-4.gap-5 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Service grid → 1-col */
+  .service-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Hero jump nav buttons wrap */
+  #exp-hero-title ~ div[role="navigation"] {
+    gap: var(--space-2);
+  }
+}
+
+/* ── BOOKING PAGE ── */
+@media (max-width: 768px) {
+  /* Review step: flight summary + price sidebar → stack */
+  #step-3 > div > div[style*="grid-template-columns:1fr 340px"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+  }
+
+  /* Passenger form grid → 1-col */
+  .pax-form-card .grid-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* bk-flight-card times layout */
+  .bk-flight-card__times {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  /* Booking search panel fields */
+  .bk-fields {
+    grid-template-columns: 1fr !important;
+  }
+
+  .bk-fields-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .bk-search-panel {
+    padding: var(--space-5);
+  }
+
+  /* Step bar labels hide on very small */
+  .step-indicator__label {
+    font-size: 0.65rem;
+  }
+}
+
+/* ── SHARED: any inline two-col grids on mobile ── */
+@media (max-width: 768px) {
+  /* Catch-all for inline style two-column grids that weren't caught above */
+  .section-pad .container > div[style*="display:grid"][style*="grid-template-columns:1fr 1fr"],
+  .section-pad-sm .container > div[style*="display:grid"][style*="grid-template-columns:1fr 1fr"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+  }
+
+  /* grid-2 utility class */
+  .grid-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* grid-3 utility class */
+  .grid-3 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Prevent text overflow everywhere */
+  p, h1, h2, h3, h4, li, span {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  /* Section padding tighter on mobile */
+  .section-pad {
+    padding-block: var(--space-10) !important;
+  }
+
+  .section-pad-sm {
+    padding-block: var(--space-8) !important;
+  }
+
+  /* Container padding */
+  .container {
+    padding-inline: var(--space-4) !important;
+  }
+}
+
+/* ── 480px and below (small phones) ── */
+@media (max-width: 480px) {
+  /* Stat strip → 2 col stays fine, just tighten */
+  .stat-strip__num {
+    font-size: 1.6rem;
+  }
+
+  /* Value/timeline cards padding */
+  .value-card,
+  .timeline-card,
+  .overview-card,
+  .redesign-point,
+  .support-card,
+  .baggage-card,
+  .exp-service-card,
+  .hci-note-card,
+  .talking-point,
+  .scope-card {
+    padding: var(--space-5) !important;
+  }
+
+  /* Nusuk pricing text */
+  .nusuk-section div[style*="font-size:var(--text-3xl)"] {
+    font-size: var(--text-2xl) !important;
+  }
+
+  /* Assist item icon smaller */
+  .assist-item__icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+  }
+
+  /* Review card rows readable */
+  .review-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+  }
+
+  .review-row__val {
+    text-align: left;
+  }
+
+  /* Booking confirm code smaller */
+  .booking-confirm__code {
+    font-size: var(--text-xl);
+    letter-spacing: 0.1em;
+  }
+
+  /* Prototype note badge center */
+  .prototype-note__badge {
+    margin-inline: auto;
+  }
+
+  /* Timeline card dot */
+  .timeline-card {
+    padding-top: var(--space-12);
+  }
+
+  /* Hero section text */
+  .about-hero h1,
+  .exp-hero h1,
+  .contact-hero h1 {
+    font-size: clamp(1.8rem, 8vw, 2.5rem) !important;
+  }
+}
+
+/* ============================================================
+   MOBILE FIXES PATCH 2 — append after previous additions
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+  /* ── FIX 1: Nusuk inner two-column grid ── */
+  .nusuk-section > div[style] > div[style*="grid-template-columns:1fr 1fr"],
+  .nusuk-section [style*="grid-template-columns:1fr 1fr"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+  }
+
+  /* Also catch the direct child div with position:relative;z-index:1 */
+  .nusuk-section > div > div {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+  }
+
+  /* Fix nusuk features list overflow */
+  .nusuk-feature {
+    flex-wrap: wrap;
+    word-break: break-word;
+  }
+
+  /* ── FIX 2: Booking review step grid ── */
+  /* The 1fr 340px two-column in step-3 */
+  #step-3 > div[style*="grid-template-columns"],
+  #step-3 > h2 ~ div[style*="grid-template-columns"],
+  .booking-step#step-3 > div {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+  }
+
+  /* Flight summary card left text cutoff */
+  .review-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow: hidden;
+  }
+
+  .review-row {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .review-row__val {
+    text-align: right;
+    font-size: var(--text-sm);
+    max-width: 55%;
+    word-break: break-word;
+  }
+
+  .review-row__label {
+    font-size: var(--text-sm);
+  }
+
+  /* Confirm button full width */
+  .confirm-booking-btn {
+    width: 100% !important;
+  }
+
+  /* ── FIX 3: Login button visible on mobile ── */
+  .navbar__actions .login-trigger {
+    display: inline-flex !important;
+    padding: 0.4rem 0.7rem !important;
+    font-size: 0.7rem !important;
+    gap: 4px !important;
+  }
+
+  /* Hide login text label, keep icon only on very small */
+  .login-trigger__text {
+    display: none;
+  }
+
+  /* Show just the icon version */
+  .login-trigger svg {
+    display: block !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Nusuk price text readable */
+  .nusuk-section [style*="font-size:2rem"],
+  .nusuk-section [style*="font-size:var(--text-3xl)"] {
+    font-size: 1.5rem !important;
+  }
+
+  /* Review step tighter */
+  .pax-form-card {
+    padding: var(--space-5) !important;
+  }
+
+  #step-3 .review-card__header {
+    padding: var(--space-4);
+  }
+
+  #step-3 .review-card__header h3 {
+    font-size: var(--text-base);
+  }
+}
