@@ -107,27 +107,27 @@ function initNavbar() {
 
 // flights.js 
 
-(function() {
-    const p = new URLSearchParams(location.search);
-    const cities = {
-      KHI:'Karachi', ISB:'Islamabad', LHE:'Lahore', PEW:'Peshawar',
-      MUX:'Multan', DXB:'Dubai', LHR:'London', JFK:'New York', AMS:'Amsterdam', BKK:'Bangkok'
-    };
-    const from = p.get('from') || '';
-    const to   = p.get('to')   || '';
-    const date = p.get('date') || '';
-    const pax  = p.get('passengers') || '1';
-    const cls  = p.get('class') || 'economy';
+(function () {
+  const p = new URLSearchParams(location.search);
+  const cities = {
+    KHI: 'Karachi', ISB: 'Islamabad', LHE: 'Lahore', PEW: 'Peshawar',
+    MUX: 'Multan', DXB: 'Dubai', LHR: 'London', JFK: 'New York', AMS: 'Amsterdam', BKK: 'Bangkok'
+  };
+  const from = p.get('from') || '';
+  const to = p.get('to') || '';
+  const date = p.get('date') || '';
+  const pax = p.get('passengers') || '1';
+  const cls = p.get('class') || 'economy';
 
-    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-    set('sum-from', cities[from] || from || '—');
-    set('sum-to',   cities[to]   || to   || '—');
-    set('sum-pax',  pax + ' Passenger' + (parseInt(pax) !== 1 ? 's' : ''));
-    set('sum-class', cls.charAt(0).toUpperCase() + cls.slice(1));
-    if (date) {
-      set('sum-date', new Date(date).toLocaleDateString('en-PK', { weekday:'short', year:'numeric', month:'short', day:'numeric' }));
-    }
-  })();
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  set('sum-from', cities[from] || from || '—');
+  set('sum-to', cities[to] || to || '—');
+  set('sum-pax', pax + ' Passenger' + (parseInt(pax) !== 1 ? 's' : ''));
+  set('sum-class', cls.charAt(0).toUpperCase() + cls.slice(1));
+  if (date) {
+    set('sum-date', new Date(date).toLocaleDateString('en-PK', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }));
+  }
+})();
 
 /* ══════════════════════════════════════════════════════════
    SEARCH OVERLAY
@@ -438,12 +438,12 @@ function initA11yPanel() {
 ══════════════════════════════════════════════════════════ */
 const toastTypes = {
   success: { icon: '✓', title: 'Success' },
-  error:   { icon: '✕', title: 'Error' },
+  error: { icon: '✕', title: 'Error' },
   warning: { icon: '⚠', title: 'Warning' },
-  info:    { icon: 'ℹ', title: 'Information' },
+  info: { icon: 'ℹ', title: 'Information' },
 };
 
-window.showToast = function(msg, type = 'info', duration = 4000) {
+window.showToast = function (msg, type = 'info', duration = 4000) {
   let container = $('.toast-container');
   if (!container) {
     container = document.createElement('div');
@@ -594,11 +594,11 @@ const ROUTES = {
     { flight: 'PK-786', depart: '23:00', arrive: '06:30+1', duration: '8h 30m', class: 'Economy', price: 120000, seats: 180, aircraft: 'Boeing 777' },
     { flight: 'PK-787', depart: '10:00', arrive: '17:30', duration: '8h 30m', class: 'Business', price: 320000, seats: 24, aircraft: 'Boeing 777' },
   ],
-   'HKG-LHR': [
+  'HKG-LHR': [
     { flight: 'PK-786', depart: '23:00', arrive: '06:30+1', duration: '8h 30m', class: 'Economy', price: 120000, seats: 180, aircraft: 'Boeing 777' },
     { flight: 'PK-787', depart: '10:00', arrive: '17:30', duration: '8h 30m', class: 'Business', price: 320000, seats: 24, aircraft: 'Boeing 777' },
   ],
-  
+
 };
 
 const CITIES = [
@@ -715,10 +715,10 @@ function initBookingWidget() {
 
   function handleSearch() {
     const from = fromInput?.dataset.code || '';
-    const to   = toInput?.dataset.code || '';
+    const to = toInput?.dataset.code || '';
     const date = departInput?.value || '';
     const passengers = $('.passenger-select', widget)?.value || '1';
-    const cabinClass  = $('.class-select', widget)?.value || 'economy';
+    const cabinClass = $('.class-select', widget)?.value || 'economy';
 
     if (!from || !to) {
       showToast('Please select origin and destination cities.', 'warning');
@@ -746,9 +746,9 @@ function initBookingWidget() {
   $$('[data-counter]', widget).forEach(btn => {
     on(btn, 'click', () => {
       const type = btn.dataset.counter;
-      const dir  = btn.dataset.dir;
-      const max  = type === 'adults' ? 9 : 6;
-      const min  = type === 'adults' ? 1 : 0;
+      const dir = btn.dataset.dir;
+      const max = type === 'adults' ? 9 : 6;
+      const min = type === 'adults' ? 1 : 0;
 
       if (dir === 'inc') counters[type] = Math.min(counters[type] + 1, max);
       if (dir === 'dec') counters[type] = Math.max(counters[type] - 1, min);
@@ -776,15 +776,15 @@ function initFlightsPage() {
 
   const params = new URLSearchParams(location.search);
   const from = params.get('from') || '';
-  const to   = params.get('to')   || '';
+  const to = params.get('to') || '';
   const date = params.get('date') || '';
 
   const fromCity = CITIES.find(c => c.code === from);
-  const toCity   = CITIES.find(c => c.code === to);
+  const toCity = CITIES.find(c => c.code === to);
 
   // Update header
   const routeEl = $('.flights-route');
-  const dateEl  = $('.flights-date');
+  const dateEl = $('.flights-date');
   if (routeEl && fromCity && toCity) {
     routeEl.innerHTML = `
       <span>${fromCity.name}</span>
@@ -848,8 +848,8 @@ function initFlightsPage() {
 
 function sortFlights(flights, by) {
   return [...flights].sort((a, b) => {
-    if (by === 'price')    return a.price - b.price;
-    if (by === 'depart')   return a.depart.localeCompare(b.depart);
+    if (by === 'price') return a.price - b.price;
+    if (by === 'depart') return a.depart.localeCompare(b.depart);
     if (by === 'duration') return a.duration.localeCompare(b.duration);
     return 0;
   });
@@ -857,7 +857,7 @@ function sortFlights(flights, by) {
 
 function renderFlights(container, flights, from, to, date) {
   const fromCity = CITIES.find(c => c.code === from);
-  const toCity   = CITIES.find(c => c.code === to);
+  const toCity = CITIES.find(c => c.code === to);
 
   if (!flights.length) {
     container.innerHTML = `<div class="no-flights"><div class="no-flights__icon">🔍</div><p>No flights match your filters.</p></div>`;
@@ -1067,17 +1067,17 @@ function initBookingPage() {
 
   // passenger dropdown
   on(passengerBtn, 'click', (e) => {
-  e.stopPropagation();
+    e.stopPropagation();
 
-  const isOpen = passengerDropdown?.classList.toggle('open');
+    const isOpen = passengerDropdown?.classList.toggle('open');
 
-  passengerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-});
+    passengerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
 
-on(document, 'click', () => {
-  passengerDropdown?.classList.remove('open');
-  passengerBtn?.setAttribute('aria-expanded', 'false');
-});
+  on(document, 'click', () => {
+    passengerDropdown?.classList.remove('open');
+    passengerBtn?.setAttribute('aria-expanded', 'false');
+  });
 
   on(passengerDropdown, 'click', e => e.stopPropagation());
 
@@ -1145,8 +1145,12 @@ on(document, 'click', () => {
       });
     });
 
-    setFeedback(`${routeFlights.length} flights found. Please select a flight.`);
-    showToast(`${routeFlights.length} flights found.`, 'success');
+    const flightFeedback = $('#flight-select-feedback');
+
+    if (flightFeedback) {
+      flightFeedback.textContent = `${routeFlights.length} flights found.`;
+}
+    showToast(`${ routeFlights.length } flights found.`, 'success');
     goToStep(1);
   });
 
@@ -1175,7 +1179,7 @@ on(document, 'click', () => {
 
       updatePaymentSummary(selectedFlight.price);
 
-      showToast(`${selectedFlight.flight} selected. Continue to passenger details.`, 'success');
+      showToast(`${ selectedFlight.flight } selected.Continue to passenger details.`, 'success');
       goToStep(2);
     });
   });
@@ -1237,9 +1241,9 @@ on(document, 'click', () => {
     const taxEl = $('.pay-tax');
     const totalEl = $('.pay-total');
 
-    if (baseEl) baseEl.textContent = `PKR ${base.toLocaleString()}`;
-    if (taxEl) taxEl.textContent = `PKR ${tax.toLocaleString()}`;
-    if (totalEl) totalEl.textContent = `PKR ${total.toLocaleString()}`;
+    if (baseEl) baseEl.textContent = `PKR ${ base.toLocaleString() } `;
+    if (taxEl) taxEl.textContent = `PKR ${ tax.toLocaleString() } `;
+    if (totalEl) totalEl.textContent = `PKR ${ total.toLocaleString() } `;
   }
 
   // confirm booking
@@ -1253,10 +1257,10 @@ on($('.confirm-booking-btn', page), 'click', () => {
   btn.disabled = true;
   btn.textContent = 'Booking Confirmed ✓';
 
-  showToast(`Booking confirmed for ${passengerName} on ${flightNumber}.`, 'success');
+  showToast(`Booking confirmed for ${ passengerName } on ${ flightNumber }.`, 'success');
 
   setFeedback(
-    `Mock booking confirmed. Confirmation details have been generated for ${passengerName}.`
+    `Mock booking confirmed.Confirmation details have been generated for ${ passengerName }.`
   );
 
   const reviewStep = $('#step-3');
@@ -1265,14 +1269,14 @@ on($('.confirm-booking-btn', page), 'click', () => {
   if (existing) existing.remove();
 
   reviewStep.insertAdjacentHTML('beforeend', `
-    <div class="booking-confirmation-card" role="status" aria-live="polite">
+        < div class= "booking-confirmation-card" role = "status" aria - live="polite" >
       <div class="booking-confirmation-card__icon">✓</div>
       <div>
         <h3>Booking Confirmed</h3>
         <p>Your mock booking for <strong>${flightNumber}</strong> has been confirmed for <strong>${passengerName}</strong>.</p>
       </div>
-    </div>
-  `);
+    </ >
+        `);
 });
 
   goToStep(0);

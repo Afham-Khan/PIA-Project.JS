@@ -8,7 +8,17 @@
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="css/global.css" />
   <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet" />
- 
+ <link
+  rel="icon"
+  type="image/svg+xml"
+  href='data:image/svg+xml,
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44">
+    <circle cx="22" cy="22" r="22" fill="%230A6B3D"/>
+    <path d="M8 26 L22 12 L36 26" stroke="%23C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <ellipse cx="22" cy="26" rx="10" ry="4" fill="%23C9A84C" opacity="0.3"/>
+    <circle cx="22" cy="22" r="4" fill="white"/>
+  </svg>'
+/>
 </head>
 <body>
 
@@ -39,9 +49,11 @@
         <div style="font-size:.6rem;color:var(--clr-slate-400);letter-spacing:.05em;line-height:1;font-weight:500">Great People to Fly With</div>
       </div>
     </a>
-    <ul class="navbar__links" role="list">
-      <li class="nav-dropdown">
-        <a href="#" class="nav-link active" aria-haspopup="true" aria-expanded="false">Where we Fly <span class="nav-link__chevron"><i class="ri-arrow-down-s-line" aria-hidden="true"></i></span></a>
+<ul class="navbar__links" role="list">
+        <li class="nav-dropdown">
+          <a href="#" class="nav-link" aria-haspopup="true" aria-expanded="false">
+            Where we Fly <span class="nav-link__chevron"><i class="ri-arrow-down-s-line" aria-hidden="true"></i></span>
+          </a>
         <div class="nav-dropdown__menu" role="menu">
           <a href="flights.html?from=KHI&to=ISB" class="nav-dropdown__item" role="menuitem"><span class="nav-dropdown__icon"><i class="ri-flag-line" aria-hidden="true"></i></span> Domestic Routes</a>
           <a href="flights.html?from=KHI&to=DXB" class="nav-dropdown__item" role="menuitem"><span class="nav-dropdown__icon"><i class="ri-earth-line" aria-hidden="true"></i></span> International Routes</a>

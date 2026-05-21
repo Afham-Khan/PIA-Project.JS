@@ -4516,6 +4516,7 @@ body.a11y-underline-links a {
   align-items: center;
   gap: var(--space-2);
   position: relative;
+  width: 110px
 }
 
 .step-indicator::after {
@@ -4572,6 +4573,7 @@ body.a11y-underline-links a {
   font-weight: 600;
   color: var(--clr-slate-400);
   white-space: nowrap;
+  /* gap: 0.5rem; */
 }
 
 .step-indicator.current .step-indicator__label {

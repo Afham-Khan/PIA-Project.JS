@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="SMI International Airlines – Book flights, check destinations, explore deals. Great People to Fly With." />
   <meta name="theme-color" content="#0A6B3D" />
+  <link
+  rel="icon"
+  type="image/svg+xml"
+  href='data:image/svg+xml,
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44">
+    <circle cx="22" cy="22" r="22" fill="%230A6B3D"/>
+    <path d="M8 26 L22 12 L36 26" stroke="%23C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <ellipse cx="22" cy="26" rx="10" ry="4" fill="%23C9A84C" opacity="0.3"/>
+    <circle cx="22" cy="22" r="4" fill="white"/>
+  </svg>'
+/>
   <title>SIA – SMI International Airlines | Great People to Fly With</title>
 
   <!-- Tailwind CDN -->
@@ -599,15 +610,23 @@
           </div>
 
           <div class="dest-card reveal delay-4">
-            <img src="https://images.unsplash.com/photo-1607148580743-d29a9e6f04c4?w=600&q=80&auto=format&fit=crop"
-                 alt="Peshawar historic site" class="dest-card__img" />
-            <div class="dest-card__overlay"></div>
-            <div class="dest-card__content">
-              <div class="dest-card__city">Peshawar</div>
-              <div class="dest-card__country">Pakistan · PEW</div>
-              <a href="flights.html?from=KHI&to=PEW" class="dest-card__price">From PKR 13,800</a>
-            </div>
-          </div>
+  <img 
+    src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80"
+    alt="Peshawar city"
+    class="dest-card__img"
+  />
+
+  <div class="dest-card__overlay"></div>
+
+  <div class="dest-card__content">
+    <div class="dest-card__city">Peshawar</div>
+    <div class="dest-card__country">Pakistan · PEW</div>
+
+    <a href="flights.html?from=KHI&to=PEW" class="dest-card__price">
+      From PKR 18,500
+    </a>
+  </div>
+</div>
         </div>
       </div>
     </section>
@@ -710,7 +729,7 @@
                   <div class="offer-card__price-label">Starting from</div>
                   <div class="offer-card__price">PKR 85,000</div>
                 </div>
-                <a href="#" class="btn btn-primary btn-sm">Explore</a>
+                <a href="experience.html#nusuk" class="btn btn-primary btn-sm">Explore</a>
               </div>
             </div>
           </div>
@@ -729,7 +748,7 @@
                   <div class="offer-card__price-label">Available from</div>
                   <div class="offer-card__price">PKR 5,000</div>
                 </div>
-                <a href="#" class="btn btn-gold btn-sm">Buy Now</a>
+                <a href="experience.html#gift-cards" class="btn btn-gold btn-sm">Buy Now</a>
               </div>
             </div>
           </div>
@@ -828,16 +847,21 @@
             <p>Book flights, manage bookings, get real-time updates, and check in — all from your pocket.</p>
           </div>
           <div class="app-badges">
-            <a href="#" class="app-badge" aria-label="Download on the App Store">
+            <a   href="https://www.apple.com/app-store/" 
+  target="_blank" 
+  rel="noopener noreferrer" class="app-badge" aria-label="Download on the App Store">
               <div class="app-badge__icon" aria-hidden="true"><i class="ri-apple-line" aria-hidden="true"></i></div>
               <div>
                 <div class="app-badge__label">Download on the</div>
                 <div class="app-badge__store">App Store</div>
               </div>
             </a>
-            <a href="#" class="app-badge" aria-label="Get it on Google Play">
+            <a   href="https://play.google.com/store" 
+  target="_blank" 
+  rel="noopener noreferrer" class="app-badge" aria-label="Get it on Google Play">
               <div class="app-badge__icon" aria-hidden="true"><i class="ri-play-circle-line" aria-hidden="true"></i></div>
               <div>
+                
                 <div class="app-badge__label">Get it on</div>
                 <div class="app-badge__store">Google Play</div>
               </div>
