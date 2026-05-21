@@ -2338,6 +2338,8 @@ body.a11y-underline-links a {
 .login-modal__header {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: flex-start;
   gap: 1rem;
   margin-bottom: 1.25rem;
 }
@@ -2377,6 +2379,25 @@ body.a11y-underline-links a {
 
 .login-form .form-group {
   margin-bottom: 1.5rem;
+}
+
+@media (max-width: 520px) {
+  .login-modal__box {
+    padding: 1rem;
+    width: min(100%, 92vw);
+  }
+
+  .login-modal__header {
+    gap: 0.75rem;
+  }
+
+  .login-modal__title {
+    font-size: 1.25rem;
+  }
+
+  .login-modal__close {
+    margin-left: auto;
+  }
 }
 
 .login-modal__hint {
@@ -5294,9 +5315,28 @@ body.a11y-underline-links a {
   }
 
   .page-loader__flight-card {
-    grid-template-columns: 70px 1fr 70px;
-    gap: 0.65rem;
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
     padding: 1rem;
+    text-align: center;
+  }
+
+  .page-loader__airport {
+    align-items: center;
+  }
+
+  .page-loader__airport--right {
+    align-items: center;
+    text-align: center;
+  }
+
+  .page-loader__route {
+    width: 100%;
+  }
+
+  .page-loader__track {
+    height: 62px;
+    margin-inline: auto;
   }
 
   .page-loader__code {
@@ -5306,9 +5346,28 @@ body.a11y-underline-links a {
   .page-loader__city {
     font-size: 0.65rem;
   }
+}
 
-  .page-loader__track {
-    height: 62px;
+@media (max-width: 420px) {
+  .page-loader__shell {
+    padding: 0.9rem;
+  }
+
+  .page-loader__brand-name {
+    font-size: 0.9rem;
+  }
+
+  .page-loader__brand-sub {
+    font-size: 0.65rem;
+  }
+
+  .page-loader__logo {
+    width: 42px;
+    height: 42px;
+  }
+
+  .page-loader__route-text {
+    font-size: 0.72rem;
   }
 }
 
@@ -5345,8 +5404,52 @@ body.a11y-underline-links a {
     padding-inline: var(--space-4);
   }
 
+  .navbar {
+    height: auto;
+    min-height: var(--nav-height);
+  }
+
+  .navbar__inner {
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-block: 0.65rem;
+  }
+
   .navbar__links {
     display: none;
+  }
+
+  .navbar__logo {
+    min-width: 0;
+  }
+
+  .navbar__logo > div {
+    min-width: 0;
+  }
+
+  .navbar__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--space-2);
+    flex: 1 1 auto;
+    min-width: 0;
+    margin-left: auto;
+  }
+
+  .navbar__search-btn {
+    flex-shrink: 0;
+  }
+
+  .navbar__actions .btn,
+  .navbar__actions .login-trigger,
+  .navbar__actions .btn-primary,
+  .navbar__actions .btn-outline {
+    display: none !important;
   }
 
   .navbar__hamburger {
