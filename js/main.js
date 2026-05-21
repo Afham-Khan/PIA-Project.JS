@@ -775,75 +775,81 @@ function initFlightsPage() {
   if (!$('.flights-results')) return;
 
   const params = new URLSearchParams(location.search);
-  const from = params.get('from') || '';
-  const to = params.get('to') || '';
-  const date = params.get('date') || '';
+
+  let from = params.get('from') || 'KHI';
+  let to = params.get('to') || 'ISB';
+  let date = params.get('date') || new Date().toISOString().split('T')[0];
+  const passengers = params.get('passengers') || '1';
+  const cabin = params.get('class') || '';
 
   const fromCity = CITIES.find(c => c.code === from);
   const toCity = CITIES.find(c => c.code === to);
 
-  // Update header
+  $('#sum-from') && ($('#sum-from').textContent = fromCity?.name || from);
+  $('#sum-to') && ($('#sum-to').textContent = toCity?.name || to);
+  $('#sum-pax') && ($('#sum-pax').textContent = `${passengers} Passenger${passengers !== '1' ? 's' : ''}`);
+  $('#sum-class') && ($('#sum-class').textContent = cabin ? cabin[0].toUpperCase() + cabin.slice(1) : 'Economy');
+
+  const d = new Date(date);
+  $('#sum-date') && ($('#sum-date').textContent = d.toLocaleDateString('en-PK', {
+    weekday: 'short',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  }));
+
   const routeEl = $('.flights-route');
   const dateEl = $('.flights-date');
-  if (routeEl && fromCity && toCity) {
+
+  if (routeEl) {
     routeEl.innerHTML = `
-      <span>${fromCity.name}</span>
+      <span>${fromCity?.name || from}</span>
       <span class="route-arrow">→</span>
-      <span>${toCity.name}</span>
+      <span>${toCity?.name || to}</span>
     `;
   }
-  if (dateEl && date) {
-    const d = new Date(date);
-    dateEl.textContent = d.toLocaleDateString('en-PK', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+  if (dateEl) {
+    dateEl.textContent = d.toLocaleDateString('en-PK', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
   }
 
-  // Get results
-  const key = `${from}-${to}`;
-  const flights = ROUTES[key] || [];
   const container = $('.flights-list');
-
   if (!container) return;
 
-  // Loading state
+  let flights = ROUTES[`${from}-${to}`];
+
+  if (!flights || !flights.length) {
+    flights = Object.values(ROUTES).flat().slice(0, 8);
+    showToast('Showing suggested flights for demo search.', 'info');
+  }
+
   container.innerHTML = `<div class="flights-loading"><div class="spinner spinner--green"></div><p>Searching available flights…</p></div>`;
 
   setTimeout(() => {
-    if (!flights.length) {
-      container.innerHTML = `
-        <div class="no-flights">
-          <div class="no-flights__icon">✈</div>
-          <h3>No Flights Found</h3>
-          <p>No direct flights available for this route on the selected date. Try a different date or check connecting routes.</p>
-          <a href="index.html" class="btn btn-primary">Search Again</a>
-        </div>`;
-      return;
-    }
+    let visibleFlights = cabin
+      ? flights.filter(f => f.class.toLowerCase() === cabin.toLowerCase())
+      : [...flights];
 
-    // Sort
-    let sorted = [...flights];
-    const sortEl = $('.sort-select');
-    const sortBy = sortEl?.value || 'price';
-    sorted = sortFlights(sorted, sortBy);
+    renderFlights(container, sortFlights(visibleFlights, $('.sort-select')?.value || 'price'), from, to, date, passengers);
 
-    renderFlights(container, sorted, from, to, date);
-
-    // Filter / sort listeners
     on($('.sort-select'), 'change', () => {
-      const sortedNow = sortFlights([...flights], $('.sort-select').value);
-      renderFlights(container, sortedNow, from, to, date);
+      renderFlights(container, sortFlights([...visibleFlights], $('.sort-select').value), from, to, date, passengers);
     });
 
     on($('.filter-class'), 'change', () => {
       const cls = $('.filter-class').value;
-      const filtered = flights.filter(f => !cls || f.class.toLowerCase() === cls);
-      renderFlights(container, sortFlights(filtered, $('.sort-select').value), from, to, date);
+      visibleFlights = flights.filter(f => !cls || f.class.toLowerCase() === cls);
+      renderFlights(container, sortFlights([...visibleFlights], $('.sort-select')?.value || 'price'), from, to, date, passengers);
     });
 
-    // Update count
     const countEl = $('.flights-count');
-    if (countEl) countEl.textContent = `${flights.length} flight${flights.length !== 1 ? 's' : ''} found`;
-
-  }, 800);
+    if (countEl) countEl.textContent = `${visibleFlights.length} flight${visibleFlights.length !== 1 ? 's' : ''}`;
+  }, 500);
 }
 
 function sortFlights(flights, by) {
@@ -855,7 +861,7 @@ function sortFlights(flights, by) {
   });
 }
 
-function renderFlights(container, flights, from, to, date) {
+function renderFlights(container, flights, from, to, date, passengers = '1') {
   const fromCity = CITIES.find(c => c.code === from);
   const toCity = CITIES.find(c => c.code === to);
 
@@ -900,7 +906,7 @@ function renderFlights(container, flights, from, to, date) {
         <div class="flight-card__class badge ${f.class === 'Business' ? 'badge-gold' : 'badge-green'}">${f.class}</div>
         <div class="flight-card__price">PKR ${f.price.toLocaleString()}</div>
         <div class="flight-card__seats">${f.seats} seats left</div>
-        <a href="booking.html?flight=${f.flight}&from=${from}&to=${to}&date=${date}&price=${f.price}&class=${f.class}"
+     <a href="booking.html?step=2&flight=${f.flight}&from=${from}&to=${to}&date=${date}&price=${f.price}&class=${f.class}"
            class="btn btn-primary btn-sm flight-card__book">
           Select →
         </a>
@@ -1246,40 +1252,79 @@ function initBookingPage() {
     if (totalEl) totalEl.textContent = `PKR ${ total.toLocaleString() } `;
   }
 
-  // confirm booking
+  
+
+ // confirm booking
 on($('.confirm-booking-btn', page), 'click', () => {
   const btn = $('.confirm-booking-btn', page);
   if (!btn || btn.disabled) return;
 
   const passengerName = $('#pax-name')?.value?.trim() || 'Passenger';
-  const flightNumber = selectedFlight?.flight || $('.booking-summary__flight')?.textContent || 'your flight';
+  const flightNumber =
+    selectedFlight?.flight ||
+    $('.booking-summary__flight')?.textContent ||
+    'your flight';
+
+  const codeEl = $('.booking-confirmation__code');
+  if (codeEl) {
+    codeEl.textContent = 'SIA-' + Math.floor(100000 + Math.random() * 900000);
+  }
 
   btn.disabled = true;
   btn.textContent = 'Booking Confirmed ✓';
 
-  showToast(`Booking confirmed for ${ passengerName } on ${ flightNumber }.`, 'success');
+  showToast(`Booking confirmed for ${passengerName} on ${flightNumber}.`, 'success');
 
-  setFeedback(
-    `Mock booking confirmed.Confirmation details have been generated for ${ passengerName }.`
-  );
-
-  const reviewStep = $('#step-3');
-
-  const existing = $('.booking-confirmation-card', page);
-  if (existing) existing.remove();
-
-  reviewStep.insertAdjacentHTML('beforeend', `
-        < div class= "booking-confirmation-card" role = "status" aria - live="polite" >
-      <div class="booking-confirmation-card__icon">✓</div>
-      <div>
-        <h3>Booking Confirmed</h3>
-        <p>Your mock booking for <strong>${flightNumber}</strong> has been confirmed for <strong>${passengerName}</strong>.</p>
-      </div>
-    </ >
-        `);
+  goToStep(4);
 });
 
+function hydrateBookingFromUrl() {
+  const params = new URLSearchParams(location.search);
+
+  const flight = params.get('flight');
+  const from = params.get('from');
+  const to = params.get('to');
+  const date = params.get('date');
+  const price = params.get('price');
+  const cls = params.get('class') || 'Economy';
+  const step = parseInt(params.get('step') || '0', 10);
+
+  if (!flight || !from || !to || !date) return false;
+
+  selectedFlight = {
+    flight,
+    price: parseInt(price || '12500', 10),
+    class: cls
+  };
+
+  $$('.booking-summary__route').forEach(el => {
+    el.textContent = `${from} → ${to}`;
+  });
+
+  $$('.booking-summary__date').forEach(el => {
+    el.textContent = new Date(date).toLocaleDateString('en-PK', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  });
+
+  const flightEl = $('.booking-summary__flight');
+  const classEl = $('.booking-summary__class');
+
+  if (flightEl) flightEl.textContent = selectedFlight.flight;
+  if (classEl) classEl.textContent = selectedFlight.class;
+
+  updatePaymentSummary(selectedFlight.price);
+  goToStep(Number.isNaN(step) ? 2 : step);
+
+  return true;
+}
+
+  if (!hydrateBookingFromUrl()) {
   goToStep(0);
+}
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -1462,7 +1507,7 @@ function initPageLoader() {
     return;
   }
 
-  const minDelay = 3200;
+  const minDelay = 2200;
 
   window.addEventListener('load', () => {
     setTimeout(() => {
@@ -1513,3 +1558,4 @@ document.addEventListener('DOMContentLoaded', () => {
   initPageLoader();
   // handleBackNavigation();
 });
+
