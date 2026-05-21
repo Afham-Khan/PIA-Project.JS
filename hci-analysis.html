@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="HCI Analysis of PIA Redesign — how usability principles improve the passenger experience." />
-  <title>HCI Analysis — PIA Redesign Prototype</title>
+  <meta name="description" content="HCI Analysis of SIA Redesign — how usability principles improve the passenger experience." />
+  <title>HCI Analysis — SIA Redesign Prototype</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="css/global.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet" />
  
 </head>
 <body>
@@ -22,29 +23,29 @@
     <span class="announce-bar__item"><span class="announce-bar__dot"></span>HCI Redesign Prototype — Academic Project · Group Members: 3</span>
     <span class="announce-bar__item"><span class="announce-bar__dot"></span>All flight data is mock/hard-coded · No real transactions</span>
   </div>
-  <button class="announce-bar__close" aria-label="Close announcement">✕</button>
+  <button class="announce-bar__close" aria-label="Close announcement"><i class="ri-close-line" aria-hidden="true"></i></button>
 </div>
 
 <!-- Navbar -->
 <nav class="navbar" role="navigation" aria-label="Main navigation">
   <div class="container navbar__inner">
       <button class="page-back-btn" onclick="handleBackNavigation()" aria-label="Go back">
-  <span aria-hidden="true">←</span>
+  <span aria-hidden="true"><i class="ri-arrow-left-line" aria-hidden="true"></i></span>
   <span>Back</span>
 </button>
-    <a href="index.html" class="navbar__logo" aria-label="PIA – Pakistan International Airlines">
+    <a href="index.html" class="navbar__logo" aria-label="SIA – SMI International Airlines">
       <svg width="44" height="44" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="22" fill="#0A6B3D"/><path d="M8 26 L22 12 L36 26" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="22" cy="22" r="4" fill="white"/></svg>
       <div>
-        <div style="font-family:var(--font-display);font-weight:900;font-size:1.05rem;color:var(--clr-green);line-height:1">PIA</div>
+        <div style="font-family:var(--font-display);font-weight:900;font-size:1.05rem;color:var(--clr-green);line-height:1">SIA</div>
         <div style="font-size:.6rem;color:var(--clr-slate-400);letter-spacing:.05em;line-height:1;font-weight:500">Great People to Fly With</div>
       </div>
     </a>
     <ul class="navbar__links" role="list">
       <li class="nav-dropdown">
-        <a href="flights.html" class="nav-link" aria-haspopup="true">Where we Fly <span class="nav-link__chevron">▾</span></a>
+        <a href="flights.html" class="nav-link" aria-haspopup="true">Where we Fly <span class="nav-link__chevron"><i class="ri-arrow-down-s-line" aria-hidden="true"></i></span></a>
         <div class="nav-dropdown__menu" role="menu">
-          <a href="flights.html?from=KHI&to=ISB" class="nav-dropdown__item" role="menuitem"><span class="nav-dropdown__icon">🇵🇰</span> Domestic Routes</a>
-          <a href="flights.html?from=KHI&to=DXB" class="nav-dropdown__item" role="menuitem"><span class="nav-dropdown__icon">🌍</span> International Routes</a>
+          <a href="flights.html?from=KHI&to=ISB" class="nav-dropdown__item" role="menuitem"><span class="nav-dropdown__icon"><i class="ri-flag-line" aria-hidden="true"></i></span> Domestic Routes</a>
+          <a href="flights.html?from=KHI&to=DXB" class="nav-dropdown__item" role="menuitem"><span class="nav-dropdown__icon"><i class="ri-earth-line" aria-hidden="true"></i></span> International Routes</a>
         </div>
       </li>
       <li><a href="experience.html" class="nav-link">Experience</a></li>
@@ -67,12 +68,12 @@
 
 <!-- Mobile Nav -->
 <div class="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
-  <a href="index.html" class="mobile-nav__link">Home <span>›</span></a>
-  <a href="flights.html" class="mobile-nav__link">Search Flights <span>›</span></a>
-  <a href="experience.html" class="mobile-nav__link">Experience <span>›</span></a>
-  <a href="about.html" class="mobile-nav__link">About PIA <span>›</span></a>
-  <a href="contact.html" class="mobile-nav__link">Contact <span>›</span></a>
-  <a href="hci-analysis.html" class="mobile-nav__link">HCI Analysis <span>›</span></a>
+  <a href="index.html" class="mobile-nav__link">Home <span><i class="ri-arrow-right-s-line" aria-hidden="true"></i></span></a>
+  <a href="flights.html" class="mobile-nav__link">Search Flights <span><i class="ri-arrow-right-s-line" aria-hidden="true"></i></span></a>
+  <a href="experience.html" class="mobile-nav__link">Experience <span><i class="ri-arrow-right-s-line" aria-hidden="true"></i></span></a>
+  <a href="about.html" class="mobile-nav__link">About SIA <span><i class="ri-arrow-right-s-line" aria-hidden="true"></i></span></a>
+  <a href="contact.html" class="mobile-nav__link">Contact <span><i class="ri-arrow-right-s-line" aria-hidden="true"></i></span></a>
+  <a href="hci-analysis.html" class="mobile-nav__link">HCI Analysis <span><i class="ri-arrow-right-s-line" aria-hidden="true"></i></span></a>
   <div style="margin-top:2rem;display:flex;flex-direction:column;gap:1rem">
     <a href="booking.html" class="btn btn-primary">Book a Flight</a>
   </div>
@@ -83,12 +84,12 @@
   <!-- ══ HERO ══ -->
   <section class="hci-hero" aria-labelledby="hci-hero-title">
     <div class="container" style="position:relative;z-index:1">
-      <div class="hci-hero__tag">📚 Human Computer Interaction · Course Project</div>
-      <h1 class="hci-hero__title" id="hci-hero-title">HCI Analysis: Redesigning PIA for Better Passenger Experience</h1>
+      <div class="hci-hero__tag"><i class="ri-book-line" aria-hidden="true"></i> Human Computer Interaction · Course Project</div>
+      <h1 class="hci-hero__title" id="hci-hero-title">HCI Analysis: Redesigning SIA for Better Passenger Experience</h1>
       <p class="hci-hero__sub">This prototype improves passenger usability through accessibility, consistency, navigation, user feedback, and efficiency — the five core HCI evaluation criteria.</p>
       <div style="display:flex;gap:var(--space-3);flex-wrap:wrap">
-        <a href="booking.html" class="btn btn-gold btn-lg">View Booking Flow →</a>
-        <a href="flights.html?from=KHI&to=ISB" class="btn btn-outline-white btn-lg">Explore Flight Results →</a>
+        <a href="booking.html" class="btn btn-gold btn-lg">View Booking Flow <i class="ri-arrow-right-s-line" aria-hidden="true"></i></a>
+        <a href="flights.html?from=KHI&to=ISB" class="btn btn-outline-white btn-lg">Explore Flight Results <i class="ri-arrow-right-s-line" aria-hidden="true"></i></a>
       </div>
 
       <!-- Quick metrics -->
@@ -106,7 +107,7 @@
           <div style="font-size:.72rem;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.06em;margin-top:.25rem">Team Members</div>
         </div>
         <div style="text-align:center">
-          <div style="font-family:var(--font-display);font-size:2rem;font-weight:900;color:var(--clr-gold)">♿</div>
+          <div style="font-family:var(--font-display);font-size:2rem;font-weight:900;color:var(--clr-gold)"><i class="ri-wheelchair-line" aria-hidden="true"></i></div>
           <div style="font-size:.72rem;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.06em;margin-top:.25rem">A11y Panel</div>
         </div>
         <div style="text-align:center">
@@ -123,47 +124,47 @@
       <div class="section-header reveal" style="text-align:left;margin-bottom:var(--space-8)">
         <div class="section-eyebrow" style="justify-content:flex-start">Project Scope</div>
         <h2 class="section-title" id="scope-heading">What This Prototype Covers</h2>
-        <p class="section-subtitle">This is not a complete clone of PIA.com. It is an HCI redesign prototype focused on passenger-facing interactions.</p>
+        <p class="section-subtitle">This is not a complete clone of SIA.com. It is an HCI redesign prototype focused on passenger-facing interactions.</p>
       </div>
 
       <div class="grid-3 gap-4">
         <div class="scope-card reveal delay-1">
-          <span style="font-size:1.8rem;flex-shrink:0" aria-hidden="true">🎯</span>
+          <span style="font-size:1.8rem;flex-shrink:0" aria-hidden="true"><i class="ri-target-line" aria-hidden="true"></i></span>
           <div>
             <h3 style="font-weight:700;margin-bottom:var(--space-1)">Scope of Redesign</h3>
             <p style="font-size:var(--text-sm);color:var(--clr-slate-600);line-height:1.6">We focused on passenger-facing tasks only: booking, flight search, service discovery, support access, and accessibility features.</p>
           </div>
         </div>
         <div class="scope-card reveal delay-2">
-          <span style="font-size:1.8rem;flex-shrink:0" aria-hidden="true">📦</span>
+          <span style="font-size:1.8rem;flex-shrink:0" aria-hidden="true"><i class="ri-package-line" aria-hidden="true"></i></span>
           <div>
             <h3 style="font-weight:700;margin-bottom:var(--space-1)">Mock Data Only</h3>
             <p style="font-size:var(--text-sm);color:var(--clr-slate-600);line-height:1.6">All flight data — routes, prices, schedules — is hard-coded. There is no real backend, no real payment, and no real booking processing.</p>
           </div>
         </div>
         <div class="scope-card reveal delay-3">
-          <span style="font-size:1.8rem;flex-shrink:0" aria-hidden="true">🧪</span>
+          <span style="font-size:1.8rem;flex-shrink:0" aria-hidden="true"><i class="ri-flask-line" aria-hidden="true"></i></span>
           <div>
             <h3 style="font-weight:700;margin-bottom:var(--space-1)">Academic Prototype</h3>
             <p style="font-size:var(--text-sm);color:var(--clr-slate-600);line-height:1.6">This project exists to demonstrate HCI principles in a real-world airline context. Usability and interaction design are the primary goals.</p>
           </div>
         </div>
         <div class="scope-card reveal delay-4">
-          <span style="font-size:1.8rem;flex-shrink:0" aria-hidden="true">🛠</span>
+          <span style="font-size:1.8rem;flex-shrink:0" aria-hidden="true"><i class="ri-tools-line" aria-hidden="true"></i></span>
           <div>
             <h3 style="font-weight:700;margin-bottom:var(--space-1)">Technology Used</h3>
             <p style="font-size:var(--text-sm);color:var(--clr-slate-600);line-height:1.6">HTML, Tailwind CSS (CDN), Vanilla JavaScript. No frameworks, no backend, no npm. Designed to run directly in any browser.</p>
           </div>
         </div>
         <div class="scope-card reveal delay-5">
-          <span style="font-size:1.8rem;flex-shrink:0" aria-hidden="true">✈</span>
+          <span style="font-size:1.8rem;flex-shrink:0" aria-hidden="true"><i class="ri-flight-takeoff-line" aria-hidden="true"></i></span>
           <div>
-            <h3 style="font-weight:700;margin-bottom:var(--space-1)">Why PIA?</h3>
+            <h3 style="font-weight:700;margin-bottom:var(--space-1)">Why SIA?</h3>
             <p style="font-size:var(--text-sm);color:var(--clr-slate-600);line-height:1.6">Airline websites involve high-stakes user decisions: money, schedules, travel. They are an ideal HCI case study with clear usability problems to solve.</p>
           </div>
         </div>
         <div class="scope-card reveal delay-1">
-          <span style="font-size:1.8rem;flex-shrink:0" aria-hidden="true">👥</span>
+          <span style="font-size:1.8rem;flex-shrink:0" aria-hidden="true"><i class="ri-group-line" aria-hidden="true"></i></span>
           <div>
             <h3 style="font-weight:700;margin-bottom:var(--space-1)">Target Users</h3>
             <p style="font-size:var(--text-sm);color:var(--clr-slate-600);line-height:1.6">Pakistani domestic travelers, international diaspora, and users with accessibility needs — ranging from tech-savvy to first-time digital bookers.</p>
@@ -187,7 +188,7 @@
         <!-- 1. Accessibility -->
         <div class="principle-card reveal">
           <div class="principle-card__top">
-            <div class="principle-card__icon ic-access" aria-hidden="true">♿</div>
+            <div class="principle-card__icon ic-access" aria-hidden="true"><i class="ri-wheelchair-line" aria-hidden="true"></i></div>
             <div>
               <div class="principle-card__number">PRINCIPLE 01</div>
               <div class="principle-card__name">Accessibility</div>
@@ -196,11 +197,11 @@
           <div class="principle-card__body">
             <div class="principle-row">
               <div class="principle-fact">
-                <div class="principle-fact__label principle-fact__label--problem">⚠ Typical Problem</div>
+                <div class="principle-fact__label principle-fact__label--problem"><i class="ri-error-warning-line" aria-hidden="true"></i> Typical Problem</div>
                 <p class="principle-fact__text">Airline websites are difficult for users with visual, motor, or cognitive limitations. Small text, poor contrast, unclear forms, and hidden support options make tasks frustrating or impossible for many passengers.</p>
               </div>
               <div class="principle-fact">
-                <div class="principle-fact__label principle-fact__label--solution">✓ Our Improvement</div>
+                <div class="principle-fact__label principle-fact__label--solution"><i class="ri-checkbox-circle-line" aria-hidden="true"></i> Our Improvement</div>
                 <p class="principle-fact__text">We added a skip-to-content link, a fully interactive Accessibility Panel (high contrast, large text, reduced motion, link underline), visible focus states on all interactive elements, clearly labelled form fields, and a prominent Special Assistance section in the Contact page.</p>
               </div>
             </div>
@@ -218,7 +219,7 @@
         <!-- 2. Consistency -->
         <div class="principle-card reveal">
           <div class="principle-card__top">
-            <div class="principle-card__icon ic-consist" aria-hidden="true">🔁</div>
+            <div class="principle-card__icon ic-consist" aria-hidden="true"><i class="ri-refresh-line" aria-hidden="true"></i></div>
             <div>
               <div class="principle-card__number">PRINCIPLE 02</div>
               <div class="principle-card__name">Consistency</div>
@@ -227,11 +228,11 @@
           <div class="principle-card__body">
             <div class="principle-row">
               <div class="principle-fact">
-                <div class="principle-fact__label principle-fact__label--problem">⚠ Typical Problem</div>
+                <div class="principle-fact__label principle-fact__label--problem"><i class="ri-error-warning-line" aria-hidden="true"></i> Typical Problem</div>
                 <p class="principle-fact__text">Inconsistent buttons, layouts, card styles, navigation patterns, and color usage increase cognitive load. Users must re-learn the interface on every page, slowing task completion and increasing error rates.</p>
               </div>
               <div class="principle-fact">
-                <div class="principle-fact__label principle-fact__label--solution">✓ Our Improvement</div>
+                <div class="principle-fact__label principle-fact__label--solution"><i class="ri-checkbox-circle-line" aria-hidden="true"></i> Our Improvement</div>
                 <p class="principle-fact__text">We built a single global.css design system with tokens for color, spacing, typography, shadows, and radii. Every button, card, form field, navbar, and footer is reused across all six pages without modification, giving passengers a predictable experience.</p>
               </div>
             </div>
@@ -249,7 +250,7 @@
         <!-- 3. Navigation -->
         <div class="principle-card reveal">
           <div class="principle-card__top">
-            <div class="principle-card__icon ic-nav" aria-hidden="true">🧭</div>
+            <div class="principle-card__icon ic-nav" aria-hidden="true"><i class="ri-compass-line" aria-hidden="true"></i></div>
             <div>
               <div class="principle-card__number">PRINCIPLE 03</div>
               <div class="principle-card__name">Navigation</div>
@@ -258,11 +259,11 @@
           <div class="principle-card__body">
             <div class="principle-row">
               <div class="principle-fact">
-                <div class="principle-fact__label principle-fact__label--problem">⚠ Typical Problem</div>
+                <div class="principle-fact__label principle-fact__label--problem"><i class="ri-error-warning-line" aria-hidden="true"></i> Typical Problem</div>
                 <p class="principle-fact__text">Airline websites overwhelm users with too many scattered links, unclear menu hierarchy, and no active state to indicate current position. Users struggle to find core tasks like check-in, flight status, or booking support.</p>
               </div>
               <div class="principle-fact">
-                <div class="principle-fact__label principle-fact__label--solution">✓ Our Improvement</div>
+                <div class="principle-fact__label principle-fact__label--solution"><i class="ri-checkbox-circle-line" aria-hidden="true"></i> Our Improvement</div>
                 <p class="principle-fact__text">We implemented a sticky navbar with dropdown menus, a mobile drawer, a search overlay (Ctrl+K), active page link highlighting, a Quick Services strip on the homepage, and clear CTA buttons in every section that guide users to the next logical step.</p>
               </div>
             </div>
@@ -280,7 +281,7 @@
         <!-- 4. User Feedback -->
         <div class="principle-card reveal">
           <div class="principle-card__top">
-            <div class="principle-card__icon ic-feed" aria-hidden="true">💬</div>
+            <div class="principle-card__icon ic-feed" aria-hidden="true"><i class="ri-chat-3-line" aria-hidden="true"></i></div>
             <div>
               <div class="principle-card__number">PRINCIPLE 04</div>
               <div class="principle-card__name">User Feedback</div>
@@ -289,11 +290,11 @@
           <div class="principle-card__body">
             <div class="principle-row">
               <div class="principle-fact">
-                <div class="principle-fact__label principle-fact__label--problem">⚠ Typical Problem</div>
+                <div class="principle-fact__label principle-fact__label--problem"><i class="ri-error-warning-line" aria-hidden="true"></i> Typical Problem</div>
                 <p class="principle-fact__text">Users are left guessing when they search, select, or submit. No loading states, no confirmation messages, no error correction hints. When mistakes happen — same city, empty fields — users receive no guidance on how to recover.</p>
               </div>
               <div class="principle-fact">
-                <div class="principle-fact__label principle-fact__label--solution">✓ Our Improvement</div>
+                <div class="principle-fact__label principle-fact__label--solution"><i class="ri-checkbox-circle-line" aria-hidden="true"></i> Our Improvement</div>
                 <p class="principle-fact__text">Every critical action produces visible feedback: a loading spinner when searching flights, toast notifications for success/error/warning states, inline form validation, aria-live regions for screen readers, and an empty-state message when no flights match filters. Booking steps show clear progress.</p>
               </div>
             </div>
@@ -311,7 +312,7 @@
         <!-- 5. Efficiency -->
         <div class="principle-card reveal">
           <div class="principle-card__top">
-            <div class="principle-card__icon ic-eff" aria-hidden="true">⚡</div>
+            <div class="principle-card__icon ic-eff" aria-hidden="true"><i class="ri-flashlight-line" aria-hidden="true"></i></div>
             <div>
               <div class="principle-card__number">PRINCIPLE 05</div>
               <div class="principle-card__name">Efficiency</div>
@@ -320,11 +321,11 @@
           <div class="principle-card__body">
             <div class="principle-row">
               <div class="principle-fact">
-                <div class="principle-fact__label principle-fact__label--problem">⚠ Typical Problem</div>
+                <div class="principle-fact__label principle-fact__label--problem"><i class="ri-error-warning-line" aria-hidden="true"></i> Typical Problem</div>
                 <p class="principle-fact__text">Passengers want to complete core tasks — book a flight, check in, find baggage info — in the fewest possible steps. Original airline sites bury key actions behind multiple menus, force unnecessary logins, and provide no shortcut to frequent tasks.</p>
               </div>
               <div class="principle-fact">
-                <div class="principle-fact__label principle-fact__label--solution">✓ Our Improvement</div>
+                <div class="principle-fact__label principle-fact__label--solution"><i class="ri-checkbox-circle-line" aria-hidden="true"></i> Our Improvement</div>
                 <p class="principle-fact__text">The booking widget is above the fold on the homepage with city autocomplete and a route-swap button. Quick services reduce navigation steps. Flight filters (sort by price/time/duration, filter by class) reduce scanning effort. Passenger counter replaces manual text entry. The whole booking flow is guided and linear.</p>
               </div>
             </div>
@@ -355,74 +356,74 @@
       <div class="grid-3 gap-6">
         <div class="compare-card reveal delay-1">
           <div class="compare-card__before">
-            <div class="compare-label compare-label--before">✕ Original Issue</div>
+            <div class="compare-label compare-label--before"><i class="ri-close-line" aria-hidden="true"></i> Original Issue</div>
             <p class="compare-card__text">Scattered service links buried in sub-menus with no grouped quick-access strip.</p>
           </div>
           <div class="compare-card__after">
-            <div class="compare-label compare-label--after">✓ Our Redesign</div>
+            <div class="compare-label compare-label--after"><i class="ri-checkbox-circle-line" aria-hidden="true"></i> Our Redesign</div>
             <p class="compare-card__text">A horizontally scrollable Quick Services strip directly below booking — Check-In, Flight Status, Manage Booking, Cargo all visible in one row.</p>
           </div>
-          <div class="compare-card__benefit">🏆 HCI Benefit: Faster task discovery</div>
+          <div class="compare-card__benefit"><i class="ri-trophy-line" aria-hidden="true"></i> HCI Benefit: Faster task discovery</div>
         </div>
 
         <div class="compare-card reveal delay-2">
           <div class="compare-card__before">
-            <div class="compare-label compare-label--before">✕ Original Issue</div>
+            <div class="compare-label compare-label--before"><i class="ri-close-line" aria-hidden="true"></i> Original Issue</div>
             <p class="compare-card__text">Form errors only shown on submit, with no inline guidance or clear error messages.</p>
           </div>
           <div class="compare-card__after">
-            <div class="compare-label compare-label--after">✓ Our Redesign</div>
+            <div class="compare-label compare-label--after"><i class="ri-checkbox-circle-line" aria-hidden="true"></i> Our Redesign</div>
             <p class="compare-card__text">Inline validation on blur, same-city prevention, required field highlights, and toast notifications with clear error messages on every form.</p>
           </div>
-          <div class="compare-card__benefit">🏆 HCI Benefit: Better error recovery</div>
+          <div class="compare-card__benefit"><i class="ri-trophy-line" aria-hidden="true"></i> HCI Benefit: Better error recovery</div>
         </div>
 
         <div class="compare-card reveal delay-3">
           <div class="compare-card__before">
-            <div class="compare-label compare-label--before">✕ Original Issue</div>
+            <div class="compare-label compare-label--before"><i class="ri-close-line" aria-hidden="true"></i> Original Issue</div>
             <p class="compare-card__text">No accessibility tools visible — users with special needs must call a helpline with no digital alternative.</p>
           </div>
           <div class="compare-card__after">
-            <div class="compare-label compare-label--after">✓ Our Redesign</div>
+            <div class="compare-label compare-label--after"><i class="ri-checkbox-circle-line" aria-hidden="true"></i> Our Redesign</div>
             <p class="compare-card__text">Persistent Accessibility Panel with font size control, high contrast, reduced motion. Dedicated Special Assistance section on Contact page with a direct request form.</p>
           </div>
-          <div class="compare-card__benefit">🏆 HCI Benefit: More inclusive experience</div>
+          <div class="compare-card__benefit"><i class="ri-trophy-line" aria-hidden="true"></i> HCI Benefit: More inclusive experience</div>
         </div>
 
         <div class="compare-card reveal delay-4">
           <div class="compare-card__before">
-            <div class="compare-label compare-label--before">✕ Original Issue</div>
+            <div class="compare-label compare-label--before"><i class="ri-close-line" aria-hidden="true"></i> Original Issue</div>
             <p class="compare-card__text">Flight search returns a cluttered list with no sorting or filtering — users must manually compare every option.</p>
           </div>
           <div class="compare-card__after">
-            <div class="compare-label compare-label--after">✓ Our Redesign</div>
+            <div class="compare-label compare-label--after"><i class="ri-checkbox-circle-line" aria-hidden="true"></i> Our Redesign</div>
             <p class="compare-card__text">Flight results page includes sort (price, depart, duration) and class filters. Loading state gives clear feedback. Empty state explains when no results are found.</p>
           </div>
-          <div class="compare-card__benefit">🏆 HCI Benefit: Reduced decision fatigue</div>
+          <div class="compare-card__benefit"><i class="ri-trophy-line" aria-hidden="true"></i> HCI Benefit: Reduced decision fatigue</div>
         </div>
 
         <div class="compare-card reveal delay-5">
           <div class="compare-card__before">
-            <div class="compare-label compare-label--before">✕ Original Issue</div>
+            <div class="compare-label compare-label--before"><i class="ri-close-line" aria-hidden="true"></i> Original Issue</div>
             <p class="compare-card__text">Mobile navigation is collapsed into a hamburger with no visual feedback and poor touch targets.</p>
           </div>
           <div class="compare-card__after">
-            <div class="compare-label compare-label--after">✓ Our Redesign</div>
+            <div class="compare-label compare-label--after"><i class="ri-checkbox-circle-line" aria-hidden="true"></i> Our Redesign</div>
             <p class="compare-card__text">Mobile drawer with animated hamburger, large touch targets (44px minimum), full list of page links, and a prominent Book a Flight CTA at the bottom.</p>
           </div>
-          <div class="compare-card__benefit">🏆 HCI Benefit: Better mobile usability</div>
+          <div class="compare-card__benefit"><i class="ri-trophy-line" aria-hidden="true"></i> HCI Benefit: Better mobile usability</div>
         </div>
 
         <div class="compare-card reveal delay-1">
           <div class="compare-card__before">
-            <div class="compare-label compare-label--before">✕ Original Issue</div>
+            <div class="compare-label compare-label--before"><i class="ri-close-line" aria-hidden="true"></i> Original Issue</div>
             <p class="compare-card__text">No active page indicator in navigation — users cannot tell where they are in the site structure.</p>
           </div>
           <div class="compare-card__after">
-            <div class="compare-label compare-label--after">✓ Our Redesign</div>
+            <div class="compare-label compare-label--after"><i class="ri-checkbox-circle-line" aria-hidden="true"></i> Our Redesign</div>
             <p class="compare-card__text">Active nav link is highlighted with a green underline and background. Current page is detectable by JavaScript matching the URL — consistent across all six pages.</p>
           </div>
-          <div class="compare-card__benefit">🏆 HCI Benefit: Clear navigation context</div>
+          <div class="compare-card__benefit"><i class="ri-trophy-line" aria-hidden="true"></i> HCI Benefit: Clear navigation context</div>
         </div>
       </div>
     </div>
@@ -440,11 +441,11 @@
       <div style="display:flex;flex-direction:column;gap:var(--space-3);max-width:860px;margin-inline:auto">
         <div class="talking-point reveal delay-1">
           <div class="talking-point__num" aria-label="Point 1">1</div>
-          <p style="font-size:var(--text-sm);color:var(--clr-slate-700);line-height:1.65"><strong>Why PIA?</strong> We chose PIA because airline websites involve high-stakes real-world decisions — booking travel, spending money, managing time. This makes them ideal for HCI analysis where usability directly impacts user outcomes.</p>
+          <p style="font-size:var(--text-sm);color:var(--clr-slate-700);line-height:1.65"><strong>Why SIA?</strong> We chose SIA because airline websites involve high-stakes real-world decisions — booking travel, spending money, managing time. This makes them ideal for HCI analysis where usability directly impacts user outcomes.</p>
         </div>
         <div class="talking-point reveal delay-2">
           <div class="talking-point__num" aria-label="Point 2">2</div>
-          <p style="font-size:var(--text-sm);color:var(--clr-slate-700);line-height:1.65"><strong>Scope decision:</strong> We chose not to clone the entire PIA website. Instead we focused on the passenger task flow — search, discover, book, get help — because HCI is about the quality of interaction, not the quantity of pages.</p>
+          <p style="font-size:var(--text-sm);color:var(--clr-slate-700);line-height:1.65"><strong>Scope decision:</strong> We chose not to clone the entire SIA website. Instead we focused on the passenger task flow — search, discover, book, get help — because HCI is about the quality of interaction, not the quantity of pages.</p>
         </div>
         <div class="talking-point reveal delay-3">
           <div class="talking-point__num" aria-label="Point 3">3</div>
@@ -481,15 +482,15 @@
           <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem">
             <svg width="40" height="40" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="22" fill="#0A6B3D"/><path d="M8 26 L22 12 L36 26" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="22" cy="22" r="4" fill="white"/></svg>
             <div>
-              <div style="font-family:var(--font-display);font-weight:900;font-size:1.2rem;color:white">PIA</div>
+              <div style="font-family:var(--font-display);font-weight:900;font-size:1.2rem;color:white">SIA</div>
               <div style="font-size:.65rem;color:rgba(255,255,255,.5);letter-spacing:.05em">Great People to Fly With</div>
             </div>
           </div>
-          <p class="footer__brand-desc">Pakistan International Airlines — HCI Redesign Prototype. Academic project for Human Computer Interaction course.</p>
+          <p class="footer__brand-desc">SMI International Airlines — HCI Redesign Prototype. Academic project for Human Computer Interaction course.</p>
           <div class="footer__socials" aria-label="Social media links">
-            <a href="https://facebook.com" class="footer__social-link" aria-label="Facebook" target="_blank" rel="noopener">f</a>
-            <a href="https://twitter.com" class="footer__social-link" aria-label="Twitter" target="_blank" rel="noopener">𝕏</a>
-            <a href="https://instagram.com" class="footer__social-link" aria-label="Instagram" target="_blank" rel="noopener">◎</a>
+            <a href="https://facebook.com" class="footer__social-link" aria-label="Facebook" target="_blank" rel="noopener"><i class="ri-facebook-circle-line" aria-hidden="true"></i></a>
+            <a href="https://twitter.com" class="footer__social-link" aria-label="Twitter" target="_blank" rel="noopener"><i class="ri-twitter-line" aria-hidden="true"></i></a>
+            <a href="https://instagram.com" class="footer__social-link" aria-label="Instagram" target="_blank" rel="noopener"><i class="ri-instagram-line" aria-hidden="true"></i></a>
           </div>
         </div>
         <div>
@@ -499,7 +500,7 @@
             <li><a href="flights.html" class="footer__link">Search Flights</a></li>
             <li><a href="booking.html" class="footer__link">Book a Flight</a></li>
             <li><a href="experience.html" class="footer__link">Experience</a></li>
-            <li><a href="about.html" class="footer__link">About PIA</a></li>
+            <li><a href="about.html" class="footer__link">About SIA</a></li>
             <li><a href="contact.html" class="footer__link">Contact</a></li>
             <li><a href="hci-analysis.html" class="footer__link">HCI Analysis</a></li>
           </ul>
@@ -528,7 +529,7 @@
   </div>
   <div class="footer__bottom">
     <div class="container" style="display:contents">
-      <p class="footer__copyright">© 2024 Pakistan International Airlines. HCI Redesign Prototype — Academic Use Only.</p>
+      <p class="footer__copyright">© 2024 SMI International Airlines. HCI Redesign Prototype — Academic Use Only.</p>
       <nav class="footer__bottom-links" aria-label="Legal links">
         <a href="hci-analysis.html" class="footer__bottom-link">HCI Analysis</a>
         <a href="about.html" class="footer__bottom-link">About</a>
@@ -539,21 +540,21 @@
 </footer>
 
 <!-- Search Overlay -->
-<div class="search-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Search PIA">
+<div class="search-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Search SIA">
   <div class="search-overlay__box" role="document">
     <div class="search-overlay__header">
       <div>
-        <p class="search-overlay__eyebrow">Search PIA</p>
+        <p class="search-overlay__eyebrow">Search SIA</p>
         <h2 class="search-overlay__title">Where would you like to go?</h2>
       </div>
 
       <button class="search-overlay__close" type="button" aria-label="Close search">
-        ✕
+        <i class="ri-close-line" aria-hidden="true"></i>
       </button>
     </div>
 
     <form class="search-overlay__form">
-      <span class="search-overlay__icon" aria-hidden="true">⌕</span>
+      <span class="search-overlay__icon" aria-hidden="true"><i class="ri-search-line" aria-hidden="true"></i></span>
       <input
         class="search-overlay__input"
         type="search"
@@ -591,16 +592,16 @@
 
 <!-- Accessibility trigger -->
 <button class="a11y-trigger" aria-label="Open accessibility options" aria-expanded="false" aria-controls="a11y-panel">
-  <span aria-hidden="true">♿</span>
+  <span aria-hidden="true"><i class="ri-wheelchair-line" aria-hidden="true"></i></span>
   <!-- <span class="a11y-trigger__label">Accessibility</span> -->
 </button>
 <aside id="a11y-panel" class="a11y-panel" aria-hidden="true" aria-label="Accessibility options">
   <div class="a11y-panel__header">
     <span>Accessibility</span>
-    <button class="a11y-trigger btn-ghost btn-sm" aria-label="Close accessibility panel" style="font-size:.85rem">✕</button>
+    <button class="a11y-trigger btn-ghost btn-sm" aria-label="Close accessibility panel" style="font-size:.85rem"><i class="ri-close-line" aria-hidden="true"></i></button>
   </div>
   <div class="a11y-option">
-    <div class="a11y-option__label"><span aria-hidden="true">🔤</span> Text Size</div>
+    <div class="a11y-option__label"><span aria-hidden="true"><i class="ri-text-line" aria-hidden="true"></i></span> Text Size</div>
     <div class="a11y-size-controls">
       <button class="a11y-size-btn a11y-font-decrease" aria-label="Decrease font size">A−</button>
       <span class="a11y-font-size-val" aria-live="polite">16px</span>
@@ -608,25 +609,25 @@
     </div>
   </div>
   <div class="a11y-option">
-    <label class="a11y-option__label" for="hci-toggle-contrast"><span aria-hidden="true">◑</span> High Contrast</label>
+    <label class="a11y-option__label" for="hci-toggle-contrast"><span aria-hidden="true"><i class="ri-contrast-line" aria-hidden="true"></i></span> High Contrast</label>
     <button id="hci-toggle-contrast" class="a11y-toggle" role="switch" aria-pressed="false" data-action="high-contrast"></button>
   </div>
   <div class="a11y-option">
-    <label class="a11y-option__label" for="hci-toggle-motion"><span aria-hidden="true">⏸</span> Reduce Motion</label>
+    <label class="a11y-option__label" for="hci-toggle-motion"><span aria-hidden="true"><i class="ri-pause-line" aria-hidden="true"></i></span> Reduce Motion</label>
     <button id="hci-toggle-motion" class="a11y-toggle" role="switch" aria-pressed="false" data-action="reduced-motion"></button>
   </div>
   <div class="a11y-option">
-    <label class="a11y-option__label" for="hci-toggle-underline"><span aria-hidden="true">U̲</span> Underline Links</label>
+    <label class="a11y-option__label" for="hci-toggle-underline"><span aria-hidden="true"><i class="ri-underline" aria-hidden="true"></i></span> Underline Links</label>
     <button id="hci-toggle-underline" class="a11y-toggle" role="switch" aria-pressed="false" data-action="underline-links"></button>
   </div>
   <div class="a11y-option">
-    <label class="a11y-option__label" for="hci-toggle-large"><span aria-hidden="true">🅰</span> Large Text</label>
+    <label class="a11y-option__label" for="hci-toggle-large"><span aria-hidden="true"><i class="ri-text-line" aria-hidden="true"></i></span> Large Text</label>
     <button id="hci-toggle-large" class="a11y-toggle" role="switch" aria-pressed="false" data-action="large-text"></button>
   </div>
   <button class="btn btn-ghost btn-sm a11y-reset" style="width:100%;margin-top:1rem">Reset All</button>
 </aside>
 
-<button class="back-to-top" aria-label="Back to top">↑</button>
+<button class="back-to-top" aria-label="Back to top"><i class="ri-arrow-up-line" aria-hidden="true"></i></button>
 <div class="toast-container" aria-live="polite" aria-atomic="true"></div>
 <script src="js/main.js"></script>
 </body>

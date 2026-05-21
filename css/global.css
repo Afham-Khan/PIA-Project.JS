@@ -1,5 +1,5 @@
 /* ============================================================
-   PIA HCI REDESIGN — global.css
+   SIA HCI REDESIGN — global.css
    Design tokens · Resets · Typography · Shared Components
    ============================================================ */
 
@@ -1662,6 +1662,7 @@ body.a11y-underline-links a {
 .footer__bottom {
   border-top: 1px solid rgba(255, 255, 255, .1);
   padding-block: var(--space-6);
+  padding-inline: var(--space-4);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -3543,7 +3544,7 @@ body.a11y-underline-links a {
   background: var(--clr-white);
   border: 1px solid var(--clr-slate-200);
   border-radius: var(--radius-xl);
-  padding: var(--space-7);
+  padding: var(--space-8);
   transition: all var(--duration-base) var(--ease-out);
 }
 
@@ -3563,20 +3564,20 @@ body.a11y-underline-links a {
   font-size: var(--text-xl);
   font-weight: 700;
   color: var(--clr-slate-800);
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-4);
 }
 
 .baggage-card__rows {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-4);
 }
 
 .baggage-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-3) var(--space-4);
+  padding: var(--space-4) var(--space-5);
   background: var(--clr-off-white);
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
@@ -3755,7 +3756,7 @@ body.a11y-underline-links a {
 }
 
 .about-hero::before {
-  content: 'PIA';
+  content: 'SIA';
   position: absolute;
   right: -2%;
   top: 50%;

@@ -1,5 +1,5 @@
 /* ============================================================
-   PIA HCI REDESIGN — main.js
+   SIA HCI REDESIGN — main.js
    Shared logic for all pages
    ============================================================ */
 
@@ -71,6 +71,16 @@ function initNavbar() {
       link.classList.add('active');
     }
   });
+
+  // Close any dropdown that may keep focus after history navigation
+  const resetDropdownFocus = () => {
+    const focusedDropdown = document.activeElement?.closest('.nav-dropdown');
+    if (focusedDropdown) {
+      document.activeElement.blur();
+    }
+  };
+  resetDropdownFocus();
+  on(window, 'pageshow', resetDropdownFocus);
 
   // Mobile hamburger
   const hamburger = $('.navbar__hamburger');
@@ -857,7 +867,7 @@ function renderFlights(container, flights, from, to, date) {
   container.innerHTML = flights.map(f => `
     <div class="flight-card reveal">
       <div class="flight-card__airline">
-        <span class="flight-card__logo">PIA</span>
+        <span class="flight-card__logo">SIA</span>
         <span class="flight-card__num">${f.flight}</span>
         <span class="flight-card__aircraft">${f.aircraft}</span>
       </div>
@@ -1437,6 +1447,16 @@ function handleBackNavigation() {
 function initPageLoader() {
   const loader = document.getElementById('page-loader');
   if (!loader) return;
+
+  const navEntry = performance.getEntriesByType('navigation')?.[0] || { type: 'navigate' };
+  const referrer = document.referrer;
+  const isRefresh = navEntry.type === 'reload';
+  const isInternalNav = navEntry.type === 'navigate' && referrer && new URL(referrer).origin === location.origin;
+
+  if (!isRefresh && isInternalNav) {
+    loader.remove();
+    return;
+  }
 
   const minDelay = 3200;
 
