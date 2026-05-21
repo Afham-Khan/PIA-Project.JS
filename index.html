@@ -1,11 +1,1117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SMI International Airlines – Book flights, check destinations, explore deals. Great People to Fly With." />
+  <meta name="theme-color" content="#0A6B3D" />
+  <link
+  rel="icon"
+  type="image/svg+xml"
+  href='data:image/svg+xml,
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44">
+    <circle cx="22" cy="22" r="22" fill="%230A6B3D"/>
+    <path d="M8 26 L22 12 L36 26" stroke="%23C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <ellipse cx="22" cy="26" rx="10" ry="4" fill="%23C9A84C" opacity="0.3"/>
+    <circle cx="22" cy="22" r="4" fill="white"/>
+  </svg>'
+/>
+  <title>SIA – SMI International Airlines | Great People to Fly With</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- Global CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/global.css" />
+
 </head>
+
 <body>
-    
+<!-- ══ PREMIUM PAGE LOADER ══ -->
+<div id="page-loader" class="page-loader" role="status" aria-live="polite" aria-label="Loading page">
+  <div class="page-loader__shell">
+    <div class="page-loader__top">
+      <div class="page-loader__brand">
+        <div class="page-loader__logo">SIA</div>
+        <div>
+          <p class="page-loader__brand-name">SMI International Airlines</p>
+          <p class="page-loader__brand-sub">Great People to Fly With</p>
+        </div>
+      </div>
+
+      <span class="page-loader__status">Loading</span>
+    </div>
+
+    <div class="page-loader__flight-card">
+      <div class="page-loader__airport">
+        <span class="page-loader__code">KHI</span>
+        <span class="page-loader__city">Karachi</span>
+      </div>
+
+      <div class="page-loader__route">
+        <div class="page-loader__track">
+          <span class="page-loader__dot page-loader__dot--left"></span>
+          <span class="page-loader__dot page-loader__dot--right"></span>
+          <span class="page-loader__plane" aria-hidden="true"><i class="ri-flight-takeoff-line" aria-hidden="true"></i></span>
+        </div>
+        <p class="page-loader__route-text">Preparing your journey</p>
+      </div>
+
+      <div class="page-loader__airport page-loader__airport--right">
+        <span class="page-loader__code">ISB</span>
+        <span class="page-loader__city">Islamabad</span>
+      </div>
+    </div>
+
+    <div class="page-loader__progress">
+      <span></span>
+    </div>
+  </div>
+</div>
+  <!-- Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Announcement Bar -->
+  <div class="announce-bar" role="banner" aria-label="Service announcements">
+    <div class="announce-bar__track" aria-live="off">
+      <span class="announce-bar__item"><span class="announce-bar__dot"></span>SIA flights will operate from Terminal 5 at King Khalid Airport Riyadh — Click Here</span>
+      <span class="announce-bar__item"><span class="announce-bar__dot"></span>Web & Mobile Check-In now available 24 hours before departure</span>
+      <span class="announce-bar__item"><span class="announce-bar__dot"></span>Nusuk — Your Official Guide to Makkah and Madinah — Book Now</span>
+      <span class="announce-bar__item"><span class="announce-bar__dot"></span>Share the Freedom — Fly with SIA Gift Cards for your loved ones</span>
+      <!-- Duplicate for seamless loop -->
+      <span class="announce-bar__item"><span class="announce-bar__dot"></span>SIA flights will operate from Terminal 5 at King Khalid Airport Riyadh — Click Here</span>
+      <span class="announce-bar__item"><span class="announce-bar__dot"></span>Web & Mobile Check-In now available 24 hours before departure</span>
+      <span class="announce-bar__item"><span class="announce-bar__dot"></span>Nusuk — Your Official Guide to Makkah and Madinah — Book Now</span>
+      <span class="announce-bar__item"><span class="announce-bar__dot"></span>Share the Freedom — Fly with SIA Gift Cards for your loved ones</span>
+    </div>
+    <button class="announce-bar__close" aria-label="Close announcement"><i class="ri-close-line" aria-hidden="true"></i></button>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container navbar__inner">
+      <!-- Logo -->
+      <a href="index.html" class="navbar__logo" aria-label="SIA – SMI International Airlines">
+        <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="22" cy="22" r="22" fill="#0A6B3D"/>
+          <path d="M8 26 L22 12 L36 26" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <ellipse cx="22" cy="26" rx="10" ry="4" fill="#C9A84C" opacity="0.3"/>
+          <circle cx="22" cy="22" r="4" fill="white"/>
+        </svg>
+        <div>
+          <div style="font-family:var(--font-display);font-weight:900;font-size:1.05rem;color:var(--clr-green);line-height:1">SIA</div>
+          <div style="font-size:0.6rem;color:var(--clr-slate-400);letter-spacing:0.05em;line-height:1;font-weight:500">Great People to Fly With</div>
+        </div>
+      </a>
+
+      <!-- Primary Links -->
+      <ul class="navbar__links" role="list">
+        <li class="nav-dropdown">
+          <a href="#" class="nav-link" aria-haspopup="true" aria-expanded="false">
+            Where we Fly <span class="nav-link__chevron"><i class="ri-arrow-down-s-line" aria-hidden="true"></i></span>
+          </a>
+          <div class="nav-dropdown__menu" role="menu">
+            <a href="flights.html?from=KHI&to=ISB" class="nav-dropdown__item" role="menuitem">
+              <span class="nav-dropdown__icon">🇵🇰</span> Domestic Routes
+            </a>
+            <a href="flights.html?from=KHI&to=DXB" class="nav-dropdown__item" role="menuitem">
+              <span class="nav-dropdown__icon"><i class="ri-earth-fill"></i></span> International Routes
+            </a>
+          </div>
+        </li>
+
+        <li >
+          <a href="experience.html" class="nav-link" aria-haspopup="true" aria-expanded="false">
+            Experience
+          </a>
+          <!-- <div class="nav-dropdown__menu" role="menu">
+            <a href="#" class="nav-dropdown__item" role="menuitem">
+              <span class="nav-dropdown__icon"><i class="ri-diamond-line" aria-hidden="true"></i></span> Business Class
+            </a>
+            <a href="#" class="nav-dropdown__item" role="menuitem">
+              <span class="nav-dropdown__icon">🍽</span> Dining & Meals
+            </a>
+            <a href="#" class="nav-dropdown__item" role="menuitem">
+              <span class="nav-dropdown__icon">🎧</span> Entertainment
+            </a>
+            <a href="#" class="nav-dropdown__item" role="menuitem">
+              <span class="nav-dropdown__icon"><i class="ri-wheelchair-line" aria-hidden="true"></i></span> Special Assistance
+            </a>
+          </div> -->
+        </li>
+
+        <li>
+          <a href="index.html#awards" class="nav-link">Awards+ Plus</a>
+        </li>
+
+        <li>
+          <a href="index.html#deals" class="nav-link">Deals</a>
+        </li>
+
+        <li>
+          <a href="hci-analysis.html" class="nav-link">Hci Analysis</a>
+        </li>
+
+        <li>
+          <a href="about.html" class="nav-link">About</a>
+        </li>
+
+        <li>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </li>
+      </ul>
+
+      <!-- Actions -->
+      <div class="navbar__actions">
+        <button class="navbar__search-btn" data-action="open-search" aria-label="Search">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <button class="btn btn-outline btn-sm login-trigger" type="button" style="display:flex;align-items:center;gap:6px">
+  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+    <circle cx="12" cy="7" r="4"/>
+  </svg>
+  <span class="login-trigger__text">Login</span>
+</button>
+        <a href="booking.html" class="btn btn-primary btn-sm">Book Now</a>
+
+        <!-- Hamburger -->
+        <button class="navbar__hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
+    <a href="index.html" class="mobile-nav__link">Home <span>›</span></a>
+    <a href="flights.html" class="mobile-nav__link">Search Flights <span>›</span></a>
+    <a href="about.html" class="mobile-nav__link">About SIA <span>›</span></a>
+    <a href="contact.html" class="mobile-nav__link">Contact <span>›</span></a>
+    <a href="#" class="mobile-nav__link">Awards+ Plus <span>›</span></a>
+    <a href="#" class="mobile-nav__link">Deals <span>›</span></a>
+    <div style="margin-top:2rem;display:flex;flex-direction:column;gap:1rem">
+      <a href="#" class="btn btn-outline">Log In</a>
+      <a href="booking.html" class="btn btn-primary">Book a Flight</a>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <main id="main-content">
+
+    <!-- ══ HERO SLIDER ══ -->
+    <section class="hero-slider" aria-label="Featured destinations">
+      <!-- Slide 1 -->
+      <div class="hero-slide active" aria-hidden="false">
+        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1400&q=80&auto=format&fit=crop"
+             alt="Scenic mountain landscape representing SIA destinations"
+             class="hero-slide__img" />
+        <div class="hero-slide__overlay"></div>
+        <div class="hero-slide__content">
+          <div class="container">
+            <div class="hero-slide__tag"><i class="ri-flight-takeoff-line" aria-hidden="true"></i> Great People to Fly With</div>
+            <h1 class="hero-slide__heading">Fly to the <em>World</em> with SIA</h1>
+            <p class="hero-slide__sub">Pakistan's national airline connecting you to over 35 destinations worldwide. Experience warmth, culture, and world-class hospitality.</p>
+            <div class="hero-slide__actions">
+              <a href="#booking" class="btn btn-gold btn-xl">Book a Flight</a>
+              <a href="about.html" class="btn btn-outline-white btn-xl">Explore SIA</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="hero-slide" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1400&q=80&auto=format&fit=crop"
+             alt="Aerial view of a destination city"
+             class="hero-slide__img" />
+        <div class="hero-slide__overlay"></div>
+        <div class="hero-slide__content">
+          <div class="container">
+            <div class="hero-slide__tag"><i class="ri-mosque-line" aria-hidden="true"></i> Nusuk Special Package</div>
+            <h1 class="hero-slide__heading">Journey to <em>Makkah &</em> Madinah</h1>
+            <p class="hero-slide__sub">Travel with peace of mind on SIA's special Umrah and Hajj packages. Your spiritual journey begins here.</p>
+            <div class="hero-slide__actions">
+              <a href="#" class="btn btn-gold btn-xl">Explore Packages</a>
+              <a href="flights.html?from=KHI&to=JED" class="btn btn-outline-white btn-xl">Book Flights</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="hero-slide" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1400&q=80&auto=format&fit=crop"
+             alt="Aircraft flying above clouds"
+             class="hero-slide__img" />
+        <div class="hero-slide__overlay"></div>
+        <div class="hero-slide__content">
+          <div class="container">
+            <div class="hero-slide__tag"><i class="ri-diamond-line" aria-hidden="true"></i> Business Class</div>
+            <h1 class="hero-slide__heading">Luxury Above the <em>Clouds</em></h1>
+            <p class="hero-slide__sub">Indulge in SIA Business Class — lie-flat seats, premium dining, and dedicated service from our award-winning cabin crew.</p>
+            <div class="hero-slide__actions">
+              <a href="#" class="btn btn-gold btn-xl">Discover Business</a>
+              <a href="booking.html" class="btn btn-outline-white btn-xl">Book Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <button class="hero-prev" aria-label="Previous slide">‹</button>
+      <button class="hero-next" aria-label="Next slide">›</button>
+
+      <div class="hero-controls" role="tablist" aria-label="Slide navigation">
+        <button class="hero-dot active" role="tab" aria-selected="true" aria-label="Slide 1"></button>
+        <button class="hero-dot" role="tab" aria-selected="false" aria-label="Slide 2"></button>
+        <button class="hero-dot" role="tab" aria-selected="false" aria-label="Slide 3"></button>
+      </div>
+
+      <div class="scroll-indicator" aria-hidden="true">
+        <span>Scroll</span>
+        <div class="scroll-indicator__line"></div>
+      </div>
+    </section>
+
+    <!-- ══ BOOKING WIDGET ══ -->
+    <section id="booking" class="booking-section" aria-label="Flight search">
+      <div class="container" style="padding-block:var(--space-12) var(--space-12)">
+        <div class="booking-widget">
+          <div class="booking-widget__header">
+            <div style="font-family:var(--font-display);font-weight:700;font-size:1.1rem;color:var(--clr-slate-800)">
+              Search Flights
+            </div>
+            <div style="display:flex;gap:0.5rem" role="group" aria-label="Trip type">
+              <button class="trip-tab active" data-trip="oneway" aria-pressed="true">One Way</button>
+              <button class="trip-tab" data-trip="roundtrip" aria-pressed="false">Round Trip</button>
+              <button class="trip-tab" data-trip="multicity" aria-pressed="false">Multi-City</button>
+            </div>
+          </div>
+
+          <form class="booking-form" novalidate aria-label="Flight search form">
+            <!-- Row 1: From / Swap / To / Depart -->
+            <div class="booking-fields">
+              <!-- From -->
+              <div class="form-group">
+                <label class="form-label" for="from-city">From</label>
+                <div class="input-wrapper">
+                  <span class="input-wrapper__icon" aria-hidden="true"><i class="ri-flight-takeoff-line" aria-hidden="true"></i></span>
+                  <input
+                    id="from-city"
+                    class="form-control from-input"
+                    type="text"
+                    placeholder="City or Airport"
+                    autocomplete="off"
+                    aria-autocomplete="list"
+                    aria-label="Departure city"
+                    required
+                  />
+                  <div class="city-dropdown" hidden role="listbox" aria-label="City suggestions"></div>
+                </div>
+              </div>
+
+              <!-- Swap -->
+              <div style="padding-bottom:1px">
+                <button type="button" class="swap-btn" aria-label="Swap origin and destination"><i class="ri-swap-line" aria-hidden="true"></i></button>
+              </div>
+
+              <!-- To -->
+              <div class="form-group">
+                <label class="form-label" for="to-city">To</label>
+                <div class="input-wrapper">
+                  <span class="input-wrapper__icon" aria-hidden="true"><i class="ri-map-pin-2-fill"></i></span>
+                  <input
+                    id="to-city"
+                    class="form-control to-input"
+                    type="text"
+                    placeholder="City or Airport"
+                    autocomplete="off"
+                    aria-autocomplete="list"
+                    aria-label="Destination city"
+                    required
+                  />
+                  <div class="city-dropdown" hidden role="listbox" aria-label="City suggestions"></div>
+                </div>
+              </div>
+
+              <!-- Depart -->
+              <div class="form-group">
+                <label class="form-label" for="depart-date">Depart</label>
+                <div class="input-wrapper">
+                  <span class="input-wrapper__icon" aria-hidden="true"><i class="ri-calendar-2-fill"></i></span>
+                  <input
+                    id="depart-date"
+                    class="form-control depart-input"
+                    type="date"
+                    aria-label="Departure date"
+                    required
+                  />
+                </div>
+              </div>
+
+              <!-- Return (hidden by default) -->
+              <div class="form-group return-date-group" style="display:none">
+                <label class="form-label" for="return-date">Return</label>
+                <div class="input-wrapper">
+                  <span class="input-wrapper__icon" aria-hidden="true"><i class="ri-calendar-2-fill"></i></span>
+                  <input
+                    id="return-date"
+                    class="form-control return-input"
+                    type="date"
+                    aria-label="Return date"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Passengers / Class / Search -->
+            <div class="booking-fields-row2">
+              <!-- Passengers -->
+              <div class="form-group">
+                <label class="form-label" id="passenger-label">Passengers</label>
+                <div class="input-wrapper" style="position:relative">
+                  <span class="input-wrapper__icon" aria-hidden="true"><i class="ri-user-fill"></i></span>
+                  <button
+                    type="button"
+                    class="form-control passenger-btn"
+                    style="text-align:left;cursor:pointer"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    aria-labelledby="passenger-label"
+                  >
+                    1 Passenger
+                  </button>
+                  <input type="hidden" class="passenger-select" value="1" />
+
+                  <!-- Passenger dropdown -->
+                  <div class="passenger-dropdown" role="dialog" aria-label="Passenger selection">
+                    <div class="passenger-row">
+                      <div>
+                        <div class="passenger-row__label">Adults</div>
+                        <div class="passenger-row__sub">12 years and above</div>
+                      </div>
+                      <div style="display:flex;align-items:center;gap:0.75rem">
+                        <button type="button" class="counter-btn" data-counter="adults" data-dir="dec" aria-label="Decrease adults">−</button>
+                        <span class="counter-val" data-type="adults" aria-live="polite">1</span>
+                        <button type="button" class="counter-btn" data-counter="adults" data-dir="inc" aria-label="Increase adults">+</button>
+                      </div>
+                    </div>
+                    <div class="passenger-row">
+                      <div>
+                        <div class="passenger-row__label">Children</div>
+                        <div class="passenger-row__sub">2–11 years</div>
+                      </div>
+                      <div style="display:flex;align-items:center;gap:0.75rem">
+                        <button type="button" class="counter-btn" data-counter="children" data-dir="dec" aria-label="Decrease children">−</button>
+                        <span class="counter-val" data-type="children" aria-live="polite">0</span>
+                        <button type="button" class="counter-btn" data-counter="children" data-dir="inc" aria-label="Increase children">+</button>
+                      </div>
+                    </div>
+                    <div class="passenger-row">
+                      <div>
+                        <div class="passenger-row__label">Infants</div>
+                        <div class="passenger-row__sub">Under 2 years</div>
+                      </div>
+                      <div style="display:flex;align-items:center;gap:0.75rem">
+                        <button type="button" class="counter-btn" data-counter="infants" data-dir="dec" aria-label="Decrease infants">−</button>
+                        <span class="counter-val" data-type="infants" aria-live="polite">0</span>
+                        <button type="button" class="counter-btn" data-counter="infants" data-dir="inc" aria-label="Increase infants">+</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Class -->
+              <div class="form-group">
+                <label class="form-label" for="cabin-class">Cabin Class</label>
+                <div class="input-wrapper">
+                  <span class="input-wrapper__icon" aria-hidden="true"><i class="ri-sparkling-2-fill"></i></span>
+                  <select id="cabin-class" class="form-control form-select class-select" aria-label="Cabin class">
+                    <option value="economy">Economy</option>
+                    <option value="business">Business</option>
+                    <option value="first">First Class</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Promo -->
+              <div class="form-group">
+                <label class="form-label" for="promo-code">Promo Code</label>
+                <div class="input-wrapper">
+                  <span class="input-wrapper__icon" aria-hidden="true"><i class="ri-coupon-2-line"></i></span>
+                  <input id="promo-code" class="form-control" type="text" placeholder="Enter code" aria-label="Promotional code" />
+                </div>
+              </div>
+
+              <!-- Search Button -->
+              <div style="padding-bottom:1px">
+                <button type="submit" class="btn btn-primary booking-search-btn" style="width:100%;height:48px" aria-label="Search available flights">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                  Search Flights
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ QUICK LINKS ══ -->
+    <section class="quick-links section-pad-sm" aria-label="Quick services">
+      <div class="container">
+        <div class="quick-links__inner" role="list">
+          <a href="#" class="quick-link-item" role="listitem">
+            <span class="quick-link-item__icon" aria-hidden="true"><i class="ri-file-list-line" aria-hidden="true"></i></span> Check-In Online
+          </a>
+          <a href="#" class="quick-link-item" role="listitem">
+            <span class="quick-link-item__icon" aria-hidden="true"><i class="ri-flight-takeoff-line" aria-hidden="true"></i></span> Flight Status
+          </a>
+          <a href="#" class="quick-link-item" role="listitem">
+            <span class="quick-link-item__icon" aria-hidden="true"><i class="ri-suitcase-line" aria-hidden="true"></i></span> Manage Booking
+          </a>
+          <a href="#" class="quick-link-item" role="listitem">
+            <span class="quick-link-item__icon" aria-hidden="true"><i class="ri-package-line" aria-hidden="true"></i></span> Track Cargo
+          </a>
+          <a href="#" class="quick-link-item" role="listitem">
+            <span class="quick-link-item__icon" aria-hidden="true"><i class="ri-star-line" aria-hidden="true"></i></span> Awards+ Login
+          </a>
+          <a href="#" class="quick-link-item" role="listitem">
+            <span class="quick-link-item__icon" aria-hidden="true"><i class="ri-phone-line" aria-hidden="true"></i></span> Call n Fly
+          </a>
+          <a href="#" class="quick-link-item" role="listitem">
+            <span class="quick-link-item__icon" aria-hidden="true"><i class="ri-gift-line" aria-hidden="true"></i></span> Gift Cards
+          </a>
+          <a href="#" class="quick-link-item" role="listitem">
+            <span class="quick-link-item__icon" aria-hidden="true"><i class="ri-flight-takeoff-line" aria-hidden="true"></i></span> Charter Flight
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SERVICES ══ -->
+    <section class="section-pad" id="services" aria-labelledby="services-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-eyebrow">Our Services</div>
+          <h2 class="section-title" id="services-heading">Everything You Need to Fly</h2>
+          <p class="section-subtitle" style="margin-inline:auto">From booking your first flight to arriving at your destination, SIA is with you every step of the journey.</p>
+        </div>
+
+        <div class="grid-3 gap-6">
+          <div class="service-card reveal delay-1">
+            <div class="service-card__icon" aria-hidden="true"><i class="ri-flight-takeoff-line" aria-hidden="true"></i></div>
+            <h3 class="service-card__title">Flight Booking</h3>
+            <p class="service-card__desc">Book domestic and international flights easily. Choose from Economy, Business, or First Class across 35+ destinations.</p>
+            <a href="flights.html" class="service-card__link">Book Now →</a>
+          </div>
+
+          <div class="service-card reveal delay-2">
+            <div class="service-card__icon" aria-hidden="true"><i class="ri-file-list-line" aria-hidden="true"></i></div>
+            <h3 class="service-card__title">Online Check-In</h3>
+            <p class="service-card__desc">Skip the airport queues. Check in online up to 24 hours before departure and choose your preferred seat.</p>
+            <a href="index.html#booking" class="service-card__link">Check In →</a>
+          </div>
+
+          <div class="service-card reveal delay-3">
+            <div class="service-card__icon" aria-hidden="true"><i class="ri-plane-fill" aria-hidden="true"></i></div>
+            <h3 class="service-card__title">Cargo Services</h3>
+            <p class="service-card__desc">Reliable and efficient cargo solutions for businesses and individuals. Track your shipment in real time.</p>
+            <a href="experience.html#cargo" class="service-card__link">Track Cargo →</a>
+          </div>
+
+          <div class="service-card reveal delay-1">
+            <div class="service-card__icon" aria-hidden="true"><i class="ri-wheelchair-line" aria-hidden="true"></i></div>
+            <h3 class="service-card__title">Special Assistance</h3>
+            <p class="service-card__desc">We're committed to accessible travel for all passengers. Request wheelchair assistance, priority boarding, and more.</p>
+            <a href="contact.html#special-assistance" class="service-card__link">Learn More →</a>
+          </div>
+
+          <div class="service-card reveal delay-2">
+            <div class="service-card__icon" aria-hidden="true"><i class="ri-user-heart-fill" aria-hidden="true"></i></div>
+            <h3 class="service-card__title">Nusuk Umrah</h3>
+            <p class="service-card__desc">Your official guide to Makkah and Madinah. SIA partners with Nusuk to offer seamless Umrah travel packages.</p>
+            <a href="experience.html#nusuk" class="service-card__link">Explore →</a>
+          </div>
+
+          <div class="service-card reveal delay-3">
+            <div class="service-card__icon" aria-hidden="true"><i class="ri-bank-card-fill" aria-hidden="true"></i></div>
+            <h3 class="service-card__title">Awards+ Loyalty</h3>
+            <p class="service-card__desc">Earn miles on every flight and redeem them for free tickets, upgrades, and exclusive travel benefits.</p>
+            <a href="index.html#awards" class="service-card__link">Join Free →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ DESTINATIONS ══ -->
+    <section class="section-pad" style="background:var(--clr-off-white)" id="destinations" aria-labelledby="dest-heading">
+      <div class="container">
+        <div class="section-header reveal" style="display:flex;align-items:flex-end;justify-content:space-between;text-align:left;margin-bottom:var(--space-8)">
+          <div>
+            <div class="section-eyebrow" style="justify-content:flex-start">Popular Destinations</div>
+            <h2 class="section-title" id="dest-heading">Where Will You Fly?</h2>
+          </div>
+          <a href="flights.html" class="btn btn-outline" style="flex-shrink:0">View All Routes →</a>
+        </div>
+
+        <div class="destinations-grid">
+          <!-- Featured large card -->
+          <div class="dest-card dest-card--featured reveal">
+            <img src="https://images.unsplash.com/photo-1559561853-08451507cbe7?w=800&q=80&auto=format&fit=crop"
+                 alt="Aerial view of Islamabad, Pakistan"
+                 class="dest-card__img" />
+            <div class="dest-card__overlay"></div>
+            <div class="dest-card__content">
+              <span class="badge badge-white" style="margin-bottom:0.5rem">Most Popular</span>
+              <div class="dest-card__city">Islamabad</div>
+              <div class="dest-card__country">Pakistan · ISB</div>
+              <a href="flights.html?from=KHI&to=ISB" class="dest-card__price">From PKR 11,900</a>
+            </div>
+          </div>
+
+          <!-- Small cards -->
+          <div class="dest-card reveal delay-1">
+            <img src="https://images.unsplash.com/photo-1514222134-b57cbb8ce073?w=600&q=80&auto=format&fit=crop"
+                 alt="Lahore city view" class="dest-card__img" />
+            <div class="dest-card__overlay"></div>
+            <div class="dest-card__content">
+              <div class="dest-card__city">Lahore</div>
+              <div class="dest-card__country">Pakistan · LHE</div>
+              <a href="flights.html?from=KHI&to=LHE" class="dest-card__price">From PKR 10,500</a>
+            </div>
+          </div>
+
+          <div class="dest-card reveal delay-2">
+            <img src="https://images.unsplash.com/photo-1605723517503-3cadb5818a0c?w=600&q=80&auto=format&fit=crop"
+                 alt="Dubai skyline" class="dest-card__img" />
+            <div class="dest-card__overlay"></div>
+            <div class="dest-card__content">
+              <div class="dest-card__city">Dubai</div>
+              <div class="dest-card__country">UAE · DXB</div>
+              <a href="flights.html?from=KHI&to=DXB" class="dest-card__price">From PKR 38,000</a>
+            </div>
+          </div>
+
+          <div class="dest-card reveal delay-3">
+            <img src="https://images.unsplash.com/photo-1577086664693-894d8405334a?w=600&q=80&auto=format&fit=crop"
+                 alt="London aerial view" class="dest-card__img" />
+            <div class="dest-card__overlay"></div>
+            <div class="dest-card__content">
+              <div class="dest-card__city">London</div>
+              <div class="dest-card__country">UK · LHR</div>
+              <a href="flights.html?from=KHI&to=LHR" class="dest-card__price">From PKR 1,20,000</a>
+            </div>
+          </div>
+
+          <div class="dest-card reveal delay-4">
+  <img 
+    src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80"
+    alt="Peshawar city"
+    class="dest-card__img"
+  />
+
+  <div class="dest-card__overlay"></div>
+
+  <div class="dest-card__content">
+    <div class="dest-card__city">Peshawar</div>
+    <div class="dest-card__country">Pakistan · PEW</div>
+
+    <a href="flights.html?from=KHI&to=PEW" class="dest-card__price">
+      From PKR 18,500
+    </a>
+  </div>
+</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ STATS ══ -->
+    <section class="stats-section section-pad" aria-label="SIA achievements">
+      <div class="container">
+        <div class="section-header reveal" style="text-align:center;margin-bottom:var(--space-12)">
+          <div class="section-eyebrow" style="color:rgba(255,255,255,.6)">By the Numbers</div>
+          <h2 class="section-title" style="color:var(--clr-white)">Pakistan's Most Trusted Airline</h2>
+        </div>
+        <div class="grid-4 gap-8">
+          <div class="stat-item reveal delay-1">
+            <div class="stat-item__number">
+              <span data-count-to="35" data-count-suffix="+">0+</span>
+            </div>
+            <div class="stat-item__label">Destinations Worldwide</div>
+          </div>
+          <div class="stat-item reveal delay-2">
+            <div class="stat-item__number">
+              <span data-count-to="70" data-count-suffix="+">0+</span>
+            </div>
+            <div class="stat-item__label">Years of Service</div>
+          </div>
+          <div class="stat-item reveal delay-3">
+            <div class="stat-item__number">
+              <span data-count-to="45" data-count-suffix="+">0+</span>
+            </div>
+            <div class="stat-item__label">Aircraft in Fleet</div>
+          </div>
+          <div class="stat-item reveal delay-4">
+            <div class="stat-item__number">
+              <span data-count-to="6000000" data-count-suffix="+">0</span>
+            </div>
+            <div class="stat-item__label">Passengers Annually</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ DEALS & OFFERS ══ -->
+    <section class="section-pad" id="deals" aria-labelledby="deals-heading">
+      <div class="container">
+        <div class="section-header reveal" style="text-align:left">
+          <div class="section-eyebrow" style="justify-content:flex-start">Exclusive Deals</div>
+          <h2 class="section-title" id="deals-heading">Special Offers for You</h2>
+          <p class="section-subtitle">Limited-time fares and packages curated for every traveller.</p>
+        </div>
+
+        <div class="grid-2 gap-6">
+          <div class="offer-card reveal delay-1">
+            <div class="offer-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1547394765-185e1e68f34e?w=400&q=80&auto=format&fit=crop"
+                   alt="Summer sale destination" class="offer-card__img" />
+            </div>
+            <div class="offer-card__body">
+              <span class="offer-card__tag">Summer Sale</span>
+              <h3 class="offer-card__title">Karachi to Dubai — Fly This Summer</h3>
+              <p class="offer-card__desc">Enjoy special summer fares on our KHI–DXB route. Book by 30 June, travel until 31 August.</p>
+              <div class="offer-card__footer">
+                <div>
+                  <div class="offer-card__price-label">Starting from</div>
+                  <div class="offer-card__price">PKR 32,000</div>
+                </div>
+                <a href="flights.html?from=KHI&to=DXB" class="btn btn-primary btn-sm">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="offer-card reveal delay-2">
+            <div class="offer-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1604580864964-0462f5d5b1a8?w=400&q=80&auto=format&fit=crop"
+                   alt="London Heathrow terminal" class="offer-card__img" />
+            </div>
+            <div class="offer-card__body">
+              <span class="offer-card__tag">UK Special</span>
+              <h3 class="offer-card__title">Non-Stop to London Heathrow</h3>
+              <p class="offer-card__desc">Experience SIA's iconic PK-786 Karachi to London service. Business Class upgrades available.</p>
+              <div class="offer-card__footer">
+                <div>
+                  <div class="offer-card__price-label">Starting from</div>
+                  <div class="offer-card__price">PKR 1,10,000</div>
+                </div>
+                <a href="flights.html?from=KHI&to=LHR" class="btn btn-primary btn-sm">Book Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="offer-card reveal delay-3">
+            <div class="offer-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=400&q=80&auto=format&fit=crop"
+                   alt="Makkah Grand Mosque" class="offer-card__img" />
+            </div>
+            <div class="offer-card__body">
+              <span class="offer-card__tag">Nusuk Package</span>
+              <h3 class="offer-card__title">Umrah Package — All-Inclusive</h3>
+              <p class="offer-card__desc">Travel, stay, and guide — complete Umrah arrangements through SIA's Nusuk partnership.</p>
+              <div class="offer-card__footer">
+                <div>
+                  <div class="offer-card__price-label">Starting from</div>
+                  <div class="offer-card__price">PKR 85,000</div>
+                </div>
+                <a href="experience.html#nusuk" class="btn btn-primary btn-sm">Explore</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="offer-card reveal delay-4">
+            <div class="offer-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=400&q=80&auto=format&fit=crop"
+                   alt="Travel gift card" class="offer-card__img" />
+            </div>
+            <div class="offer-card__body">
+              <span class="offer-card__tag">Gift Cards</span>
+              <h3 class="offer-card__title">Share the Freedom — SIA Gift Cards</h3>
+              <p class="offer-card__desc">Gift the joy of travel to your loved ones. Redeemable on all SIA flights, no expiry.</p>
+              <div class="offer-card__footer">
+                <div>
+                  <div class="offer-card__price-label">Available from</div>
+                  <div class="offer-card__price">PKR 5,000</div>
+                </div>
+                <a href="experience.html#gift-cards" class="btn btn-gold btn-sm">Buy Now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ AWARDS+ ══ -->
+    <section class="awards-section section-pad" id="awards" aria-labelledby="awards-heading">
+      <div class="container">
+        <div class="section-header reveal" style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:var(--space-8);text-align:left">
+          <div>
+            <div class="section-eyebrow" style="justify-content:flex-start">Loyalty Programme</div>
+            <h2 class="section-title" id="awards-heading">Join Awards+ Plus</h2>
+          </div>
+          <a href="#" class="btn btn-primary" style="flex-shrink:0">Enrol Now</a>
+        </div>
+
+        <div class="grid-3 gap-6">
+          <div class="awards-card reveal delay-1">
+            <div class="awards-card__icon" aria-hidden="true"><i class="ri-flight-takeoff-line" aria-hidden="true"></i></div>
+            <div>
+              <h3 class="awards-card__title">Earn Miles</h3>
+              <p class="awards-card__desc">Earn miles on every SIA flight. Miles accumulate across Economy, Business, and partner flights.</p>
+            </div>
+          </div>
+          <div class="awards-card reveal delay-2">
+            <div class="awards-card__icon" aria-hidden="true"><i class="ri-gift-line" aria-hidden="true"></i></div>
+            <div>
+              <h3 class="awards-card__title">Redeem Rewards</h3>
+              <p class="awards-card__desc">Use your miles for free flights, seat upgrades, lounge access, and exclusive merchandise.</p>
+            </div>
+          </div>
+          <div class="awards-card reveal delay-3">
+            <div class="awards-card__icon" aria-hidden="true"><i class="ri-diamond-line" aria-hidden="true"></i></div>
+            <div>
+              <h3 class="awards-card__title">Elite Status</h3>
+              <p class="awards-card__desc">Reach Gold, Platinum, or Elite tiers for priority check-in, extra baggage, and lounge access worldwide.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ NEWS ══ -->
+    <section class="section-pad" aria-labelledby="news-heading">
+      <div class="container">
+        <div class="section-header reveal" style="text-align:left">
+          <div class="section-eyebrow" style="justify-content:flex-start">Latest Updates</div>
+          <h2 class="section-title" id="news-heading">News & Announcements</h2>
+        </div>
+
+        <div class="grid-3 gap-4">
+          <div class="news-card reveal delay-1">
+            <div class="news-card__date" aria-label="May 15">
+              <div class="news-card__day">15</div>
+              <div class="news-card__month">May</div>
+            </div>
+            <div>
+              <div class="news-card__title">SIA Launches New Karachi–Bangkok Route</div>
+              <div class="news-card__excerpt">Direct flights to Bangkok will commence from 1 July 2026, operated three times weekly on Boeing 777.</div>
+            </div>
+          </div>
+
+          <div class="news-card reveal delay-2">
+            <div class="news-card__date" aria-label="May 10">
+              <div class="news-card__day">10</div>
+              <div class="news-card__month">May</div>
+            </div>
+            <div>
+              <div class="news-card__title">Terminal 5 Operations at King Khalid Airport</div>
+              <div class="news-card__excerpt">SIA flights to Riyadh will now depart from Terminal 5 at King Khalid International Airport effective immediately.</div>
+            </div>
+          </div>
+
+          <div class="news-card reveal delay-3">
+            <div class="news-card__date" aria-label="April 28">
+              <div class="news-card__day">28</div>
+              <div class="news-card__month">Apr</div>
+            </div>
+            <div>
+              <div class="news-card__title">SIA Receives 3-Star Airline Rating</div>
+              <div class="news-card__excerpt">SMI International Airlines has been awarded a 3-star rating for product and service quality improvements.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ APP BANNER ══ -->
+    <section class="section-pad-sm" aria-label="Download the SIA app">
+      <div class="container">
+        <div class="app-banner reveal">
+          <div class="app-banner__text">
+            <h2>Travel Smarter with the SIA App</h2>
+            <p>Book flights, manage bookings, get real-time updates, and check in — all from your pocket.</p>
+          </div>
+          <div class="app-badges">
+            <a   href="https://www.apple.com/app-store/" 
+  target="_blank" 
+  rel="noopener noreferrer" class="app-badge" aria-label="Download on the App Store">
+              <div class="app-badge__icon" aria-hidden="true"><i class="ri-apple-line" aria-hidden="true"></i></div>
+              <div>
+                <div class="app-badge__label">Download on the</div>
+                <div class="app-badge__store">App Store</div>
+              </div>
+            </a>
+            <a   href="https://play.google.com/store" 
+  target="_blank" 
+  rel="noopener noreferrer" class="app-badge" aria-label="Get it on Google Play">
+              <div class="app-badge__icon" aria-hidden="true"><i class="ri-play-circle-line" aria-hidden="true"></i></div>
+              <div>
+                
+                <div class="app-badge__label">Get it on</div>
+                <div class="app-badge__store">Google Play</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__main">
+      <div class="container">
+        <div class="footer__grid">
+          <!-- Brand -->
+          <div>
+            <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
+              <svg width="40" height="40" viewBox="0 0 44 44" fill="none">
+                <circle cx="22" cy="22" r="22" fill="#0A6B3D"/>
+                <path d="M8 26 L22 12 L36 26" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <circle cx="22" cy="22" r="4" fill="white"/>
+              </svg>
+              <div>
+                <div style="font-family:var(--font-display);font-weight:900;font-size:1.2rem;color:white">SIA</div>
+                <div style="font-size:0.65rem;color:rgba(255,255,255,.5);letter-spacing:0.05em">Great People to Fly With</div>
+              </div>
+            </div>
+            <p class="footer__brand-desc">SMI International Airlines — connecting Pakistan to the world since 1946. We are committed to providing safe, reliable, and warm travel experiences.</p>
+            <address style="font-style:normal;margin-top:1.25rem">
+              <p style="font-size:0.8rem;color:rgba(255,255,255,.4);line-height:1.6">
+                SIA Building, Jinnah International Airport<br>
+                Karachi, 75200, Pakistan<br>
+                <a href="tel:+922111786786" style="color:rgba(255,255,255,.5);transition:color .2s" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color='rgba(255,255,255,.5)'">(+92-21) 111-786-786</a>
+              </p>
+            </address>
+            <div class="footer__socials" aria-label="Social media links">
+              <a href="#" class="footer__social-link" aria-label="Facebook">f</a>
+              <a href="#" class="footer__social-link" aria-label="Twitter / X">𝕏</a>
+              <a href="#" class="footer__social-link" aria-label="Instagram">◎</a>
+              <a href="#" class="footer__social-link" aria-label="LinkedIn">in</a>
+              <a href="#" class="footer__social-link" aria-label="YouTube"><i class="ri-play-circle-line" aria-hidden="true"></i></a>
+            </div>
+          </div>
+
+          <!-- About -->
+          <div>
+            <h3 class="footer__heading">About Us</h3>
+            <ul class="footer__links">
+              <li><a href="about.html" class="footer__link">Vision & Values</a></li>
+              <li><a href="about.html" class="footer__link">Management</a></li>
+              <li><a href="#" class="footer__link">Careers</a></li>
+              <li><a href="#" class="footer__link">Press Release</a></li>
+              <li><a href="#" class="footer__link">Tenders</a></li>
+              <li><a href="#" class="footer__link">Bid Reports</a></li>
+              <li><a href="hci-analysis.html" class="footer__link">Accessibility Plan</a></li>
+            </ul>
+          </div>
+
+          <!-- Facilities -->
+          <div>
+            <h3 class="footer__heading">Facilities</h3>
+            <ul class="footer__links">
+              <li><a href="#" class="footer__link">Air Passenger Rights</a></li>
+              <li><a href="#" class="footer__link">Conditions of Carriage</a></li>
+              <li><a href="#" class="footer__link">Booking Conditions</a></li>
+              <li><a href="#" class="footer__link">Traveller's Information</a></li>
+              <li><a href="#" class="footer__link">Baggage Guide</a></li>
+              <li><a href="#" class="footer__link">Track Your Cargo</a></li>
+              <li><a href="#" class="footer__link">Digital Check-In</a></li>
+            </ul>
+          </div>
+
+          <!-- Help -->
+          <div>
+            <h3 class="footer__heading">Help & Contact</h3>
+            <ul class="footer__links">
+              <li><a href="contact.html" class="footer__link">Help & Contact</a></li>
+              <li><a href="#" class="footer__link">Overseas Pakistanis</a></li>
+              <li><a href="#" class="footer__link">Special Assistance</a></li>
+              <li><a href="#" class="footer__link">Special Assistance Form</a></li>
+              <li><a href="#" class="footer__link">Frequently Asked Questions</a></li>
+              <li><a href="contact.html" class="footer__link">Feedback</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer__bottom">
+      <div class="container" style="display:contents">
+        <p class="footer__copyright">© 2024 SMI International Airlines. All Rights Reserved.</p>
+        <nav class="footer__bottom-links" aria-label="Legal links">
+          <a href="#" class="footer__bottom-link">Privacy Policy</a>
+          <a href="#" class="footer__bottom-link">Terms of Use</a>
+          <a href="#" class="footer__bottom-link">Site Map</a>
+          <a href="hci-analysis.html" class="footer__bottom-link">Accessibility</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══ SEARCH OVERLAY ══ -->
+  <div class="search-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Search SIA">
+  <div class="search-overlay__box" role="document">
+    <div class="search-overlay__header">
+      <div>
+        <p class="search-overlay__eyebrow">Search SIA</p>
+        <h2 class="search-overlay__title">Where would you like to go?</h2>
+      </div>
+
+      <button class="search-overlay__close" type="button" aria-label="Close search">
+        <i class="ri-close-line" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <form class="search-overlay__form">
+      <span class="search-overlay__icon" aria-hidden="true"><i class="ri-search-line" aria-hidden="true"></i></span>
+      <input
+        class="search-overlay__input"
+        type="search"
+        placeholder="Search flights, baggage, check-in, support..."
+        aria-label="Search query"
+      />
+      <button class="search-overlay__submit" type="submit">
+        Search
+      </button>
+    </form>
+
+    <div class="search-overlay__quick">
+      <p class="search-overlay__label">Popular searches</p>
+
+      <div class="search-overlay__tags">
+        <button class="search-tag" type="button" data-url="flights.html?from=KHI&to=DXB">
+          Dubai Flights
+        </button>
+        <button class="search-tag" type="button" data-url="flights.html?from=KHI&to=ISB">
+          Islamabad
+        </button>
+        <button class="search-tag" type="button" data-url="index.html#booking">
+          Online Check-In
+        </button>
+        <button class="search-tag" type="button" data-url="experience.html#baggage">
+          Baggage Policy
+        </button>
+        <button class="search-tag" type="button" data-url="experience.html">
+          Business Class
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- ══ ACCESSIBILITY TRIGGER ══ -->
+  <button class="a11y-trigger" aria-label="Open accessibility options" aria-expanded="false" aria-controls="a11y-panel">
+    <span aria-hidden="true"><i class="ri-wheelchair-line" aria-hidden="true"></i></span>
+    <!-- <span class="a11y-trigger__label">Accessibility</span> -->
+  </button>
+
+  <!-- ══ ACCESSIBILITY PANEL ══ -->
+  <aside id="a11y-panel" class="a11y-panel" aria-hidden="true" aria-label="Accessibility options">
+    <div class="a11y-panel__header">
+      <span>Accessibility</span>
+      <button class="a11y-close btn-ghost btn-sm" aria-label="Close accessibility panel" style="font-size:0.85rem"><i class="ri-close-line" aria-hidden="true"></i></button>
+    </div>
+
+    <div class="a11y-option">
+      <div class="a11y-option__label">
+        <span aria-hidden="true">🔤</span> Text Size
+      </div>
+      <div class="a11y-size-controls">
+        <button class="a11y-size-btn a11y-font-decrease" aria-label="Decrease font size">A−</button>
+        <span class="a11y-font-size-val" aria-live="polite">16px</span>
+        <button class="a11y-size-btn a11y-font-increase" aria-label="Increase font size">A+</button>
+      </div>
+    </div>
+
+    <div class="a11y-option">
+      <label class="a11y-option__label" for="toggle-contrast">
+        <span aria-hidden="true">◑</span> High Contrast
+      </label>
+      <button id="toggle-contrast" class="a11y-toggle" role="switch" aria-pressed="false" data-action="high-contrast" aria-label="Toggle high contrast"></button>
+    </div>
+
+    <div class="a11y-option">
+      <label class="a11y-option__label" for="toggle-motion">
+        <span aria-hidden="true">⏸</span> Reduce Motion
+      </label>
+      <button id="toggle-motion" class="a11y-toggle" role="switch" aria-pressed="false" data-action="reduced-motion" aria-label="Toggle reduced motion"></button>
+    </div>
+
+    <div class="a11y-option">
+      <label class="a11y-option__label" for="toggle-underline">
+        <span aria-hidden="true">U̲</span> Underline Links
+      </label>
+      <button id="toggle-underline" class="a11y-toggle" role="switch" aria-pressed="false" data-action="underline-links" aria-label="Toggle underline links"></button>
+    </div>
+
+    <div class="a11y-option">
+      <label class="a11y-option__label" for="toggle-large">
+        <span aria-hidden="true">🅰</span> Large Text
+      </label>
+      <button id="toggle-large" class="a11y-toggle" role="switch" aria-pressed="false" data-action="large-text" aria-label="Toggle large text"></button>
+    </div>
+
+    <button class="btn btn-ghost btn-sm a11y-reset" style="width:100%;margin-top:1rem" aria-label="Reset all accessibility settings">
+      Reset All
+    </button>
+  </aside>
+
+  <!-- Back to top -->
+  <button class="back-to-top" aria-label="Back to top">↑</button>
+
+  <!-- Toast container -->
+  <div class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- JS -->
+  <script src="js/main.js"></script>
+  <div class="login-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Login">
+  <div class="login-modal__box">
+    <div class="login-modal__header">
+      <div>
+        <p class="login-modal__eyebrow">Awards+ Plus</p>
+        <h2 class="login-modal__title">Login to your account</h2>
+      </div>
+      <button class="login-modal__close" type="button" aria-label="Close login"><i class="ri-close-line" aria-hidden="true"></i></button>
+    </div>
+
+    <form class="login-form">
+      <div class="form-group">
+        <label class="form-label" for="login-email">Email</label>
+        <input id="login-email" class="form-control" type="email" placeholder="passenger@email.com" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="login-password">Password</label>
+        <input id="login-password" class="form-control" type="password" placeholder="Enter password" required />
+      </div>
+
+      <button class="btn btn-primary" type="submit" style="width:100%;margin-top:1rem">
+        Login
+      </button>
+
+      <p class="login-modal__hint">
+        Demo only: enter any email and password.
+      </p>
+    </form>
+  </div>
+</div>
 </body>
 </html>
