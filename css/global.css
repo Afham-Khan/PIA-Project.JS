@@ -1336,6 +1336,10 @@ body.a11y-large-text {
 }
 
 body.a11y-high-contrast {
+  filter: none;
+}
+
+body.a11y-high-contrast > *:not(.a11y-trigger):not(.a11y-panel):not(.back-to-top) {
   filter: contrast(1.4);
 }
 
